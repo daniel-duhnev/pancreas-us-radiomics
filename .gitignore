@@ -1,0 +1,14 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore Dataset (Huge files!)
+*.dcm
+*.nii
+*.nii.gz
+PANCREAS_2/
+data/
+
+# Ignore Environment configs (Optional, but good to keep local)
+.vscode/
+.ipynb_checkpoints/
