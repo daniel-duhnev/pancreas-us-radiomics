@@ -1,14 +1,17 @@
-# Ignore Python cache
+# ignore python cache
 __pycache__/
 *.pyc
 
-# Ignore Dataset (Huge files!)
+# ignore sensitive dataset with big files
 *.dcm
 *.nii
 *.nii.gz
 PANCREAS_2/
 data/
 
-# Ignore Environment configs (Optional, but good to keep local)
+# ignore env config
 .vscode/
+
+# ignore generated analysis reports with sensitive data
+analysis/reports/
 .ipynb_checkpoints/
