@@ -15,3 +15,7 @@ data/
 # ignore generated analysis reports with sensitive data
 analysis/reports/
 .ipynb_checkpoints/
+
+# ignore local archive backups (keep locally, never commit)
+*.zip
+*.ZIP
