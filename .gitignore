@@ -11,6 +11,7 @@ data/
 
 # ignore env config
 .vscode/
+.DS_Store
 
 # ignore generated analysis reports with sensitive data
 analysis/reports/
