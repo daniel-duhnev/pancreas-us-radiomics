@@ -35,6 +35,27 @@ Next (radiomics):
 - Select kernel: `thesis_env (Python 3.9.25)`.
 - Run cells top-to-bottom.
 
+## Coding + writing style (required)
+- Write code in a plain, straightforward style (like a very strong junior engineer).
+- Prefer clarity over cleverness:
+  - Use explicit multi-line `for` loops (not dense comprehensions) when it improves readability.
+  - Use descriptive variable names (avoid single-letter names except trivial indices).
+  - Avoid “shortcut” one-liners that hide logic.
+- Keep comments short and literal (explain *why* when needed; don’t narrate every line).
+- No emojis.
+- No “AI-ish” formatting or decoration (avoid big ASCII separators like `----` or fancy banner blocks).
+- Keep notebooks readable top-to-bottom:
+  - Step-by-step cells.
+  - Print helpful, minimal status messages.
+  - Avoid heavy refactors unless requested.
+
+Quick rubric (use this before editing notebooks):
+- Cell size: any code cell > ~40 lines is a smell for “not junior-readable”.
+- Idioms: count comprehensions, ternaries, heavy chaining; each one is fine occasionally, but lots of them shifts the notebook away from the house style.
+- Repetition: if you see the same “find date folder → find dicom → read → mask” block repeated, readability decays fast (future readers must mentally diff variants).
+- Tone: comments should explain why and invariants; avoid dramatic wording (it ages poorly and confuses reviewers).
+- Audience: decide per notebook whether it’s an “exploration scratchpad” vs a “pipeline artifact”; apply strict style mainly to pipeline artifacts.
+
 ## What to avoid
 - Don’t “nbconvert” run notebooks using a different Python.
 - Don’t refactor notebooks heavily or add fancy abstractions.
