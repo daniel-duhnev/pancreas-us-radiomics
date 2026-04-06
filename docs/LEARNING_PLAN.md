@@ -64,7 +64,7 @@ These care about how **neighbouring pixels** relate to each other:
 - Computes summary statistics from each matrix.
 - Returns ~93 numbers per image.
 
-### Notebook: `E1_understanding_radiomics_features.ipynb`
+### Notebook: `12_1_understanding_radiomics_features.ipynb`
 
 - Load one real image from our dataset (e.g., study 01_01) with its mask.
 - Show the image, overlay the mask, show the cropped region.
@@ -150,7 +150,7 @@ statistical tests don't have a "test set."
 - Our features have small effect sizes (|r| < 0.2), meaning even if something
   were significant, the groups barely separate.
 
-### Notebook: `E2_understanding_statistical_tests.ipynb`
+### Notebook: `14_1_understanding_statistical_tests.ipynb`
 
 - Take one real feature from our data, plot the two group distributions side
   by side.
@@ -226,7 +226,7 @@ ML hard.
 - Does not mean ML is useless -- means these particular features on this dataset
   don't carry enough signal.
 
-### Notebook: `E3_understanding_ml_classification.ipynb`
+### Notebook: `15_1_understanding_ml_classification.ipynb`
 
 - Build a tiny synthetic example: 2 features, 2 classes, visible on a scatter
   plot.
@@ -245,9 +245,9 @@ ML hard.
 | Step | What | Output |
 |------|------|--------|
 | 1 | Review Module 1 plan | Confirm / adjust |
-| 2 | Build `E1_understanding_radiomics_features.ipynb` | Interactive notebook |
+| 2 | Build `12_1_understanding_radiomics_features.ipynb` | Interactive notebook |
 | 3 | Review Module 2 plan | Confirm / adjust |
-| 4 | Build `E2_understanding_statistical_tests.ipynb` | Interactive notebook |
+| 4 | Build `14_1_understanding_statistical_tests.ipynb` | Interactive notebook |
 | 5 | Review Module 3 plan | Confirm / adjust |
-| 6 | Build `E3_understanding_ml_classification.ipynb` | Interactive notebook |
+| 6 | Build `15_1_understanding_ml_classification.ipynb` | Interactive notebook |
 | 7 | Audit actual analysis notebooks (12, 14a, 14b, 15) | Check for mistakes |
