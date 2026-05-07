@@ -14,10 +14,18 @@
 
 ## Project status
 - Notebooks 01-15: complete (preprocessing, radiomics extraction, stats, ML)
-- Notebook 16: ML improvements (Category 1) — next to implement
-- Notebooks 17-19: planned experiments (see docs/PLAN_NEW_EXPERIMENTS.md)
-- 3 new images (34_02, 40_02, 41_03) to integrate (see docs/PLAN_INTEGRATE_NEW_IMAGES.md)
+- NB 17: sequential ML experiments — complete (AUC ~0.5, no signal)
+- NB 17b: joint optimization ML — complete (best AUC 0.537, confirms no signal)
+- 3 new images (34_02, 40_02, 41_03) integrated (137 studies total)
 - Study 47_01 excluded (no images, confirmed by hospital)
+- Next notebooks to create: NB 18-23 (see docs/PLAN_THESIS_ROADMAP.md)
+
+## Current phase (May 2026)
+- Build independent dataset (1 per patient, ~55 studies) — NB 18
+- Stats + ML on independent dataset with 10-fold stratified CV — NB 19, 20
+- Paired analysis (14 patients with both outcomes) — NB 21
+- Extended analysis (alt texture features, surrounding tissue) — NB 22, 23
+- Thesis writing in LaTeX (start now, parallel with experiments)
 
 ## Coding standards
 - See `docs/AGENT_HANDOFF.md` for full rules
@@ -31,6 +39,9 @@
   M. Angeles Garcia, Helena Font (Hospital Clinic Barcelona)
 
 ## Thesis timeline
-- Experiments complete: early May 2026
-- Thesis submission: mid June 2026
+- Independent dataset + core results: May 6-16
+- Extended analysis: May 19-30
+- Thesis writing: ongoing from May 12
+- Submit to Gemma for review: June 8
+- Final submission: mid June 2026
 - Thesis defence: mid July 2026

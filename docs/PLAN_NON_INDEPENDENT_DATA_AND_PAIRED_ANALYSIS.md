@@ -2,7 +2,7 @@
 
 ## Background
 
-Our dataset contains **134 ultrasound studies from 55 patients** (mean 2.4 studies per patient). Of these, **14 patients have both rejection and no-rejection studies**. All current statistical analyses (Mann-Whitney U tests, t-tests) treat studies as independent observations. However, studies from the same patient are correlated due to shared genetics, surgical technique, and baseline organ characteristics. This violates the independence assumption underlying these tests.
+Our dataset contains **137 ultrasound studies from 55 patients** (mean 2.5 studies per patient). Of these, **14 patients have both rejection and no-rejection studies**. All current statistical analyses (Mann-Whitney U tests, t-tests) treat studies as independent observations. However, studies from the same patient are correlated due to shared genetics, surgical technique, and baseline organ characteristics. This violates the independence assumption underlying these tests.
 
 Clara's paper (Bassaganyas et al. 2025) uses the same independent-observations approach, so our replication is methodologically consistent with the original work. Nonetheless, this is a known limitation that warrants further investigation.
 
@@ -49,7 +49,7 @@ stat, pval = mannwhitneyu(
 - Eliminates within-patient correlation entirely.
 
 **Cons:**
-- Reduces sample size from 134 to 55, substantially reducing statistical power.
+- Reduces sample size from 137 to 55, substantially reducing statistical power.
 - Early visits (motivo 1) may reflect high post-surgical dispersion, adding noise unrelated to rejection status.
 - Biased toward early timepoints, which may not represent the typical state of the organ.
 
@@ -76,7 +76,7 @@ df_last = df.sort_values('study_date').groupby('patient_id').last().reset_index(
 - Eliminates within-patient correlation entirely.
 
 **Cons:**
-- Reduces sample size from 134 to 55.
+- Reduces sample size from 137 to 55.
 - Biased toward late timepoints; may reflect chronic changes rather than acute rejection.
 - For patients with both outcomes, the "last" study may not be representative.
 
@@ -135,7 +135,7 @@ for feature in feature_list:
 
 ### 4. Mixed-Effects Models
 
-**What it does:** Fit a linear mixed model for each radiomic feature with rejection status as the fixed effect and patient as a random intercept. This properly accounts for within-patient correlation while using all 134 observations.
+**What it does:** Fit a linear mixed model for each radiomic feature with rejection status as the fixed effect and patient as a random intercept. This properly accounts for within-patient correlation while using all 137 observations.
 
 **Implementation:**
 
@@ -172,7 +172,7 @@ summary(model)
 
 **Pros:**
 - Gold standard for repeated/clustered measures.
-- Uses all 134 observations, maximizing statistical power.
+- Uses all 137 observations, maximizing statistical power.
 - Properly accounts for within-patient correlation via the random intercept.
 - Provides estimates of both between-patient and within-patient variance.
 
@@ -213,7 +213,7 @@ p_value_rejection = result.pvalues['rejection']
 **Packages:** `statsmodels` (`GEE`, `cov_struct`)
 
 **Pros:**
-- Uses all 134 observations.
+- Uses all 137 observations.
 - Robust to misspecification of the correlation structure (sandwich/robust standard errors).
 - Provides population-average effects, which are often more interpretable for clinical questions.
 - Does not require normality assumptions as strictly as mixed models.
@@ -345,7 +345,8 @@ for feature in feature_list:
 
 ## Notes
 
-- This plan is for **future investigation only**. No implementation is required at this time.
-- The current analysis (treating studies as independent) is consistent with Bassaganyas et al. 2025 and is appropriate for the replication phase of this thesis.
-- Any of the above approaches can be implemented independently; they do not depend on each other.
-- Results from multiple approaches should be compared: features that are significant across several approaches are the most trustworthy.
+- **Status (May 2026):** The independent dataset (Approach 1 variant) and paired analysis (Approach 7) are now priority items per Gemma's May 6 guidance. See `PLAN_THESIS_ROADMAP.md` for implementation plan (NB 18, 19, 20, 21).
+- The independent dataset uses a specific selection rule: 1 per patient, prefer first rejection study if patient has both outcomes.
+- Paired analysis (14 patients) is NB 21, using Wilcoxon signed-rank test.
+- Mixed-effects models (Approach 4) and other advanced approaches remain optional — implement only if time permits.
+- The current full-dataset analysis (treating studies as independent) is consistent with Bassaganyas et al. 2025 and remains valid for the replication phase.

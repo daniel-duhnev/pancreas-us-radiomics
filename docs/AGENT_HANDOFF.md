@@ -9,13 +9,19 @@
 Extract texture-focused radiomics features from pancreas ultrasound ROIs (defined by clinician white contours), then test whether these features correlate with clinical rejection and/or improve prognosis prediction.
 
 ## What’s “done” vs “next”
-Done (preprocessing):
-- Batch pipeline to turn DICOMs into grayscale images + clean masks (contour subtraction) and generate an eroded dataset (K=3, iter=1) with `masks/` and `segmented/` previews.
-- Special handling for two outlier images where the clinician contour wasn’t closed.
+Done:
+- Preprocessing pipeline: DICOMs → grayscale images + clean masks (contour subtraction, erosion K=3 iter=1)
+- Radiomics extraction: 93 PyRadiomics features from 137 studies
+- Stats (NB 14a/14b): 0/93 radiomics features significant; ARFI significant in late period
+- ML (NB 15, 17, 17b): all models AUC ~0.5, no predictive signal from radiomics
 
-Next (radiomics):
-- Extract texture features (GLCM etc.) from the ROI for all images.
-- Merge features with `bd_estudiUPF.csv` labels and run statistical tests / basic ML.
+Next (May 2026 — see docs/PLAN_THESIS_ROADMAP.md):
+- ~~Integrate 3 new images~~ (done, 137 studies)
+- Build independent dataset (1 per patient, ~55 studies) — NB 18
+- Stats + ML on independent dataset (10-fold CV) — NB 19, 20
+- Paired analysis (14 patients) — NB 21
+- Extended analysis (LBP, Gabor, Laws’, surrounding tissue) — NB 22, 23
+- Thesis writing in LaTeX
 
 ## Key conventions
 - “Study ID” is the folder name under `data/PANCREAS_2/PANCREAS_2/` (e.g., `01_01`).

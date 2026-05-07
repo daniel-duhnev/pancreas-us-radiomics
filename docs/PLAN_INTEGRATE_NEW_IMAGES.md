@@ -4,7 +4,7 @@
 
 Carlos sent DICOM images for 3 of the 4 missing studies (34_02, 40_02, 41_03) on 2026-04-23. Study 47_01 has no images and should be excluded (confirmed by Carlos: "no tiene imágenes colgadas, nunca las pudimos recuperar").
 
-Downloaded files are in `~/Downloads/Páncreas restantes (22-04-2026)/`. Structure matches existing DICOMs: `study_id/date/dicom_uid`.
+Downloaded files are at `data/Páncreas restantes (22-04-2026)/` (already copied from Downloads). Structure matches existing DICOMs: `study_id/date/dicom_uid`.
 
 After integration, dataset goes from 134 to 137 studies. Study 47_01 remains in the clinical spreadsheet (138 rows) but has no image — mark as excluded.
 
@@ -17,9 +17,9 @@ After integration, dataset goes from 134 to 137 studies. Study 47_01 remains in 
 Copy the 3 folders into `data/PANCREAS_2/PANCREAS_2/`:
 
 ```
-cp -r ~/Downloads/Páncreas\ restantes\ \(22-04-2026\)/34_02 data/PANCREAS_2/PANCREAS_2/
-cp -r ~/Downloads/Páncreas\ restantes\ \(22-04-2026\)/40_02 data/PANCREAS_2/PANCREAS_2/
-cp -r ~/Downloads/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PANCREAS_2/
+cp -r data/Páncreas\ restantes\ \(22-04-2026\)/34_02 data/PANCREAS_2/PANCREAS_2/
+cp -r data/Páncreas\ restantes\ \(22-04-2026\)/40_02 data/PANCREAS_2/PANCREAS_2/
+cp -r data/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PANCREAS_2/
 ```
 
 **Checks:**
@@ -84,11 +84,11 @@ cp -r ~/Downloads/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PAN
 - Compare p-values before/after — should be very similar
 - If any big changes, investigate the 3 new studies specifically
 
-### Step 8: Update experiment notebooks (16-19)
+### Step 8: Continue with independent dataset (NB 18)
 
-- They read from `reports/13_merged_radiomics_clinical.csv`
-- They will automatically pick up the 137 rows next time they run
-- No code changes needed
+After integration, continue with `docs/PLAN_THESIS_ROADMAP.md` Phase 1.2:
+- Build independent dataset (1 per patient, ~55-56 studies)
+- All downstream notebooks (19-23) will read from the independent dataset CSV
 
 ---
 
@@ -104,4 +104,4 @@ cp -r ~/Downloads/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PAN
 
 ## When to do this
 
-After completing Category 1 (ML improvements). The new experiment notebooks (16-19) work fine on the existing 134-row CSV. Integrate the 3 images in a clean session before thesis writing begins.
+First step in Phase 1 of the thesis roadmap (May 6-9). Do this before building the independent dataset (NB 18).

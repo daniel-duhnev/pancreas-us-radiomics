@@ -7,7 +7,7 @@ Below is a file-by-file recommendation.
 ## dataset_audit_simple.csv (135 lines)
 **What it is:** basic dataset inventory (DICOM filename, image size, channels, modality, full path).
 
-**Why it’s useful:** easy to cite in the thesis (e.g., all images are US, RGB, 768×1024, N=134 unique studies).
+**Why it’s useful:** easy to cite in the thesis (e.g., all images are US, RGB, 768×1024, N=137 unique studies).
 
 **Status:** safe and small.
 

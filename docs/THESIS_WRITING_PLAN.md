@@ -2,12 +2,12 @@
 
 ## Context
 
-All analysis notebooks (12-15) are complete with final results. The thesis is for the EMAI program (Erasmus Mundus Master in AI) at UPF, supervised by Gemma Piella. A LaTeX template is available. The goal is to start writing now -- the parts that are stable regardless of any future experiments -- and have a first full draft by mid-June, with final submission end of July 2026.
+Analysis notebooks 12-17b are complete. Notebooks 18-23 are planned (independent dataset, paired analysis, extended analysis — see `PLAN_THESIS_ROADMAP.md`). The thesis is for the EMAI program (Erasmus Mundus Master in AI) at UPF, supervised by Gemma Piella. Gemma said (May 6 meeting): start writing NOW, don't wait for all results. Thesis is 30 credits, needs ~40-50 pages.
 
 **Decisions made:**
 - Format: LaTeX (using EMAI 2026 template)
 - Writing approach: Claude writes full draft sections for review
-- Scope: discuss with Gemma first; write stable sections now
+- Deadline: mid June 2026 submission (moved up from July)
 
 The thesis tells a clear story: we tested whether radiomics texture features from grayscale ultrasound predict pancreas transplant rejection (they don't), and we replicated clinical biomarker results from Bassaganyas et al. 2025 (ARFI/perfusion features do predict rejection). The negative radiomics result combined with the positive clinical replication is itself the contribution.
 
@@ -31,10 +31,10 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 
 ### Section 3.1: Dataset (~2 pages)
 - Study population: 56 patients, Hospital Clinic Barcelona, Oct 2016 - Jan 2020
-- 138 initial studies, 134 with radiomics. Class split: 98 normal, 40 rejection
+- 138 initial studies, 137 with radiomics. Class split: 98 normal, 39 rejection
 - Imaging protocol: Siemens Acuson S3000, grayscale US + ARFI + DCE-US
 - Outcome definition: biopsy or clinical criteria
-- Data structure: repeated measures (55 patients -> 134 studies, mean 2.4 per patient)
+- Data structure: repeated measures (55 patients -> 137 studies, mean 2.5 per patient)
 - **Table 1**: Dataset summary (demographics, class balance)
 - **Figure 1**: Example images (raw DICOM, preprocessed, mask, segmented ROI)
 
@@ -56,11 +56,13 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 - FDR correction (Benjamini-Hochberg) for radiomics
 - Stratification: motivo-based AND days-based (>90 days)
 
-### Section 3.5: ML Classification (~1.5 pages)
-- Correlation removal (|r|>0.9, p-value-guided selection)
-- LogReg + Random Forest, class_weight="balanced"
-- StandardScaler inside Pipeline (no data leakage)
-- Stratified 5-fold CV, metrics: AUC, sensitivity, specificity
+### Section 3.5: ML Classification (~2-3 pages)
+- Correlation removal (|r|>0.9, p-value-guided selection): 93 → 32 features
+- Joint optimization: Pipeline (StandardScaler → SelectKBest → model) with GridSearchCV
+- 4 models: LogReg, RF, SVM, NaiveBayes (all with class_weight="balanced" where applicable)
+- Full dataset (137 studies): LOOCV evaluation
+- Independent dataset (~55 studies): 10-fold stratified CV (Gemma's recommendation)
+- Metrics: AUC, sensitivity, specificity via Youden's index
 
 ---
 
@@ -95,7 +97,7 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 ## Step 4: Write Results (~6-8 pages)
 
 ### Section 4.1: Feature Extraction (0.5 page)
-- 93 features from 134 studies, no failures, 305 correlated pairs
+- 93 features from 137 studies, no failures, 300 correlated pairs
 - **Figure 4**: Correlation heatmap (exists: `reports/14a_correlation_heatmap_radiomics.png`)
 
 ### Section 4.2: Radiomics Statistical Analysis (~1.5 pages)
@@ -113,10 +115,17 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 - **Table 6**: Replication comparison (our p-values vs Clara's)
 - **Figure 6**: ARFI box plots by rejection status (to generate)
 
-### Section 4.4: ML Classification (~1 page)
-- **Table 7**: AUC/sensitivity/specificity for all models/datasets
-- All AUC ~0.5, models are guessing
-- **Table 8**: Top RF feature importances
+### Section 4.4: ML Classification (~2-3 pages)
+- **Table 7**: Joint optimization results — full dataset (137 studies, LOOCV)
+- **Table 8**: Joint optimization results — independent dataset (~55 studies, 10-fold CV)
+- All AUC ~0.5, models are guessing on both datasets
+- ROC curves for all models
+- **Table 9**: Paired analysis results (14 patients, Wilcoxon signed-rank)
+
+### Section 4.5: Extended Analysis (~2 pages)
+- Alternative texture features (LBP, Gabor, Laws'): stats + ML results
+- Surrounding tissue normalization: stats + ML results
+- If no signal: rules out "wrong features" and "wrong normalization" concerns
 
 ---
 
@@ -129,8 +138,8 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 - 5.1.4: Implications -- targeted biomarkers outperform generic texture analysis
 
 ### Section 5.2: Limitations (~1.5 pages)
-1. Repeated measures / non-independence (55 patients -> 134 studies)
-2. Small sample size (134 studies, 39 rejection)
+1. Repeated measures / non-independence (55 patients -> 137 studies)
+2. Small sample size (137 studies, 39 rejection)
 3. No FDR correction in clinical analysis (14b)
 4. Single PyRadiomics configuration
 5. ML used only radiomics, not combined with clinical features
@@ -173,19 +182,20 @@ New figures needed (from notebook data):
 
 ---
 
-## Timeline
+## Timeline (updated May 2026)
 
 | Period | Focus | Deliverable |
 |--------|-------|-------------|
-| **Apr 8-17** | LaTeX setup + Methods draft | Compilable thesis with Methods chapter |
-| **Apr 18 - May 15** | Introduction + Results + figures | Full Introduction, Results with tables/figures |
-| **May 16 - Jun 15** | Discussion + Abstract + Appendices | First complete draft |
-| **Jun 16 - Jul 15** | Supervisor review + revisions | Final draft |
-| **Jul 16-31** | Submission + defense prep | Submitted thesis + presentation slides |
+| **May 6-12** | Data prep + independent dataset | NB 18, integrate new images |
+| **May 12-19** | Core independent results + start writing | NB 19, 20, 21. Thesis: Intro + Methods |
+| **May 19-26** | Extended analysis + writing | NB 22, 23. Thesis: Background + Dataset |
+| **May 26-Jun 1** | Results writing | Thesis: Results with all tables/figures |
+| **Jun 1-8** | Discussion + review | Thesis: Discussion + Conclusion. Send to Gemma |
+| **Jun 8-15** | Final revisions + submit | Final thesis |
 
 Key dates:
-- Spring Event: April 15-17, 2026 (present research to peers)
-- Final report due: end of July 2026
+- Thesis submission: mid June 2026
+- Thesis defence: mid July 2026
 - Graduation: August 31, 2026
 
 ---
@@ -222,12 +232,13 @@ Key dates:
 
 | File | What it provides |
 |------|------------------|
-| `docs/update_summary_notebooks_12_to_15.md` | All results, methods, limitations in one place |
+| `docs/PLAN_THESIS_ROADMAP.md` | Master plan for all remaining work |
 | `docs/PROJECT_CONTEXT.md` | Dataset description, research context |
 | `docs/PREPROCESSING_PIPELINE.md` | Image preprocessing details |
-| `docs/PLAN_REPEATED_MEASURES.md` | Repeated measures investigation approaches |
+| `docs/PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md` | Repeated measures approaches |
+| `reports/13_merged_radiomics_clinical.csv` | Current 137-study merged dataset |
 | `reports/14a_stats_radiomics_features.csv` | All radiomics p-values and effect sizes |
 | `reports/14b_stats_clinical_features.csv` | All clinical p-values and effect sizes |
-| `reports/15_ml_results.csv` | ML classification results |
+| `reports/17b_joint_optimization_results.csv` | Joint optimization ML results |
 | `reports/14b_comparison_our_results_vs_bassaganyas2025.pdf` | Replication comparison report |
 | Clara's paper (in repo root) | Reference methodology and results to replicate |
