@@ -155,9 +155,9 @@ If Steps 4.1/4.2 produce interesting features, repeat the ML pipeline on the ind
 | 15 | Baseline ML | Complete |
 | 17 | Sequential ML experiments (137 studies) | Complete |
 | 17b | Joint optimization ML (137 studies) | Complete |
-| **18** | **Build independent dataset** | **To create** |
-| **19** | **Stats on independent dataset** | **To create** |
-| **20** | **ML on independent dataset (10-fold CV)** | **To create** |
+| 18 | Build independent dataset | Complete |
+| 19 | Stats on independent dataset | Complete |
+| 20 | ML on independent dataset (10-fold CV) | Complete |
 | **21** | **Paired analysis (14 patients)** | **To create** |
 | **22** | **Alternative texture features** | **To create** |
 | **23** | **Surrounding tissue analysis** | **To create** |

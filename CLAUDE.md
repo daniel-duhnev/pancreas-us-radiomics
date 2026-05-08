@@ -16,16 +16,18 @@
 - Notebooks 01-15: complete (preprocessing, radiomics extraction, stats, ML)
 - NB 17: sequential ML experiments — complete (AUC ~0.5, no signal)
 - NB 17b: joint optimization ML — complete (best AUC 0.537, confirms no signal)
+- NB 18: independent dataset built (55 studies, 1 per patient)
+- NB 19: stats on independent dataset — complete
+- NB 20: ML on independent dataset — complete
 - 3 new images (34_02, 40_02, 41_03) integrated (137 studies total)
 - Study 47_01 excluded (no images, confirmed by hospital)
-- Next notebooks to create: NB 18-23 (see docs/PLAN_THESIS_ROADMAP.md)
+- Thesis Methods chapter: written and audited (see thesis/methods.tex)
+- Next notebooks to create: NB 21-23 (see docs/PLAN_THESIS_ROADMAP.md)
 
 ## Current phase (May 2026)
-- Build independent dataset (1 per patient, ~55 studies) — NB 18
-- Stats + ML on independent dataset with 10-fold stratified CV — NB 19, 20
 - Paired analysis (14 patients with both outcomes) — NB 21
 - Extended analysis (alt texture features, surrounding tissue) — NB 22, 23
-- Thesis writing in LaTeX (start now, parallel with experiments)
+- Thesis writing in LaTeX (Methods done, Results/Discussion/Introduction next)
 
 ## Coding standards
 - See `docs/AGENT_HANDOFF.md` for full rules

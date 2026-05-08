@@ -30,7 +30,7 @@ Unzip `thesis-documents-and-templates/Template_TFM_Latex_EMAI_2026.zip` into a n
 The entire methods chapter is ready to write. The pipeline is complete and won't change.
 
 ### Section 3.1: Dataset (~2 pages)
-- Study population: 56 patients, Hospital Clinic Barcelona, Oct 2016 - Jan 2020
+- Study population: 56 patients, Hospital Clinic Barcelona, Oct 2016 - Feb 2020
 - 138 initial studies, 137 with radiomics. Class split: 98 normal, 39 rejection
 - Imaging protocol: Siemens Acuson S3000, grayscale US + ARFI + DCE-US
 - Outcome definition: biopsy or clinical criteria

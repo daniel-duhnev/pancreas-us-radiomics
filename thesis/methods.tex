@@ -3,13 +3,13 @@
 \section{Dataset}
 \label{sec:dataset}
 
-This study used a retrospective dataset of abdominal ultrasound examinations from pancreas transplant recipients at Hospital Cl\'{i}nic de Barcelona, collected between October 2016 and January 2020. The cohort comprised 56 patients who underwent a total of 138 imaging studies as part of routine post-transplant surveillance. Each study corresponds to a single ultrasound examination session, identified by a unique study identifier of the form \texttt{XX\_YY}, where \texttt{XX} denotes the patient and \texttt{YY} the visit number for that patient. The number of studies per patient ranged from 1 to 7, with a mean of 2.5 studies per patient.
+This study used a retrospective dataset of abdominal ultrasound examinations from pancreas transplant recipients at Hospital Cl\'{i}nic de Barcelona, collected between October 2016 and February 2020. The cohort comprised 56 patients who underwent a total of 138 imaging studies as part of routine post-transplant surveillance. Each study corresponds to a single ultrasound examination session, identified by a unique study identifier of the form \texttt{XX\_YY}, where \texttt{XX} denotes the patient and \texttt{YY} the visit number for that patient. The number of studies per patient ranged from 1 to 6, with a mean of 2.5 studies per patient.
 
 Imaging was performed using a Siemens Acuson S3000 ultrasound system. Each examination included three imaging modalities: conventional grayscale B-mode ultrasound, Acoustic Radiation Force Impulse (ARFI) elastography, and dynamic contrast-enhanced ultrasound (DCE-US). The present work focuses exclusively on the grayscale B-mode images for radiomics analysis, while ARFI and DCE-US measurements from the clinical records are used for comparison with previously published results.
 
 In addition to the ultrasound images, the clinical database recorded quantitative measurements from ARFI elastography and DCE-US for each study. ARFI elastography measures shear wave velocity in the tissue, providing an indicator of graft stiffness. Four summary statistics were recorded per study: the median, mean, standard deviation, and interquartile range of the shear wave velocity measurements. DCE-US captures the perfusion dynamics of the graft after intravenous injection of a microbubble contrast agent. Thirteen parameters were derived from the resulting time-intensity curves, characterising the wash-in phase (contrast arrival and peak), wash-out phase (contrast clearance), and overall perfusion. Table~\ref{tab:clinical_features} lists all 17 clinical imaging features.
 
-Not all studies had valid clinical measurements. ARFI data were available for 121 of the 137 studies (88\%), as measurements that failed quality control (interquartile range to median ratio exceeding 0.3) were excluded at the source. DCE-US data were available for 127 studies (93\%), with the remaining studies excluded due to motion artifacts or technical failure during contrast administration. These quality filters were applied by the clinical team prior to data export.
+Not all studies had valid clinical measurements. ARFI data were available for 121 of the 138 studies (88\%), as measurements that failed quality control (interquartile range to median ratio exceeding 0.3) were excluded at the source. DCE-US data were available for 127 studies (92\%), with the remaining 11 studies having missing values in the source spreadsheet. Both quality filters were applied by the clinical team prior to data export.
 
 \begin{table}[ht]
 \centering
@@ -19,29 +19,29 @@ Not all studies had valid clinical measurements. ARFI data were available for 12
 \toprule
 Feature & Full name & Category & Available \\
 \midrule
-ARFI mediana & Median shear wave velocity & ARFI & 121/137 \\
-ARFI media & Mean shear wave velocity & ARFI & 121/137 \\
-ARFI DE & Standard deviation & ARFI & 121/137 \\
-ARFI RIQ & Interquartile range & ARFI & 121/137 \\
+ARFI mediana & Median shear wave velocity & ARFI & 121/138 \\
+ARFI media & Mean shear wave velocity & ARFI & 121/138 \\
+ARFI DE & Standard deviation & ARFI & 121/138 \\
+ARFI RIQ & Interquartile range & ARFI & 121/138 \\
 \midrule
-PE & Peak enhancement & DCE-US & 127/137 \\
-WiAUC & Wash-in area under the curve & DCE-US & 127/137 \\
-RT & Rise time & DCE-US & 127/137 \\
-mTTI & Mean transit time (local) & DCE-US & 127/137 \\
-TTP & Time to peak & DCE-US & 127/137 \\
-WiR & Wash-in rate & DCE-US & 127/137 \\
-WiPi & Wash-in perfusion index & DCE-US & 127/137 \\
-WoAUC & Wash-out area under the curve & DCE-US & 127/137 \\
-WiWoAUC & Wash-in and wash-out AUC & DCE-US & 127/137 \\
-FT & Fall time & DCE-US & 127/137 \\
-WoR & Wash-out rate & DCE-US & 127/137 \\
-QOF & Quality of fit & DCE-US & 127/137 \\
-Area & Region of interest area & DCE-US & 127/137 \\
+PE & Peak enhancement & DCE-US & 127/138 \\
+WiAUC & Wash-in area under the curve & DCE-US & 127/138 \\
+RT & Rise time & DCE-US & 127/138 \\
+mTTI & Mean transit time (local) & DCE-US & 127/138 \\
+TTP & Time to peak & DCE-US & 127/138 \\
+WiR & Wash-in rate & DCE-US & 127/138 \\
+WiPi & Wash-in perfusion index & DCE-US & 127/138 \\
+WoAUC & Wash-out area under the curve & DCE-US & 127/138 \\
+WiWoAUC & Wash-in and wash-out AUC & DCE-US & 127/138 \\
+FT & Fall time & DCE-US & 127/138 \\
+WoR & Wash-out rate & DCE-US & 127/138 \\
+QOF & Quality of fit & DCE-US & 127/138 \\
+Area & Region of interest area & DCE-US & 127/138 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Each study was classified as either ``rejection'' or ``no rejection'' based on the clinical variable \texttt{motivo} recorded in the patient database. This variable encodes the clinical reason for each examination and was mapped to a binary outcome: studies where the recorded reason indicated biopsy-confirmed or clinically suspected rejection were labelled as rejection, and all others as no rejection.
+Each study was classified as either ``rejection'' or ``no rejection'' based on the clinical variable \texttt{RECHAZO CL\'{I}NICO} (clinical rejection) recorded in the patient database. This is a binary variable (0 or 1) assigned by the clinical team, indicating whether rejection was diagnosed for each examination based on clinical assessment and, where available, biopsy confirmation.
 
 An important characteristic of this dataset is its repeated-measures structure: individual patients contribute multiple studies across different time points, and the same patient may have studies in both outcome classes at different visits. A total of 14 patients had studies in both the rejection and no-rejection groups. This structure violates the assumption of independence between samples that underlies standard statistical tests and cross-validation procedures, a limitation that is addressed explicitly in the experimental design (see Section~\ref{sec:statistical_analysis}).
 
@@ -63,9 +63,9 @@ Clinical imaging features & 17 (4 ARFI + 13 DCE-US) \\
 No rejection studies & 98 \\
 Rejection studies & 39 \\
 Class ratio (no rejection : rejection) & 71:29 \\
-Studies per patient (mean $\pm$ range) & 2.5 (1--7) \\
+Studies per patient (mean $\pm$ range) & 2.5 (1--6) \\
 Patients with both outcomes & 14 \\
-Collection period & Oct 2016 -- Jan 2020 \\
+Collection period & Oct 2016 -- Feb 2020 \\
 Imaging system & Siemens Acuson S3000 \\
 \bottomrule
 \end{tabular}
@@ -89,11 +89,11 @@ The raw DICOM images contained clinician-drawn white contour annotations delinea
 The preprocessing consisted of the following steps:
 
 \begin{enumerate}
-\item \textbf{DICOM loading and white pixel detection.} Each DICOM file was loaded as an RGB image. Pixels belonging to the clinician-drawn contour were identified using an intensity threshold: pixels with values exceeding 250 on all three colour channels were classified as contour pixels.
+\item \textbf{DICOM loading and white pixel detection.} Each DICOM file was loaded as an RGB image. Pixels belonging to the clinician-drawn contour were identified using an intensity threshold: pixels with values exceeding 200 on all three colour channels were classified as contour pixels.
 
 \item \textbf{Connected component filtering.} Multiple white regions may exist in an ultrasound image due to interface elements, scale bars, or other annotations. To isolate the clinician-drawn contour, only the largest connected component of detected white pixels was retained.
 
-\item \textbf{Morphological closing.} A morphological closing operation was applied to bridge small gaps in the contour line, ensuring a continuous closed boundary. This step used a circular structuring element.
+\item \textbf{Morphological closing.} A morphological closing operation was applied to bridge small gaps in the contour line, ensuring a continuous closed boundary. This step used a $10 \times 10$ square structuring element.
 
 \item \textbf{Contour filling and subtraction.} The closed contour was filled to produce a solid binary mask covering the entire annotated region. The original contour pixels were then subtracted from this filled mask, yielding a mask that includes only the tissue interior without the bright annotation border.
 
@@ -104,7 +104,7 @@ The preprocessing consisted of the following steps:
 
 The final outputs for each study were a binary mask image and a segmented grayscale image (the original image multiplied by the mask). These were stored in the preprocessed dataset directory and used as inputs for radiomics feature extraction.
 
-Two studies required special handling. Study 03\_01 exhibited a dimension mismatch between the mask and image arrays, which was resolved by transposing the mask to match the image orientation. Study 43\_01 had an incompletely closed clinician contour, causing the fill operation to collapse. This was addressed by applying a substantially larger morphological closing kernel to force closure of the contour before filling.
+Two studies (03\_01 and 43\_01) required special handling because the clinician-drawn contours contained large gaps that prevented the standard morphological closing from producing a closed boundary. The fill operation collapsed in these cases, yielding empty masks. This was addressed by applying a substantially larger morphological closing kernel ($35 \times 35$ pixels) to force closure of the contour gaps before filling. Additionally, the pipeline included automatic detection and correction of dimension mismatches between mask and image arrays via transposition or nearest-neighbour resizing.
 
 Figure~\ref{fig:preprocessing} illustrates the preprocessing pipeline for an example study. Panel~(a) shows the original grayscale ultrasound image with the clinician-drawn white contour delineating the pancreas graft. Panel~(b) shows the binary mask obtained after white pixel detection, connected component filtering, morphological closing, contour filling, and contour subtraction. Panel~(c) shows the mask after erosion, and panel~(d) shows the final segmented tissue region used as input for radiomics feature extraction.
 
@@ -119,9 +119,9 @@ Figure~\ref{fig:preprocessing} illustrates the preprocessing pipeline for an exa
 \section{Radiomics Feature Extraction}
 \label{sec:feature_extraction}
 
-Radiomics features were extracted from the preprocessed grayscale images using PyRadiomics (version 3.0) \cite{vanGriethuysen2017}, an open-source Python library that implements the feature definitions standardised by the Image Biomarker Standardisation Initiative (IBSI) \cite{zwanenburg2020}.
+Radiomics features were extracted from the preprocessed grayscale images using PyRadiomics (version 3.0.1) \cite{vanGriethuysen2017}, an open-source Python library that implements the feature definitions standardised by the Image Biomarker Standardisation Initiative (IBSI) \cite{zwanenburg2020}.
 
-Feature extraction was configured with the following settings: images were processed in two-dimensional mode (\texttt{force2D = True}), as each study consisted of a single ultrasound slice rather than a volumetric scan. Pixel intensities were discretised using a fixed bin width of 25 grey levels (\texttt{binWidth = 25}), and images were cast to 16-bit signed integers prior to extraction. Shape-based features were disabled, as ultrasound ROI shapes are determined by the clinician's annotation rather than by the underlying tissue morphology.
+Feature extraction was configured with the following settings: images were processed in two-dimensional mode (\texttt{force2D = True}), as each study consisted of a single ultrasound slice rather than a volumetric scan. Pixel intensities were discretised using a fixed bin width of 25 grey levels (the PyRadiomics default), and images were cast to 16-bit signed integers prior to extraction. Shape-based features were disabled, as ultrasound ROI shapes are determined by the clinician's annotation rather than by the underlying tissue morphology.
 
 A total of 93 features were extracted per study across six texture and intensity feature classes, summarised in Table~\ref{tab:feature_classes}.
 
@@ -161,14 +161,16 @@ Effect sizes were computed alongside each test. For features analysed with Welch
 
 To control for the increased false-positive rate arising from testing 93 features simultaneously, $p$-values were adjusted using the Benjamini-Hochberg procedure for controlling the false discovery rate (FDR) \cite{benjamini1995}. A corrected significance threshold of $\alpha = 0.05$ was used throughout.
 
-The same statistical testing procedure was applied separately to two subsets of the data stratified by the timing of the examination relative to the transplant:
+The same statistical testing procedure was applied separately to two subsets of the data stratified by the \texttt{motivo} variable, which encodes the clinical reason for each examination: 1 = one-week post-transplant visit, 2 = one-month visit, 3 = one-year visit, 4 = clinical suspicion, 5 = routine follow-up. Studies were grouped as:
 \begin{itemize}
-\item \textbf{Early period:} studies conducted within 90 days of transplantation.
-\item \textbf{Late period:} studies conducted more than 90 days post-transplant.
+\item \textbf{Early period} (motivo 1--2): scheduled visits within the first months post-transplant ($n = 67$; all $\leq$ 90 days post-transplant).
+\item \textbf{Late period} (motivo 3--5): one-year visits, clinical suspicion, and routine follow-up ($n = 70$; median 384 days post-transplant, though 13 studies in the suspicion and follow-up categories occurred within the first 90 days).
 \end{itemize}
-This stratification was motivated by the clinical observation that rejection patterns and tissue characteristics may differ between the early post-operative period and the chronic phase.
+This stratification was motivated by the clinical observation that rejection patterns and tissue characteristics may differ between the early post-operative period and the chronic phase. The grouping uses scheduled visit categories rather than a strict calendar cutoff, as the \texttt{motivo} variable captures the clinical context of each examination.
 
-For comparison purposes, the same statistical procedure was also applied to the 17 clinical imaging features recorded by the radiologists (ARFI elastography and DCE-US perfusion parameters, described in Section~\ref{sec:dataset}). Because not all studies had valid clinical measurements, the sample sizes for the clinical analysis differ from the radiomics analysis: 121 studies for ARFI features (88 no rejection, 33 rejection) and 127 studies for DCE-US features (91 no rejection, 36 rejection). Studies with missing values were excluded on a per-feature basis. FDR correction was not applied to the clinical features, as the 17 features were tested individually to replicate the analysis of Bassaganyas et al.\ \cite{bassaganyas2025}, who reported significant differences in ARFI values between rejection and no-rejection groups in the same patient cohort.
+For comparison purposes, the same statistical procedure was also applied to the 17 clinical imaging features recorded by the radiologists (ARFI elastography and DCE-US perfusion parameters, described in Section~\ref{sec:dataset}). This clinical analysis used all 138 studies (98 no rejection, 40 rejection), including study 47\_01, which was excluded from the radiomics analysis due to missing images but had valid clinical measurements. Because not all studies had valid clinical measurements, the sample sizes differ per modality: 121 studies for ARFI features (88 no rejection, 33 rejection) and 127 studies for DCE-US features (91 no rejection, 36 rejection). Studies with missing values were excluded on a per-feature basis. FDR correction was not applied to the clinical features, as the 17 features were tested individually to replicate the analysis of Bassaganyas et al.\ \cite{bassaganyas2025}, who reported significant differences in ARFI values between rejection and no-rejection groups in the same patient cohort.
+
+For the clinical feature analysis, the time-stratified comparison was performed using both the motivo-based grouping described above and a second stratification based on actual days post-transplant, using the \texttt{D\'{i}as pTXP} column recorded in the clinical spreadsheet. This second approach groups studies as early ($\leq$ 90 days) or late ($>$ 90 days), matching the cutoff used by Bassaganyas et al.\ \cite{bassaganyas2025}. The days-based late subset comprised 58 studies (36 no rejection, 22 rejection), with 52 valid ARFI measurements (33 no rejection, 19 rejection) and 50 valid DCE-US measurements (31 no rejection, 19 rejection)---matching the sample sizes reported in the original publication. The motivo-based late subset is larger ($n = 71$) because it includes 13 studies categorised as clinical suspicion or follow-up that occurred within the first 90 days post-transplant.
 
 
 \section{Machine Learning Classification}
@@ -178,7 +180,7 @@ Machine learning classification was used to evaluate whether combinations of rad
 
 \subsection{Feature Preprocessing}
 
-Prior to model training, redundant features were removed using a correlation-based filter. For each pair of features with absolute Pearson correlation exceeding 0.9, the feature with the higher (less significant) $p$-value from the univariate statistical analysis was dropped. This reduced the feature set from 93 to 31 features.
+Prior to model training, redundant features were removed using a correlation-based filter. For each pair of features with absolute Pearson correlation exceeding 0.9, the feature with the higher (less significant) $p$-value from the univariate statistical analysis was dropped. This reduced the feature set from 93 to 32 features.
 
 \subsection{Classification Pipeline}
 
@@ -196,7 +198,7 @@ Four classifiers were evaluated, chosen to represent a range of model complexiti
 
 \begin{itemize}
 \item \textbf{Logistic Regression:} a linear model regularised with L2 penalty. The regularisation strength $C$ was searched over $\{0.01, 0.1, 1, 10\}$. Class weights were set to ``balanced'' to account for class imbalance.
-\item \textbf{Random Forest:} an ensemble of decision trees. Maximum depth was searched over $\{3, 5, 10, \text{None}\}$ and minimum samples per leaf over $\{1, 5, 10\}$. Class weights were set to ``balanced''.
+\item \textbf{Random Forest:} an ensemble of decision trees. Maximum depth was searched over $\{3, 5, 7\}$ and minimum samples per leaf over $\{3, 5, 10\}$. Class weights were set to ``balanced''.
 \item \textbf{Support Vector Machine (SVM):} a kernel-based classifier. The kernel type was searched over $\{\text{linear}, \text{rbf}\}$ and regularisation $C$ over $\{0.1, 1, 10\}$. Class weights were set to ``balanced''.
 \item \textbf{Gaussian Naive Bayes:} a probabilistic classifier assuming feature independence. The variance smoothing parameter was searched over $\{10^{-9}, 10^{-7}, 10^{-5}\}$.
 \end{itemize}

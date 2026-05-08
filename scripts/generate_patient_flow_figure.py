@@ -32,7 +32,7 @@ excl_style = dict(
 ax.text(
     5, 11, "56 patients, 138 imaging studies\n"
     "Hospital Clínic de Barcelona\n"
-    "Oct 2016 – Jan 2020",
+    "Oct 2016 – Feb 2020",
     ha="center", va="center", fontsize=10,
     bbox=box_style,
 )
