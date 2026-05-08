@@ -20,3 +20,17 @@ analysis/reports/
 # ignore local archive backups (keep locally, never commit)
 *.zip
 *.ZIP
+
+# ignore LaTeX build artifacts
+thesis/*.aux
+thesis/*.bbl
+thesis/*.blg
+thesis/*.fdb_latexmk
+thesis/*.fls
+thesis/*.lof
+thesis/*.log
+thesis/*.lot
+thesis/*.out
+thesis/*.toc
+thesis/*.synctex.gz
+thesis/MasterThesis.pdf
