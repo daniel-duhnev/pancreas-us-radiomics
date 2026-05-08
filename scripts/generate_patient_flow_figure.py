@@ -121,7 +121,7 @@ ax.text(
 ax.text(
     5, 2.8,
     "14 patients contributed studies to both groups\n"
-    "Studies per patient: 1–7 (mean 2.5)",
+    "Studies per patient: 1–6 (mean 2.5)",
     ha="center", va="center", fontsize=9,
     fontstyle="italic", color="#444444",
 )
