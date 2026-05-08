@@ -2,17 +2,56 @@
 
 \chapter{Introduction}
 
-This is an example paragraph. As you can see, the main text uses a font size of 12 pt and a line spacing of 1.5. Neither the paragraphs nor the first lines of paragraphs should be indented.
-
-There is no very strict page limit. Your number of pages will be strongly influenced by the size and total number of your figures and tables. It is recommended staying within 30-50 pages. Do not try to fill as many pages as you can. Longer theses are not necessarily of higher quality and of more non-redundant content than shorter theses. Certainly, a master thesis of 15 pages is too short, and a master thesis of 100 pages is too long. Also, here you can see a sample reference \cite{rodriguez2005bilateral} or 
-\cite{Kaltenbrunner2025}.
-
 \section{Motivation}
 
+Pancreas transplantation is the only established treatment that can restore long-term normoglycaemia in patients with type~1 diabetes mellitus, eliminating the need for exogenous insulin administration and reducing the progression of secondary diabetic complications. Despite advances in surgical technique and immunosuppressive therapy, graft rejection remains a common complication that threatens transplant outcomes. Early detection of rejection is critical, as timely adjustment of immunosuppression can prevent irreversible graft damage and loss.
+
+The current reference standard for diagnosing pancreas graft rejection is percutaneous biopsy, which provides histological confirmation of immune-mediated tissue injury. However, biopsy is an invasive procedure that carries risks of bleeding, pancreatitis, and fistula formation. It is also subject to sampling variability, as focal rejection may be missed if the biopsy needle does not sample the affected region. For these reasons, biopsy is typically reserved for cases with strong clinical suspicion rather than used as a routine screening tool.
+
+Ultrasound imaging offers a non-invasive alternative for post-transplant surveillance. Conventional B-mode (grayscale) ultrasound is routinely performed to assess graft morphology, while advanced techniques such as Acoustic Radiation Force Impulse (ARFI) elastography and dynamic contrast-enhanced ultrasound (DCE-US) provide additional information about tissue stiffness and perfusion, respectively. Recent work by Bassaganyas et al.\ \cite{bassaganyas2025} demonstrated that ARFI measurements are significantly associated with rejection status in pancreas transplant recipients, particularly in the late post-transplant period (beyond 90 days). These findings suggest that quantitative imaging biomarkers derived from ultrasound could serve as non-invasive markers of rejection.
+
+However, the clinical imaging biomarkers used in current practice---such as ARFI shear wave velocity and DCE-US perfusion parameters---require specialised acquisition protocols and manual measurement by trained radiologists. This limits their scalability and introduces operator-dependent variability. An automated approach to extracting quantitative information from ultrasound images could potentially overcome these limitations.
+
+Radiomics is a computational approach that extracts large numbers of quantitative features from medical images, capturing patterns of texture, intensity, and spatial heterogeneity that may not be perceptible to the human eye \cite{lambin2012, gillies2016}. Originally developed for oncological applications in computed tomography (CT) and magnetic resonance imaging (MRI), radiomics has been increasingly applied to ultrasound imaging in recent years. The key premise is that tissue-level changes associated with disease---such as the inflammation, oedema, and fibrosis characteristic of transplant rejection---may alter the texture patterns visible in grayscale ultrasound images, even when these changes are too subtle for visual assessment.
+
+This thesis investigates whether radiomics texture features extracted from conventional grayscale ultrasound images can discriminate between pancreas transplant rejection and non-rejection. If successful, such an approach could provide an automated, non-invasive complement to existing clinical biomarkers. The study also replicates the clinical imaging analysis of Bassaganyas et al.\ \cite{bassaganyas2025} on the same patient cohort, allowing a direct comparison between automated radiomics features and manually measured clinical biomarkers.
+
+\section{Related Work}
+
+\subsection{Pancreas Transplant Rejection Monitoring}
+
+% TODO: Literature review
+
+\subsection{Ultrasound Imaging of Pancreas Grafts}
+
+% TODO: Literature review
+
+\subsection{Radiomics in Medical Imaging}
+
+% TODO: Literature review
+
+\subsection{Machine Learning for Medical Image Classification}
+
+% TODO: Literature review
+
 \section{Objectives}
+
+The main goal of this thesis is to investigate whether radiomics texture features extracted from grayscale ultrasound images can predict pancreas transplant rejection. To this end, the following specific objectives are defined:
+
+\begin{enumerate}
+\item \textbf{Extract radiomics features from pancreas transplant ultrasound images.} Develop a preprocessing pipeline to isolate the pancreas graft region from clinician-annotated ultrasound images, and apply standardised radiomics feature extraction to produce a quantitative description of tissue texture.
+
+\item \textbf{Test whether radiomics features discriminate rejection from no rejection.} Conduct statistical hypothesis testing on each extracted feature to determine whether any individual texture or intensity measure differs significantly between the two outcome groups.
+
+\item \textbf{Build machine learning classifiers and evaluate predictive performance.} Train and evaluate multiple classification models using radiomics features as input, assessing whether multivariate combinations of features achieve discriminative performance beyond individual feature analysis.
+
+\item \textbf{Replicate the clinical imaging analysis of Bassaganyas et al.} Apply the same statistical methodology to the clinical imaging features (ARFI elastography and DCE-US perfusion parameters) recorded for the same patient cohort, and compare the results with those previously reported in the literature \cite{bassaganyas2025}.
+
+\item \textbf{Compare automated radiomics with manual clinical biomarkers.} Contrast the discriminative ability of automated texture features with that of manually measured clinical imaging biomarkers, to assess whether radiomics provides additional or complementary diagnostic value.
+\end{enumerate}
+
 \section{Structure of the Report}
 
+This report is organised into four chapters. Chapter~1 introduces the clinical problem, reviews related work, and states the objectives. Chapter~2 describes the methods used in this study, including the dataset, the image preprocessing pipeline, radiomics feature extraction, statistical analysis, and the machine learning classification framework. Chapter~3 presents the results of the statistical and machine learning analyses for both radiomics and clinical features. Chapter~4 discusses the findings, addresses limitations of the study, outlines directions for future work, and draws conclusions.
 
 \newpage
-
-
