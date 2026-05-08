@@ -1,23 +1,242 @@
 \chapter{Results}
 
 \section{Feature Extraction Summary}
+\label{sec:feature_extraction_results}
 
-% TODO: Write after Methods chapter
+Radiomics feature extraction was applied to all 137 studies in the preprocessed dataset. The extraction completed without errors for every study, yielding a total of 93 features per study across the six feature classes described in Section~\ref{sec:feature_extraction}: first-order statistics (18 features), GLCM (24), GLDM (14), GLRLM (16), GLSZM (16), and NGTDM (5).
+
+An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 300 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 32 features.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.65\textwidth]{Figures/correlation_heatmap.png}
+\caption{Pearson correlation matrix of the 93 radiomics features extracted from the full dataset ($n = 137$ studies). Red indicates positive correlation and blue indicates negative correlation. The prominent block structure reflects high within-class correlations, particularly among GLRLM and GLSZM features. A total of 300 feature pairs exceeded $|r| > 0.9$.}
+\label{fig:correlation_heatmap}
+\end{figure}
+
 
 \section{Radiomics Statistical Analysis}
+\label{sec:radiomics_results}
 
-% TODO: Write with data from reports/14a
+\subsection{Full Dataset}
+
+Univariate statistical tests were performed on all 93 radiomics features using the full dataset of 137 studies (98 no rejection, 39 rejection). Based on the Shapiro-Wilk normality test, 13 features were analysed with Welch's $t$-test and 80 with the Mann-Whitney $U$ test.
+
+No feature reached nominal significance at $p < 0.05$ before multiple testing correction. The closest feature was \texttt{firstorder\_Minimum} (Mann-Whitney $U$, $p = 0.053$, rank-biserial $r = -0.21$), followed by \texttt{firstorder\_10Percentile} ($p = 0.133$) and \texttt{glrlm\_RunEntropy} ($p = 0.159$). After Benjamini-Hochberg FDR correction, all adjusted $p$-values exceeded 0.84, far from the significance threshold. Effect sizes were uniformly small across all features. Table~\ref{tab:radiomics_top10} lists the ten features with the lowest uncorrected $p$-values.
+
+\begin{table}[ht]
+\centering
+\caption{Top 10 radiomics features ranked by uncorrected $p$-value on the full dataset ($n = 137$). No feature reaches nominal significance ($p < 0.05$). Effect sizes are rank-biserial correlation (Mann-Whitney) or Cohen's $d$ ($t$-test).}
+\label{tab:radiomics_top10}
+\begin{tabular}{llrrrr}
+\toprule
+Feature & Test & $p$ & $p_{\text{FDR}}$ & Effect & Med.\ NR / R \\
+\midrule
+firstorder\_Minimum & M-W & 0.053 & 0.842 & $-0.21$ & 18.0 / 11.0 \\
+firstorder\_10Percentile & M-W & 0.133 & 0.842 & $-0.16$ & 42.5 / 36.0 \\
+glrlm\_RunEntropy & $t$ & 0.159 & 0.842 & 0.27 & 5.82 / 5.90 \\
+glszm\_ZoneEntropy & $t$ & 0.159 & 0.842 & 0.27 & 5.82 / 5.90 \\
+ngtdm\_Busyness & M-W & 0.164 & 0.842 & 0.15 & 37.3 / 52.1 \\
+firstorder\_Median & M-W & 0.192 & 0.842 & $-0.14$ & --- \\
+gldm\_DepNonUniformity & M-W & 0.199 & 0.842 & 0.14 & --- \\
+firstorder\_Mean & M-W & 0.199 & 0.842 & $-0.14$ & --- \\
+gldm\_GLNonUniformity & M-W & 0.212 & 0.842 & 0.14 & --- \\
+glrlm\_ShortRunEmphasis & M-W & 0.214 & 0.842 & $-0.14$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Stratified Analysis}
+
+The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.137 (\texttt{glcm\_ClusterProminence}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), one feature reached nominal significance---\texttt{firstorder\_Minimum} ($p = 0.037$, rank-biserial $r = -0.30$)---but this did not survive FDR correction across the 93 tests. The late-period result for this feature is consistent with its borderline status in the full dataset analysis.
+
+\subsection{Independent Dataset}
+
+To address the potential confound of repeated measures, the same analysis was performed on the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). Four features reached nominal significance at $p < 0.05$: \texttt{ngtdm\_Busyness} ($p = 0.024$), \texttt{ngtdm\_Strength} ($p = 0.025$), \texttt{glszm\_SmallAreaHighGrayLevelEmphasis} ($p = 0.033$), and \texttt{glrlm\_ShortRunHighGrayLevelEmphasis} ($p = 0.033$). However, none survived FDR correction (all adjusted $p \approx 0.38$). The features ranking highest in the independent dataset differ entirely from those in the full dataset, indicating instability rather than a reproducible signal. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature discriminates rejection from no rejection.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{Figures/boxplots_radiomics_top5.png}
+\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the full dataset ($n = 137$). Blue: no rejection ($n = 98$); orange: rejection ($n = 39$). The overlapping distributions illustrate the absence of discriminative signal. None reached $p < 0.05$.}
+\label{fig:boxplots_radiomics}
+\end{figure}
+
 
 \section{Clinical Feature Replication}
+\label{sec:clinical_results}
 
-% TODO: Write with data from reports/14b
+\subsection{Full Dataset}
+
+The 17 clinical imaging features (4 ARFI elastography and 13 DCE-US perfusion parameters) were tested on the full clinical dataset of 138 studies (98 no rejection, 40 rejection), which includes study 47\_01 that was excluded from the radiomics analysis due to missing images but had valid clinical measurements. Mann-Whitney $U$ tests were used throughout, consistent with the methodology of Bassaganyas et al.\ \cite{bassaganyas2025}.
+
+Two features reached significance at $p < 0.05$: ARFI mediana ($p = 0.028$, rank-biserial $r = 0.26$) and ARFI media ($p = 0.029$, $r = 0.26$). The rejection group showed higher median shear wave velocity (1.47~m/s vs 1.26~m/s for ARFI mediana), indicating greater tissue stiffness. No DCE-US perfusion parameter reached significance on the full dataset, consistent with the findings of Bassaganyas et al., who reported that perfusion differences emerge only in the late post-transplant period. Table~\ref{tab:clinical_full} presents the complete results.
+
+\begin{table}[ht]
+\centering
+\caption{Clinical imaging features: Mann-Whitney $U$ test results on the full dataset ($n = 138$). Features are sorted by $p$-value. $n_{\text{NR}}$ and $n_{\text{R}}$ indicate available sample sizes after excluding studies with missing values. Significant results ($p < 0.05$) are shown in bold.}
+\label{tab:clinical_full}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+Feature & $n_{\text{NR}}$ / $n_{\text{R}}$ & $p$ & Effect & Med.\ NR & Med.\ R \\
+\midrule
+\textbf{ARFI mediana} & 88 / 33 & \textbf{0.028} & 0.26 & 1.255 & 1.470 \\
+\textbf{ARFI media} & 88 / 33 & \textbf{0.029} & 0.26 & 1.275 & 1.450 \\
+Area & 91 / 36 & 0.086 & $-0.19$ & 0.460 & 0.460 \\
+WiR & 91 / 36 & 0.104 & $-0.19$ & 170.68 & 115.26 \\
+WiPi & 91 / 36 & 0.121 & $-0.18$ & 562.63 & 320.85 \\
+PE & 91 / 36 & 0.133 & $-0.17$ & 881.49 & 512.07 \\
+WiAUC & 91 / 36 & 0.148 & $-0.17$ & 3433.7 & 2286.7 \\
+ARFI DE & 88 / 33 & 0.159 & 0.17 & 0.190 & 0.230 \\
+WiWoAUC & 91 / 36 & 0.160 & $-0.16$ & 9738.4 & 6201.6 \\
+WoAUC & 91 / 36 & 0.196 & $-0.15$ & 6042.0 & 4253.9 \\
+ARFI RIQ & 88 / 33 & 0.243 & 0.14 & 0.270 & 0.300 \\
+RT & 91 / 36 & 0.247 & 0.13 & 5.770 & 6.215 \\
+WoR & 91 / 36 & 0.253 & $-0.13$ & 68.25 & 57.41 \\
+TTP & 91 / 36 & 0.283 & 0.12 & 9.360 & 10.05 \\
+FT & 91 / 36 & 0.334 & 0.11 & 10.67 & 11.52 \\
+mTTI & 91 / 36 & 0.351 & $-0.11$ & 28.58 & 25.24 \\
+QOF & 91 / 36 & 0.595 & 0.06 & 87.54 & 88.07 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Late Post-Transplant Period}
+
+The clinical feature analysis was repeated on the late post-transplant subset using the days-based stratification ($> 90$ days post-transplant, $n = 58$: 36 no rejection, 22 rejection), which matches the cutoff used by Bassaganyas et al.\ \cite{bassaganyas2025}. In contrast to the full dataset, eight features reached significance at $p < 0.05$ (Table~\ref{tab:clinical_late}). All four ARFI features were highly significant, with ARFI media and ARFI mediana reaching $p < 0.001$. The rejection group showed substantially higher shear wave velocities (median 1.44--1.46~m/s vs 0.97~m/s for no rejection), indicating increased tissue stiffness consistent with chronic rejection-related fibrosis. Four DCE-US perfusion parameters also reached significance (WiAUC, WoAUC, WiWoAUC, WiPi), with the rejection group showing lower perfusion values.
+
+The early post-transplant period ($\leq 90$ days, $n = 80$) showed no significant features, consistent with the clinical observation that early post-operative variability obscures rejection-related differences.
+
+\begin{table}[ht]
+\centering
+\caption{Clinical imaging features in the late post-transplant period ($> 90$ days, $n = 58$). Eight features reach significance ($p < 0.05$, shown in bold). ARFI sample sizes: 52 (33 NR, 19 R); DCE-US sample sizes: 50 (31 NR, 19 R).}
+\label{tab:clinical_late}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Feature & $p$ & Effect & Med.\ NR & Med.\ R \\
+\midrule
+\textbf{ARFI media} & $< \textbf{0.001}$ & 0.74 & 0.97 & 1.44 \\
+\textbf{ARFI mediana} & $< \textbf{0.001}$ & 0.72 & 0.97 & 1.46 \\
+\textbf{ARFI DE} & $< \textbf{0.001}$ & 0.57 & 0.15 & 0.23 \\
+\textbf{ARFI RIQ} & \textbf{0.004} & 0.49 & 0.23 & 0.29 \\
+\textbf{WiAUC} & \textbf{0.008} & $-0.45$ & 3386.6 & 1589.4 \\
+\textbf{WoAUC} & \textbf{0.019} & $-0.40$ & 5788.5 & 2827.8 \\
+\textbf{WiWoAUC} & \textbf{0.020} & $-0.40$ & 9137.7 & 4628.0 \\
+\textbf{WiPi} & \textbf{0.044} & $-0.34$ & 442.5 & 273.9 \\
+PE & 0.058 & $-0.32$ & 656.1 & 439.2 \\
+WiR & 0.134 & $-0.26$ & 126.0 & 109.6 \\
+RT & 0.142 & $-0.25$ & 7.00 & 5.94 \\
+mTTI & 0.181 & $-0.23$ & 29.14 & 26.24 \\
+TTP & 0.223 & $-0.21$ & 11.50 & 10.34 \\
+FT & 0.238 & $-0.20$ & 13.25 & 10.86 \\
+QOF & 0.413 & 0.14 & 86.00 & 88.21 \\
+WoR & 0.617 & $-0.09$ & 47.72 & 50.41 \\
+Area & 0.731 & $-0.06$ & 0.46 & 0.46 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Replication of Bassaganyas et al.}
+
+Table~\ref{tab:replication} compares our late-period $p$-values with those reported by Bassaganyas et al.\ \cite{bassaganyas2025} for the 12 DCE-US and ARFI features reported in their publication. Using the same $> 90$-day cutoff and the same dataset, our results match the published values to three decimal places for 10 of the 12 features. The ARFI mediana $p$-value is reported as ``$< 0.001$'' in both analyses. The only notable discrepancy is RT (rise time), where our $p$-value (0.142) is lower than the published value (0.276); however, both are non-significant and this difference does not affect the conclusions.
+
+This near-perfect replication serves two purposes. First, it validates our analysis pipeline: the data loading, preprocessing, group assignment, and statistical testing produce results consistent with an independent analysis of the same dataset. Second, it confirms that the negative radiomics result (Section~\ref{sec:radiomics_results}) is not an artifact of a flawed pipeline---the same pipeline detects the clinical biomarker signal when it exists.
+
+\begin{table}[ht]
+\centering
+\caption{Replication comparison: late-period $p$-values ($> 90$ days) from our analysis versus Bassaganyas et al.\ \cite{bassaganyas2025}. All features agree on significance status. The match validates the analysis pipeline.}
+\label{tab:replication}
+\begin{tabular}{lrrl}
+\toprule
+Feature & $p$ (Bassaganyas) & $p$ (ours) & Agreement \\
+\midrule
+ARFI mediana & $< 0.001$ & $< 0.001$ & Yes \\
+WiAUC & 0.008 & 0.008 & Yes \\
+WoAUC & 0.019 & 0.019 & Yes \\
+WiWoAUC & 0.020 & 0.020 & Yes \\
+WiPi & 0.044 & 0.044 & Yes \\
+PE & 0.058 & 0.058 & Yes \\
+WiR & 0.134 & 0.134 & Yes \\
+mTTI & 0.181 & 0.181 & Yes \\
+TTP & 0.223 & 0.223 & Yes \\
+FT & 0.238 & 0.238 & Yes \\
+RT & 0.276 & 0.142 & Both NS \\
+WoR & 0.617 & 0.617 & Yes \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The motivo-based stratification (motivo 3--5, $n = 71$) yielded 7 significant features instead of 8: WiPi dropped to borderline ($p = 0.066$) because this subset includes 13 studies from the clinical suspicion and follow-up categories that occurred within the first 90 days post-transplant (see Section~\ref{sec:statistical_analysis}). These early-period studies introduce additional variability, slightly diluting the late-period signal. The days-based stratification is therefore preferred for comparison with published results.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{Figures/boxplots_clinical_features.png}
+\caption{Distribution of clinical imaging features by rejection status on the full dataset. The four ARFI elastography features (left) and two DCE-US perfusion parameters (right) are shown. ARFI mediana and ARFI media reach significance ($p < 0.03$); the remaining features are significant only in the late post-transplant period ($> 90$ days).}
+\label{fig:boxplots_clinical}
+\end{figure}
+
 
 \section{Machine Learning Classification}
+\label{sec:ml_results}
 
-% TODO: Write with data from reports/17b
+\subsection{Full Dataset}
 
-% Sections 3.5-3.7 will be added after NB 18-23 are complete:
-% - Independent Dataset Analysis
+Four classifiers were trained and evaluated on the full dataset of 137 studies using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The feature set was reduced from 93 to 32 features after correlation-based filtering. Table~\ref{tab:ml_full} summarises the results.
+
+All models achieved AUC values close to 0.5, indicating performance indistinguishable from chance. The best-performing model by LOOCV was Naive Bayes (AUC $= 0.537$), closely followed by SVM (AUC $= 0.531$). The 5-fold cross-validation AUCs were marginally higher (0.51--0.56) due to optimistic bias from the nested hyperparameter tuning, but the LOOCV results provide a more honest estimate of generalisation performance. Figure~\ref{fig:roc_full} shows the LOOCV ROC curves for all four classifiers, which cluster around the diagonal chance line.
+
+The sensitivity--specificity trade-offs further illustrate the lack of signal. Logistic Regression and Random Forest achieved high specificity (0.89--0.92) but very low sensitivity (0.13--0.15), indicating that these models defaulted to predicting the majority class. Naive Bayes showed the opposite pattern (sensitivity $= 0.74$, specificity $= 0.41$), reflecting liberal prediction of rejection. Neither pattern represents clinically useful discrimination.
+
+\begin{table}[ht]
+\centering
+\caption{Machine learning results on the full dataset ($n = 137$, 93$\to$32 features). AUC is reported for both 5-fold stratified cross-validation and leave-one-out cross-validation (LOOCV). Sensitivity and specificity are computed at the Youden-optimal threshold from LOOCV predictions.}
+\label{tab:ml_full}
+\begin{tabular}{lrrrrr}
+\toprule
+Model & $k$ & AUC (5-fold) & AUC (LOOCV) & Sens. & Spec. \\
+\midrule
+Logistic Regression & 32 & 0.540 & 0.501 & 0.154 & 0.918 \\
+Random Forest & 20 & 0.512 & 0.399 & 0.128 & 0.888 \\
+SVM & 32 & 0.563 & 0.531 & 0.308 & 0.847 \\
+Naive Bayes & 15 & 0.537 & 0.537 & 0.744 & 0.408 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.55\textwidth]{Figures/roc_full_dataset.png}
+\caption{ROC curves from LOOCV on the full dataset ($n = 137$). All four classifiers cluster around the diagonal chance line (dashed). The best AUC is 0.537 (Naive Bayes).}
+\label{fig:roc_full}
+\end{figure}
+
+\subsection{Independent Dataset}
+
+To eliminate the effect of repeated measures, the same pipeline was applied to the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). The correlation-based filter reduced the feature set from 93 to 31 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
+
+Performance remained near chance. Logistic Regression achieved the highest 10-fold CV AUC of 0.569, with a bootstrap 95\% confidence interval of [0.40, 0.72] that includes 0.5. SVM collapsed entirely (AUC $= 0.283$, sensitivity $= 1.0$, specificity $= 0.029$), predicting nearly all studies as rejection---a sign of model instability with small samples. Random Forest and Naive Bayes hovered around 0.5.
+
+\begin{table}[ht]
+\centering
+\caption{Machine learning results on the independent dataset ($n = 55$, 93$\to$31 features). Primary evaluation: 10-fold stratified CV. LOOCV is shown for comparison with the full-dataset results. Bootstrap 95\% confidence intervals are computed from 1000 resamples.}
+\label{tab:ml_independent}
+\begin{tabular}{lrrrrrr}
+\toprule
+Model & $k$ & AUC (10-fold) & 95\% CI & AUC (LOOCV) & Sens. & Spec. \\
+\midrule
+Log.\ Regression & 15 & 0.569 & [0.40, 0.72] & 0.595 & 0.714 & 0.471 \\
+Random Forest & 10 & 0.506 & [0.33, 0.68] & 0.522 & 0.238 & 0.941 \\
+SVM & 5 & 0.283 & [0.15, 0.43] & 0.433 & 1.000 & 0.029 \\
+Naive Bayes & 10 & 0.508 & [0.36, 0.66] & 0.492 & 0.143 & 1.000 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The consistent near-chance performance across both datasets and multiple classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. The ML results rule out the possibility that a multivariate combination of individually non-significant features might achieve useful classification---no such combination was found.
+
+% Sections 3.5-3.7 will be added after NB 21-23 are complete:
+% - Independent Dataset Analysis (paired with clinical features)
 % - Paired Analysis
 % - Extended Analysis (alternative features, surrounding tissue)
 
