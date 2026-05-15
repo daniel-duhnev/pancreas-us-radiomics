@@ -345,8 +345,8 @@ for feature in feature_list:
 
 ## Notes
 
-- **Status (May 2026):** The independent dataset (Approach 1 variant) and paired analysis (Approach 7) are now priority items per Gemma's May 6 guidance. See `PLAN_THESIS_ROADMAP.md` for implementation plan (NB 18, 19, 20, 21).
-- The independent dataset uses a specific selection rule: 1 per patient, prefer first rejection study if patient has both outcomes.
-- Paired analysis (14 patients) is NB 21, using Wilcoxon signed-rank test.
-- Mixed-effects models (Approach 4) and other advanced approaches remain optional — implement only if time permits.
+- **Status (May 2026):** Both the independent dataset (NB 18-20) and paired analysis (NB 21, Approach 7) are complete.
+- Independent dataset (55 studies): 4 features at uncorrected p<0.05, 0 after FDR. ML best AUC 0.569 (CI includes 0.5).
+- Paired analysis (14 patients): used max-distance pair selection (not averaging). 9/93 features at uncorrected p<0.05, 0 after FDR. ARFI features non-significant (p=0.86), contrary to unpaired results.
+- Mixed-effects models (Approach 4) and other advanced approaches remain optional — not planned for thesis.
 - The current full-dataset analysis (treating studies as independent) is consistent with Bassaganyas et al. 2025 and remains valid for the replication phase.

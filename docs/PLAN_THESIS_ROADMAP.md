@@ -158,7 +158,7 @@ If Steps 4.1/4.2 produce interesting features, repeat the ML pipeline on the ind
 | 18 | Build independent dataset | Complete |
 | 19 | Stats on independent dataset | Complete |
 | 20 | ML on independent dataset (10-fold CV) | Complete |
-| **21** | **Paired analysis (14 patients)** | **To create** |
+| 21 | Paired analysis (14 patients) | Complete |
 | **22** | **Alternative texture features** | **To create** |
 | **23** | **Surrounding tissue analysis** | **To create** |
 

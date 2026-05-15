@@ -9,7 +9,7 @@
 - Raw DICOMs: `data/PANCREAS_2/PANCREAS_2/<study_id>/<date>/`
 - Canonical processed data: `data/PANCREAS_PREPROCESSED_CONTOUR_SUBTRACTED_ERODED_K3_I1/`
 - Clinical spreadsheet: `data/bd_estudiUPF.csv` (138 rows, 56 patients)
-- Merged radiomics + clinical: `reports/13_merged_radiomics_clinical.csv`
+- Merged radiomics + clinical: `analysis/reports/13_merged_radiomics_clinical.csv`
 - Data is gitignored. It does not come from git clone.
 
 ## Project status
@@ -17,17 +17,18 @@
 - NB 17: sequential ML experiments — complete (AUC ~0.5, no signal)
 - NB 17b: joint optimization ML — complete (best AUC 0.537, confirms no signal)
 - NB 18: independent dataset built (55 studies, 1 per patient)
-- NB 19: stats on independent dataset — complete
-- NB 20: ML on independent dataset — complete
+- NB 19: stats on independent dataset — complete (4 uncorrected p<0.05, 0 after FDR)
+- NB 20: ML on independent dataset — complete (best AUC 0.569, all CIs include 0.5)
+- NB 21: paired analysis (14 patients) — complete (9 uncorrected p<0.05, 0 after FDR)
 - 3 new images (34_02, 40_02, 41_03) integrated (137 studies total)
 - Study 47_01 excluded (no images, confirmed by hospital)
-- Thesis Methods chapter: written and audited (see thesis/methods.tex)
-- Next notebooks to create: NB 21-23 (see docs/PLAN_THESIS_ROADMAP.md)
+- Thesis: Methods chapter written, Results sections 3.1-3.4 written, Introduction motivation + objectives written
+- Next notebooks to create: NB 22, 23 (see docs/PLAN_THESIS_ROADMAP.md)
 
 ## Current phase (May 2026)
-- Paired analysis (14 patients with both outcomes) — NB 21
 - Extended analysis (alt texture features, surrounding tissue) — NB 22, 23
-- Thesis writing in LaTeX (Methods done, Results/Discussion/Introduction next)
+- Thesis writing in LaTeX (Results sections 3.5-3.7, Discussion, Related Work still needed)
+- All core analysis complete (NB 01-21). Only extended experiments remain.
 
 ## Coding standards
 - See `docs/AGENT_HANDOFF.md` for full rules

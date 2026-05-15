@@ -17,11 +17,11 @@ Done:
 
 Next (May 2026 — see docs/PLAN_THESIS_ROADMAP.md):
 - ~~Integrate 3 new images~~ (done, 137 studies)
-- Build independent dataset (1 per patient, ~55 studies) — NB 18
-- Stats + ML on independent dataset (10-fold CV) — NB 19, 20
-- Paired analysis (14 patients) — NB 21
+- ~~Build independent dataset (1 per patient, 55 studies) — NB 18~~ (done)
+- ~~Stats + ML on independent dataset (10-fold CV) — NB 19, 20~~ (done)
+- ~~Paired analysis (14 patients) — NB 21~~ (done)
 - Extended analysis (LBP, Gabor, Laws’, surrounding tissue) — NB 22, 23
-- Thesis writing in LaTeX
+- Thesis writing in LaTeX (Results 3.5-3.7, Discussion, Related Work remaining)
 
 ## Key conventions
 - “Study ID” is the folder name under `data/PANCREAS_2/PANCREAS_2/` (e.g., `01_01`).
