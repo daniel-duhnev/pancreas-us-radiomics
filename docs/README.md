@@ -9,7 +9,8 @@ Start here:
 - [REPORTS_GUIDE.md](REPORTS_GUIDE.md) — what the CSV reports are and which ones to keep
 
 Current plans:
-- [PLAN_THESIS_ROADMAP.md](PLAN_THESIS_ROADMAP.md) — master plan for remaining work (NB 22-23, thesis writing, timeline through June 2026)
+- [NEXT_STEPS_NB22_23.md](NEXT_STEPS_NB22_23.md) — **start here for remaining experiments** (detailed spec for NB 22-23, the final notebooks)
+- [PLAN_THESIS_ROADMAP.md](PLAN_THESIS_ROADMAP.md) — master plan for all work (NB 22-23, thesis writing, timeline through June 2026)
 - [PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md](PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md) — approaches for handling repeated measures (Approach 7 implemented in NB 21)
 - [THESIS_WRITING_PLAN.md](THESIS_WRITING_PLAN.md) — chapter-by-chapter writing plan with page budgets
 
