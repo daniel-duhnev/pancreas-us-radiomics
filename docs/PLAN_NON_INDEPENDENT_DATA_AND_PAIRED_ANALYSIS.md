@@ -348,5 +348,5 @@ for feature in feature_list:
 - **Status (May 2026):** Both the independent dataset (NB 18-20) and paired analysis (NB 21, Approach 7) are complete.
 - Independent dataset (55 studies): 4 features at uncorrected p<0.05, 0 after FDR. ML best AUC 0.569 (CI includes 0.5).
 - Paired analysis (14 patients): used max-distance pair selection (not averaging). 9/93 features at uncorrected p<0.05, 0 after FDR. ARFI features non-significant (p=0.86), contrary to unpaired results.
-- Mixed-effects models (Approach 4) and other advanced approaches remain optional — not planned for thesis.
+- Mixed-effects models (Approach 4) and other advanced approaches remain optional - not planned for thesis.
 - The current full-dataset analysis (treating studies as independent) is consistent with Bassaganyas et al. 2025 and remains valid for the replication phase.

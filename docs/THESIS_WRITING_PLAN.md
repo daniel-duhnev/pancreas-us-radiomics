@@ -2,7 +2,7 @@
 
 ## Context
 
-Analysis notebooks 12-17b are complete. Notebooks 18-23 are planned (independent dataset, paired analysis, extended analysis — see `PLAN_THESIS_ROADMAP.md`). The thesis is for the EMAI program (Erasmus Mundus Master in AI) at UPF, supervised by Gemma Piella. Gemma said (May 6 meeting): start writing NOW, don't wait for all results. Thesis is 30 credits, needs ~40-50 pages.
+Analysis notebooks 12-17b are complete. Notebooks 18-23 are planned (independent dataset, paired analysis, extended analysis - see `PLAN_THESIS_ROADMAP.md`). The thesis is for the EMAI program (Erasmus Mundus Master in AI) at UPF, supervised by Gemma Piella. Gemma said (May 6 meeting): start writing NOW, don't wait for all results. Thesis is 30 credits, needs ~40-50 pages.
 
 **Decisions made:**
 - Format: LaTeX (using EMAI 2026 template)
@@ -116,13 +116,19 @@ The entire methods chapter is ready to write. The pipeline is complete and won't
 - **Figure 6**: ARFI box plots by rejection status (to generate)
 
 ### Section 4.4: ML Classification (~2-3 pages)
-- **Table 7**: Joint optimization results — full dataset (137 studies, LOOCV)
-- **Table 8**: Joint optimization results — independent dataset (~55 studies, 10-fold CV)
+- **Table 7**: Joint optimization results - full dataset (137 studies, LOOCV)
+- **Table 8**: Joint optimization results - independent dataset (~55 studies, 10-fold CV)
 - All AUC ~0.5, models are guessing on both datasets
 - ROC curves for all models
-- **Table 9**: Paired analysis results (14 patients, Wilcoxon signed-rank)
 
-### Section 4.5: Extended Analysis (~2 pages)
+### Section 4.5: Paired Analysis (~1.5 pages)
+- 14 patients with both outcomes, max-distance pair selection
+- Radiomics: 9/93 at uncorrected p<0.05, 0 after FDR (best: ngtdm_Coarseness p=0.011)
+- Clinical: 0/17 significant (ARFI p>0.73 - paired signal vanishes)
+- Key insight: ARFI's unpaired significance may reflect between-patient differences, not within-patient rejection changes
+- Data source: `analysis/reports/21_paired_analysis_radiomics.csv`, `21_paired_analysis_clinical.csv`
+
+### Section 4.6: Extended Analysis (~2 pages)
 - Alternative texture features (LBP, Gabor, Laws'): stats + ML results
 - Surrounding tissue normalization: stats + ML results
 - If no signal: rules out "wrong features" and "wrong normalization" concerns
@@ -171,14 +177,13 @@ Radiomics doesn't predict rejection. Clinical biomarkers (ARFI) do. This narrows
 ## Figures to Generate
 
 New figures needed (from notebook data):
-1. Preprocessing pipeline flowchart/diagram
+1. Preprocessing pipeline flowchart/diagram (DONE: `thesis/Figures/preprocessing_pipeline.pdf`)
 2. Mask erosion before/after comparison
-3. Box plot: firstorder_Minimum by rejection status
-4. Box plots: ARFI values by rejection status (late period)
+3. Box plot: firstorder_Minimum by rejection status (DONE: `thesis/Figures/boxplots_radiomics_top5.png`)
+4. Box plots: ARFI values by rejection status (DONE: `thesis/Figures/boxplots_clinical_features.png`)
 5. Box plots: DCE-US perfusion by rejection status
 6. Replication scatter plot (our p-values vs Clara's)
-7. ROC curves for ML classifiers (regenerate NB 15)
-8. Patient flow diagram (study inclusion/exclusion)
+7. ROC curves for ML classifiers (DONE: `thesis/Figures/roc_full_dataset.png`, `roc_independent_dataset.png`)
 
 ---
 

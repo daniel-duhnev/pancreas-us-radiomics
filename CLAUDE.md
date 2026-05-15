@@ -1,4 +1,4 @@
-# Pancreas US Radiomics — Thesis Project
+# Pancreas US Radiomics - Thesis Project
 
 ## Environment
 - Conda env: `thesis_env` (Python 3.9.25). Do NOT create other envs.
@@ -8,25 +8,26 @@
 ## Key data paths
 - Raw DICOMs: `data/PANCREAS_2/PANCREAS_2/<study_id>/<date>/`
 - Canonical processed data: `data/PANCREAS_PREPROCESSED_CONTOUR_SUBTRACTED_ERODED_K3_I1/`
-- Clinical spreadsheet: `data/bd_estudiUPF.csv` (138 rows, 56 patients)
-- Merged radiomics + clinical: `analysis/reports/13_merged_radiomics_clinical.csv`
+- Clinical spreadsheet: `data/bd_estudiUPF.csv` (138 rows, 56 patients; study 47_01 has no images and is excluded → 137 usable studies from 55 patients)
+- Merged radiomics + clinical: `analysis/reports/13_merged_radiomics_clinical.csv` (137 rows)
 - Data is gitignored. It does not come from git clone.
 
 ## Project status
 - Notebooks 01-15: complete (preprocessing, radiomics extraction, stats, ML)
-- NB 17: sequential ML experiments — complete (AUC ~0.5, no signal)
-- NB 17b: joint optimization ML — complete (best AUC 0.537, confirms no signal)
+- NB 17: sequential ML experiments - complete (AUC ~0.5, no signal)
+- NB 17b: joint optimization ML - complete (best AUC 0.537, confirms no signal)
 - NB 18: independent dataset built (55 studies, 1 per patient)
-- NB 19: stats on independent dataset — complete (4 uncorrected p<0.05, 0 after FDR)
-- NB 20: ML on independent dataset — complete (best AUC 0.569, all CIs include 0.5)
-- NB 21: paired analysis (14 patients) — complete (9 uncorrected p<0.05, 0 after FDR)
+- NB 19: stats on independent dataset - complete (4 uncorrected p<0.05, 0 after FDR)
+- NB 20: ML on independent dataset - complete (best AUC 0.569, all CIs include 0.5)
+- NB 21: paired analysis (14 patients) - complete (9 uncorrected p<0.05, 0 after FDR)
 - 3 new images (34_02, 40_02, 41_03) integrated (137 studies total)
 - Study 47_01 excluded (no images, confirmed by hospital)
 - Thesis: Methods chapter written, Results sections 3.1-3.4 written, Introduction motivation + objectives written
+- Results §3.5 (paired analysis) ready to write - NB 21 data available at `analysis/reports/21_*`
 - Next notebooks to create: NB 22, 23 (see docs/PLAN_THESIS_ROADMAP.md)
 
 ## Current phase (May 2026)
-- Extended analysis (alt texture features, surrounding tissue) — NB 22, 23
+- Extended analysis (alt texture features, surrounding tissue) - NB 22, 23
 - Thesis writing in LaTeX (Results sections 3.5-3.7, Discussion, Related Work still needed)
 - All core analysis complete (NB 01-21). Only extended experiments remain.
 
@@ -42,9 +43,9 @@
   M. Angeles Garcia, Helena Font (Hospital Clinic Barcelona)
 
 ## Thesis timeline
-- Independent dataset + core results: May 6-16
-- Extended analysis: May 19-30
-- Thesis writing: ongoing from May 12
+- Independent dataset + core results: DONE (NB 18-21 complete as of May 12)
+- Extended analysis (NB 22-23): May 19-30
+- Thesis writing: ongoing (Methods + Results §3.1-3.4 done; §3.5 ready; Related Work + Discussion pending)
 - Submit to Gemma for review: June 8
 - Final submission: mid June 2026
 - Thesis defence: mid July 2026

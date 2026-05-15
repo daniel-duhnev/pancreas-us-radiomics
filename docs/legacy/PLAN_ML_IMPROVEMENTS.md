@@ -4,7 +4,7 @@
 
 Notebook 15 ran LogReg and Random Forest on the 93 radiomics features (after correlation removal to 31) with stratified 5-fold CV. Results: AUC ~0.5 (chance level). But we only reported test metrics, and we used simple correlation-based feature reduction instead of proper feature selection.
 
-This notebook addresses both gaps. It reads from existing CSVs — no dependency on the 3 new images.
+This notebook addresses both gaps. It reads from existing CSVs - no dependency on the 3 new images.
 
 ## Notebook: `analysis/16_ml_improvements.ipynb`
 
@@ -108,9 +108,9 @@ for fold_idx, (train_idx, test_idx) in enumerate(outer_cv.split(X, y)):
 **Run on:** full dataset and late subset.
 
 **Output files:**
-- `reports/16_ml_improved_results.csv` — train/test metrics comparison
-- `reports/16_rfe_feature_ranking.csv` — which features selected per fold, frequency across folds
-- `reports/16_rfe_cv_scores.csv` — RFECV curve (N features vs CV score)
+- `reports/16_ml_improved_results.csv` - train/test metrics comparison
+- `reports/16_rfe_feature_ranking.csv` - which features selected per fold, frequency across folds
+- `reports/16_rfe_cv_scores.csv` - RFECV curve (N features vs CV score)
 
 ---
 

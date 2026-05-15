@@ -4,7 +4,7 @@
 
 All core analysis is complete (NB 01-21). The overall finding is negative: B-mode ultrasound radiomics features do not predict pancreas transplant rejection. NB 22 and 23 are the final experiments. Their purpose is to **rule out alternative explanations** for the negative result:
 
-- NB 22 asks: "Did we use the wrong texture features?" If LBP, Gabor, and Laws' also show no signal, the answer is no — no texture method works on this data.
+- NB 22 asks: "Did we use the wrong texture features?" If LBP, Gabor, and Laws' also show no signal, the answer is no - no texture method works on this data.
 - NB 23 asks: "Did inter-image intensity variation mask a real signal?" If normalizing by surrounding tissue still shows nothing, the answer is no.
 
 **Both notebooks are expected to produce negative results.** That is a valid and useful finding for the thesis. It strengthens the conclusion that the limitation is fundamental (grayscale US lacks the tissue property information needed) rather than methodological.
@@ -30,11 +30,11 @@ print("OK")
 ```
 
 All other packages needed are already available:
-- `scipy` (1.13.1) — for `convolve2d` (Laws') and `stats` (Wilcoxon, Mann-Whitney)
-- `cv2` (4.13.0) — for Gabor kernels (`cv2.getGaborKernel`, `cv2.filter2D`), mask dilation
-- `numpy`, `pandas`, `matplotlib` — standard
-- `radiomics` (PyRadiomics) — needed in NB 23 for re-extraction on normalized images
-- `SimpleITK` — needed in NB 23 for PyRadiomics input format
+- `scipy` (1.13.1) - for `convolve2d` (Laws') and `stats` (Wilcoxon, Mann-Whitney)
+- `cv2` (4.13.0) - for Gabor kernels (`cv2.getGaborKernel`, `cv2.filter2D`), mask dilation
+- `numpy`, `pandas`, `matplotlib` - standard
+- `radiomics` (PyRadiomics) - needed in NB 23 for re-extraction on normalized images
+- `SimpleITK` - needed in NB 23 for PyRadiomics input format
 
 ---
 
@@ -94,7 +94,7 @@ Extract 3 families of texture features not in PyRadiomics, test them against rej
 
 ### Feature Families
 
-**1. LBP (Local Binary Patterns)** — requires `scikit-image`
+**1. LBP (Local Binary Patterns)** - requires `scikit-image`
 
 Encodes local micro-patterns by comparing each pixel to its circular neighborhood.
 
@@ -107,7 +107,7 @@ Total: 54 LBP features per image.
 
 Method: compute LBP on full image, then extract histogram only from pixels inside the mask.
 
-**2. Gabor Filters** — uses `cv2.getGaborKernel` + `cv2.filter2D`
+**2. Gabor Filters** - uses `cv2.getGaborKernel` + `cv2.filter2D`
 
 Responds to texture at specific frequencies and orientations.
 
@@ -120,7 +120,7 @@ Total: 3 × 6 × 3 = 54 Gabor features per image.
 
 Method: apply each Gabor filter to full image, compute magnitude response, extract stats from masked region only.
 
-**3. Laws' Texture Energy Measures** — uses `scipy.signal.convolve2d`
+**3. Laws' Texture Energy Measures** - uses `scipy.signal.convolve2d`
 
 Detects texture energy using predefined 1D kernels combined into 2D filters.
 
@@ -152,11 +152,11 @@ Method: convolve full image with each 2D kernel, extract stats from masked regio
 
 ### Output Files
 
-- `reports/22_alternative_features.csv` — raw features (137 × ~154)
-- `reports/22_stats_full_dataset.csv` — stats on 137 studies
-- `reports/22_stats_independent_dataset.csv` — stats on 55 studies
-- `reports/22_ml_results.csv` — ML classification results
-- `reports/22_roc_curves.png` — ROC curves if any model exceeds AUC 0.55
+- `reports/22_alternative_features.csv` - raw features (137 × ~154)
+- `reports/22_stats_full_dataset.csv` - stats on 137 studies
+- `reports/22_stats_independent_dataset.csv` - stats on 55 studies
+- `reports/22_ml_results.csv` - ML classification results
+- `reports/22_roc_curves.png` - ROC curves if any model exceeds AUC 0.55
 
 ### What NOT to do
 
@@ -223,21 +223,21 @@ sitk_image = sitk.GetImageFromArray(norm_scaled)
 
 1. **For each of 137 studies:** create surrounding mask, normalize, extract normalized radiomics (93 features), compute contrast features (~11 features)
 2. **Save:** `reports/23_normalized_radiomics.csv` (137 × 94), `reports/23_contrast_features.csv` (137 × ~12)
-3. **Stats on full dataset (137 studies)** — same pipeline as NB 14a for both feature sets
-4. **Stats on independent dataset (55 studies)** — same as NB 19
-5. **ML on independent dataset (55 studies)** — same as NB 20, run separately on:
+3. **Stats on full dataset (137 studies)** - same pipeline as NB 14a for both feature sets
+4. **Stats on independent dataset (55 studies)** - same as NB 19
+5. **ML on independent dataset (55 studies)** - same as NB 20, run separately on:
    - Normalized radiomics features (93, after correlation removal)
    - Contrast features (~11, possibly combined with normalized radiomics)
 6. **Comparison table:** original radiomics vs normalized radiomics vs contrast features
 
 ### Output Files
 
-- `reports/23_normalized_radiomics.csv` — normalized PyRadiomics features
-- `reports/23_contrast_features.csv` — pancreas-vs-surrounding features
-- `reports/23_stats_normalized.csv` — stats on normalized features
-- `reports/23_stats_contrast.csv` — stats on contrast features
-- `reports/23_ml_results.csv` — ML results
-- `reports/23_surrounding_mask_examples.png` — QA visualization (3-4 example images with mask + ring overlay)
+- `reports/23_normalized_radiomics.csv` - normalized PyRadiomics features
+- `reports/23_contrast_features.csv` - pancreas-vs-surrounding features
+- `reports/23_stats_normalized.csv` - stats on normalized features
+- `reports/23_stats_contrast.csv` - stats on contrast features
+- `reports/23_ml_results.csv` - ML results
+- `reports/23_surrounding_mask_examples.png` - QA visualization (3-4 example images with mask + ring overlay)
 
 ### What NOT to do
 
@@ -284,11 +284,11 @@ Each notebook ends with a markdown cell interpreting the results. Frame around t
 
 Once these notebooks are complete, the experimental work for the thesis is done. Remaining tasks are all thesis-writing:
 
-1. **Results sections 3.5-3.7** — write up paired analysis (NB 21) and extended analysis (NB 22-23) results in LaTeX
-2. **Related Work** — 4 subsections currently TODO stubs in `thesis/introduction.tex`
-3. **Discussion and Conclusions** — interpret overall findings, limitations, future work
-4. **Abstract** — finalize after all sections are written
-5. **Final figures** — any additional thesis-quality plots needed from NB 22-23 results
+1. **Results sections 3.5-3.7** - write up paired analysis (NB 21) and extended analysis (NB 22-23) results in LaTeX
+2. **Related Work** - 4 subsections currently TODO stubs in `thesis/introduction.tex`
+3. **Discussion and Conclusions** - interpret overall findings, limitations, future work
+4. **Abstract** - finalize after all sections are written
+5. **Final figures** - any additional thesis-quality plots needed from NB 22-23 results
 
 Timeline: NB 22-23 should be done by May 30. Thesis to Gemma by June 8.
 
@@ -307,9 +307,9 @@ Timeline: NB 22-23 should be done by May 30. Thesis to Gemma by June 8.
 | Radiomics stats (137) | firstorder_Minimum p=0.053 | All >0.84 |
 | Radiomics stats (55) | ngtdm_Busyness p=0.024 | All >0.38 |
 | Paired radiomics (14) | ngtdm_Coarseness p=0.011 | All >0.28 |
-| ML full dataset | NaiveBayes AUC 0.537 | — |
-| ML independent | LogReg AUC 0.569 [0.40, 0.72] | — |
-| Clinical (late >90d) | ARFI media p<0.001 | — |
+| ML full dataset | NaiveBayes AUC 0.537 | - |
+| ML independent | LogReg AUC 0.569 [0.40, 0.72] | - |
+| Clinical (late >90d) | ARFI media p<0.001 | - |
 
 ---
 

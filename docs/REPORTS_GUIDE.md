@@ -11,19 +11,19 @@ The folder `analysis/reports/` is gitignored (not pushed to GitHub). These CSVs 
 | `13_merged_radiomics_clinical.csv` | NB 13 | 137 | Radiomics + clinical labels merged. Primary data source for analysis. |
 | `14a_stats_radiomics_features.csv` | NB 14a | 93 | Univariate stats for all radiomics features (full dataset) |
 | `14b_stats_clinical_features.csv` | NB 14b | 17 | Clinical feature stats (ARFI + DCE-US) |
-| `15_ml_results.csv` | NB 15 | — | Baseline ML results |
-| `15_feature_importances_rf.csv` | NB 15 | — | RF feature importances |
-| `17_ml_experiment_results.csv` | NB 17 | — | Sequential ML experiment results |
+| `15_ml_results.csv` | NB 15 | - | Baseline ML results |
+| `15_feature_importances_rf.csv` | NB 15 | - | RF feature importances |
+| `17_ml_experiment_results.csv` | NB 17 | - | Sequential ML experiment results |
 | `17b_joint_optimization_results.csv` | NB 17b | 4 | Joint optimization ML results (4 models) |
 | `17b_all_models_tuned_results.csv` | NB 17b | 4 | Detailed tuned model results |
-| `18_independent_dataset.csv` | NB 18 | 55 | Independent dataset (1 per patient) — same columns as 13 |
+| `18_independent_dataset.csv` | NB 18 | 55 | Independent dataset (1 per patient) - same columns as 13 |
 | `19_stats_independent_dataset.csv` | NB 19 | 93 | Univariate stats on independent dataset |
 | `20_ml_independent_dataset_results.csv` | NB 20 | 4 | ML results on independent dataset |
 | `20_bootstrap_ci.csv` | NB 20 | 4 | Bootstrap 95% CIs for 10-fold CV AUCs |
 | `21_paired_analysis_radiomics.csv` | NB 21 | 93 | Paired Wilcoxon results for radiomics features |
 | `21_paired_analysis_clinical.csv` | NB 21 | 17 | Paired Wilcoxon results for clinical features |
 | `21_selected_pairs.csv` | NB 21 | 14 | Selected study pairs (patient, no-rej study, rej study, gap) |
-| `thesis_dataset_demographics.csv` | thesis_figures | — | Demographics summary for thesis table |
+| `thesis_dataset_demographics.csv` | thesis_figures | - | Demographics summary for thesis table |
 
 ## PNG outputs (for thesis figures)
 

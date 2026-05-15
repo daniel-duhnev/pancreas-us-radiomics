@@ -15,12 +15,12 @@ Done:
 - Stats (NB 14a/14b): 0/93 radiomics features significant; ARFI significant in late period
 - ML (NB 15, 17, 17b): all models AUC ~0.5, no predictive signal from radiomics
 
-Next (May 2026 — see docs/PLAN_THESIS_ROADMAP.md):
+Next (May 2026 - see docs/PLAN_THESIS_ROADMAP.md):
 - ~~Integrate 3 new images~~ (done, 137 studies)
-- ~~Build independent dataset (1 per patient, 55 studies) — NB 18~~ (done)
-- ~~Stats + ML on independent dataset (10-fold CV) — NB 19, 20~~ (done)
-- ~~Paired analysis (14 patients) — NB 21~~ (done)
-- Extended analysis (LBP, Gabor, Laws’, surrounding tissue) — NB 22, 23
+- ~~Build independent dataset (1 per patient, 55 studies) - NB 18~~ (done)
+- ~~Stats + ML on independent dataset (10-fold CV) - NB 19, 20~~ (done)
+- ~~Paired analysis (14 patients) - NB 21~~ (done)
+- Extended analysis (LBP, Gabor, Laws’, surrounding tissue) - NB 22, 23
 - Thesis writing in LaTeX (Results 3.5-3.7, Discussion, Related Work remaining)
 
 ## Key conventions
@@ -66,6 +66,21 @@ Quick rubric (use this before editing notebooks):
 - Don’t “nbconvert” run notebooks using a different Python.
 - Don’t refactor notebooks heavily or add fancy abstractions.
 - Don’t delete or rename dataset folders without confirming what notebooks reference.
+
+## Current next steps (May 2026)
+
+All preprocessing and radiomics extraction (NB 01-21) is complete. Next steps:
+
+**Code (notebooks):**
+- NB 22: Alternative texture features (LBP, Gabor, Laws') - not yet created
+- NB 23: Surrounding tissue analysis - not yet created
+- See `docs/PLAN_THESIS_ROADMAP.md` for context and `docs/legacy/PLAN_EXPERIMENTS_SURROUNDING_TISSUE_AND_ALT_FEATURES.md` for code snippets
+
+**Thesis writing (LaTeX):**
+- Results §3.5 (paired analysis) - data ready at `analysis/reports/21_*`
+- Related Work (4 subsections) - needs literature research
+- Discussion + Conclusions - write after all results sections
+- See `docs/THESIS_HANDOFF.md` for comprehensive writing agent instructions
 
 ## Quick sanity commands (optional)
 Run inside a notebook cell (kernel = `thesis_env`):

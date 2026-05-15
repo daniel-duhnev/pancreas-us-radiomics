@@ -31,11 +31,11 @@ Do this first so everything downstream uses the full 137-study dataset.
 - Patient has only one state (all rejection or all non-rejection) → take earliest study by date
 - Patient has both states (14 patients) → take the rejection study (earliest if multiple)
 
-**Decision needed:** How to pick when patient has both states. "Take rejection" keeps class balance closer to ~25% rejection. Alternative: take earliest by date regardless. Daniel mentioned "take rejection, always first by date" — follow that unless corrected.
+**Decision needed:** How to pick when patient has both states. "Take rejection" keeps class balance closer to ~25% rejection. Alternative: take earliest by date regardless. Daniel mentioned "take rejection, always first by date" - follow that unless corrected.
 
-**Implementation:** Small utility cell at the top of the ML notebook. Reads `13_merged_radiomics_clinical.csv` + dates from `bd_estudiUPF.csv`, outputs a filtered dataframe. Not a separate notebook — just a data prep step.
+**Implementation:** Small utility cell at the top of the ML notebook. Reads `13_merged_radiomics_clinical.csv` + dates from `bd_estudiUPF.csv`, outputs a filtered dataframe. Not a separate notebook - just a data prep step.
 
-### Phase 2: Comprehensive ML Notebook — `analysis/16_ml_comprehensive.ipynb`
+### Phase 2: Comprehensive ML Notebook - `analysis/16_ml_comprehensive.ipynb`
 
 One notebook incorporating all of Gemma's recommendations, built incrementally. Runs on both the full dataset (137 studies, GroupKFold by patient) and the independent dataset (~55 studies, LOOCV).
 
@@ -46,11 +46,11 @@ Structure (start simple, add complexity):
 - Build independent dataset (Phase 1 logic)
 - Print: sample counts, class balance for both datasets
 
-**Section B: Baseline Models — Simple Train/Test Split**
+**Section B: Baseline Models - Simple Train/Test Split**
 - One 70/30 stratified split on the independent dataset
 - Four models: LogisticRegression, RandomForest (constrained), SVM (RBF kernel), GaussianNB
 - For each: train, predict, print train AUC + test AUC
-- This is the simplest possible evaluation — establishes the floor
+- This is the simplest possible evaluation - establishes the floor
 
 **Section C: ROC Curves + Youden's Index**
 - For each model from Section B: plot ROC curve on the test set
@@ -119,7 +119,7 @@ Gemma's rec #1: review 4 papers on radiomics + ultrasound. Daniel reads these hi
 
 ## Dependencies
 
-- `boruta` package — needs `pip install boruta` in thesis_env
+- `boruta` package - needs `pip install boruta` in thesis_env
 - All other packages (sklearn, scipy, matplotlib, pandas, numpy) already installed
 
 ## Verification

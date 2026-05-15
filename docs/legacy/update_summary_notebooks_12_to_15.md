@@ -32,7 +32,7 @@ features = extractor.execute(sitk_image, sitk_mask)  # single call, returns all 
 
 ### Why 93 features
 
-We explicitly enabled 6 feature classes and disabled shape features (per supervisor guidance — shape describes the mask geometry, not image content):
+We explicitly enabled 6 feature classes and disabled shape features (per supervisor guidance - shape describes the mask geometry, not image content):
 
 | Feature class | Count | What it captures |
 |---------------|-------|------------------|
@@ -63,14 +63,14 @@ We explicitly enabled 6 feature classes and disabled shape features (per supervi
 ### Results
 
 - **Input**: 134 studies from the manifest (all had valid non-zero masks)
-- **Output**: CSV with shape (134, 94) — 134 rows x 93 features + 1 study_id column
+- **Output**: CSV with shape (134, 94) - 134 rows x 93 features + 1 study_id column
 - **No failures**: All 134 extractions succeeded, no NaN values
 - **Output file**: `reports/12_radiomics_features_k3_i1.csv`
 
 ### Key points for discussion
 
 - The `k3_i1` in the filename refers to kernel size 3 and iteration 1 from the mask erosion step (notebook 09)
-- All features are computed within the masked region only — pixels outside the mask are ignored
+- All features are computed within the masked region only - pixels outside the mask are ignored
 - Feature values are not normalised at this stage; normalisation happens later in the ML pipeline (notebook 15)
 
 ---
@@ -79,7 +79,7 @@ We explicitly enabled 6 feature classes and disabled shape features (per supervi
 
 ### What it does
 
-A data preparation step — no analysis. Joins the radiomics features (from NB 12) with clinical metadata into a single CSV so downstream notebooks can load one file.
+A data preparation step - no analysis. Joins the radiomics features (from NB 12) with clinical metadata into a single CSV so downstream notebooks can load one file.
 
 - **Input 1**: `reports/12_radiomics_features_k3_i1.csv` (134 studies, 93 features)
 - **Input 2**: `../data/bd_estudiUPF.csv` (138 clinical records)
@@ -90,7 +90,7 @@ The 100 columns are: study_id, patient_id, 93 radiomics features, motivo, reject
 
 ### Who uses it
 
-Only **notebook 15** (ML classification) loads the merged file. Notebooks 14a and 14b do their own data loading independently — 14a loads radiomics + clinical separately and joins them itself, 14b loads only the clinical CSV since it doesn't need radiomics features.
+Only **notebook 15** (ML classification) loads the merged file. Notebooks 14a and 14b do their own data loading independently - 14a loads radiomics + clinical separately and joins them itself, 14b loads only the clinical CSV since it doesn't need radiomics features.
 
 ### Why a separate notebook
 
@@ -137,7 +137,7 @@ This is the core analysis for the radiomics side. Tests whether any of the 93 ex
 
 ### Interpretation
 
-No radiomics feature distinguishes rejection from no-rejection at conventional significance thresholds. This is a **negative result** but not necessarily a failure — it means ultrasound texture features as extracted by PyRadiomics do not carry detectable signal for rejection in our dataset. Possible explanations:
+No radiomics feature distinguishes rejection from no-rejection at conventional significance thresholds. This is a **negative result** but not necessarily a failure - it means ultrasound texture features as extracted by PyRadiomics do not carry detectable signal for rejection in our dataset. Possible explanations:
 - Sample size too small (134 studies, only 39 rejection) for subtle effects
 - Ultrasound image quality/variability masks the signal
 - Rejection may not manifest in texture patterns detectable at this resolution
@@ -198,7 +198,7 @@ We keep both analyses: motivo-based (our own) and days-based (Clara's replicatio
 
 ### Key observations
 
-- **ARFI features are the strongest signal**: ARFI mediana and ARFI media reach p < 0.0001 in the late group with large effect sizes (r > 0.7). These are elastography measurements of tissue stiffness — rejection makes the pancreas stiffer.
+- **ARFI features are the strongest signal**: ARFI mediana and ARFI media reach p < 0.0001 in the late group with large effect sizes (r > 0.7). These are elastography measurements of tissue stiffness - rejection makes the pancreas stiffer.
 - **Perfusion features are weaker but present**: WiAUC, WoAUC (blood flow patterns) are significant in the late group. Rejection disrupts blood supply.
 - **Time matters**: no signal in the early period. Rejection effects on tissue properties take time to manifest, or early studies are dominated by post-surgical changes.
 - **Our replication of Clara's paper is successful**: nearly identical p-values confirm our data handling and statistical implementation are correct.
@@ -217,7 +217,7 @@ Attempts to classify rejection vs no-rejection using radiomics features. Given t
 
 ### Important: what features are used (and not used)
 
-The ML classifier uses **only radiomics features** (texture and intensity features extracted by PyRadiomics in NB 12). It does **not** include any of the clinical features from 14b — no ARFI, no perfusion parameters, no QOF, no Area. The merged CSV that NB 15 loads (`13_merged_radiomics_clinical.csv`) contains 93 radiomics feature columns plus metadata (study_id, patient_id, motivo, rejection label), but none of the clinical imaging measurements.
+The ML classifier uses **only radiomics features** (texture and intensity features extracted by PyRadiomics in NB 12). It does **not** include any of the clinical features from 14b - no ARFI, no perfusion parameters, no QOF, no Area. The merged CSV that NB 15 loads (`13_merged_radiomics_clinical.csv`) contains 93 radiomics feature columns plus metadata (study_id, patient_id, motivo, rejection label), but none of the clinical imaging measurements.
 
 This means the ML has never seen the features that actually show statistical signal (ARFI, DCE-US). A combined model using both radiomics + clinical features would be a separate experiment we haven't done yet (see Proposed Next Steps).
 
@@ -233,7 +233,7 @@ This means the ML has never seen the features that actually show statistical sig
 
 93 features for 134 samples is a recipe for overfitting. Plus, 305 feature pairs have |r| > 0.9 (massive redundancy).
 
-**Key decision — p-value-guided removal:** when two features correlate above the threshold, we keep the one with the lower p-value from notebook 14a's statistical analysis. This ensures features with the most signal (even marginal) survive. The original version dropped by column order, which accidentally removed `firstorder_Minimum` (our best feature, p=0.055) in favour of `10Percentile` (p=0.128).
+**Key decision - p-value-guided removal:** when two features correlate above the threshold, we keep the one with the lower p-value from notebook 14a's statistical analysis. This ensures features with the most signal (even marginal) survive. The original version dropped by column order, which accidentally removed `firstorder_Minimum` (our best feature, p=0.055) in favour of `10Percentile` (p=0.128).
 
 **Result:** 93 -> 31 radiomics features retained. All 31 are texture/intensity features (e.g. `firstorder_Minimum`, `glcm_Correlation`, `ngtdm_Coarseness`). No clinical features.
 
@@ -246,13 +246,13 @@ Two models, both inside a `sklearn.Pipeline` with `StandardScaler`:
 
 Both use `class_weight="balanced"` to handle class imbalance (95 vs 39). Without this, models tend to predict the majority class ("no rejection") for everything.
 
-**Why only two algorithms?** They cover both linear (LogReg) and non-linear (RF) approaches. When both produce AUC ~0.5, the problem is the features (no signal), not the model choice. Adding more algorithms (SVM, XGBoost, etc.) would confirm the same null result — you can't build a good classifier from features that don't discriminate. If we had found AUC = 0.7+, we would try more algorithms to optimise. For a negative result, two is sufficient to demonstrate the case.
+**Why only two algorithms?** They cover both linear (LogReg) and non-linear (RF) approaches. When both produce AUC ~0.5, the problem is the features (no signal), not the model choice. Adding more algorithms (SVM, XGBoost, etc.) would confirm the same null result - you can't build a good classifier from features that don't discriminate. If we had found AUC = 0.7+, we would try more algorithms to optimise. For a negative result, two is sufficient to demonstrate the case.
 
-### Step 3: Evaluation — no data leakage
+### Step 3: Evaluation - no data leakage
 
 **Stratified 5-fold CV**: splits data into 5 folds preserving the class ratio, trains on 4 folds, tests on 1, rotates 5 times.
 
-The `StandardScaler` is **inside** the Pipeline, meaning it is fitted only on each training fold, never on the test fold. This prevents data leakage — if scaling were applied to the whole dataset before CV, the test fold would be contaminated by training data statistics. Verified correct.
+The `StandardScaler` is **inside** the Pipeline, meaning it is fitted only on each training fold, never on the test fold. This prevents data leakage - if scaling were applied to the whole dataset before CV, the test fold would be contaminated by training data statistics. Verified correct.
 
 ### Results
 
@@ -263,11 +263,11 @@ The `StandardScaler` is **inside** the Pipeline, meaning it is fitted only on ea
 | Late motivo 3-5 (n=68) | Logistic Regression | 0.515 | 0.580 | 0.543 |
 | Late motivo 3-5 (n=68) | Random Forest | 0.497 | 0.373 | 0.775 |
 
-**All AUCs are around 0.5 — the models are guessing.** Logistic Regression on the full dataset scores 0.429, which is *below* chance. Random Forest's 95.8% specificity is misleading — it learned to say "no rejection" almost always, catching only 1 in 10 rejection cases.
+**All AUCs are around 0.5 - the models are guessing.** Logistic Regression on the full dataset scores 0.429, which is *below* chance. Random Forest's 95.8% specificity is misleading - it learned to say "no rejection" almost always, catching only 1 in 10 rejection cases.
 
 ### Step 4: Feature importances
 
-Random Forest ranks `RunLengthNonUniformity`, `ngtdm_Contrast`, `ngtdm_Coarseness` as most important. But with AUC at 0.5, these importances are noise — the model isn't learning anything real.
+Random Forest ranks `RunLengthNonUniformity`, `ngtdm_Contrast`, `ngtdm_Coarseness` as most important. But with AUC at 0.5, these importances are noise - the model isn't learning anything real.
 
 ### Why ML fails here
 
@@ -278,7 +278,7 @@ Random Forest ranks `RunLengthNonUniformity`, `ngtdm_Contrast`, `ngtdm_Coarsenes
 
 ### Key takeaway for the thesis
 
-**This is a valid negative result.** Radiomics features from grayscale ultrasound, as extracted with PyRadiomics, do not predict pancreas transplant rejection in our cohort. This contrasts with the clinical features in 14b (ARFI elastography, DCE-US perfusion) which do show strong signal — suggesting that targeted clinical imaging biomarkers outperform automated texture analysis for this task.
+**This is a valid negative result.** Radiomics features from grayscale ultrasound, as extracted with PyRadiomics, do not predict pancreas transplant rejection in our cohort. This contrasts with the clinical features in 14b (ARFI elastography, DCE-US perfusion) which do show strong signal - suggesting that targeted clinical imaging biomarkers outperform automated texture analysis for this task.
 
 The negative result is still publishable and informative: it sets a baseline and narrows the search space for future work (e.g. different imaging modalities, larger cohorts, deep learning on raw images instead of handcrafted features).
 
@@ -289,7 +289,7 @@ The negative result is still publishable and informative: it sets a baseline and
 
 We built a complete pipeline from raw ultrasound images to ML classification:
 
-**NB 12** extracted 93 radiomics features from 134 studies using PyRadiomics. **NB 13** merged these with clinical metadata. **NB 14a** tested all 93 radiomics features for association with rejection — none reached significance (closest: `firstorder_Minimum` at p=0.055). **NB 14b** tested 17 clinical features — ARFI elastography strongly distinguishes rejection in the late post-transplant period (p < 0.0001), and we replicated Clara's published results to 3 decimal places. **NB 15** attempted ML classification with radiomics features — AUC ~0.5 across all models, confirming the lack of signal.
+**NB 12** extracted 93 radiomics features from 134 studies using PyRadiomics. **NB 13** merged these with clinical metadata. **NB 14a** tested all 93 radiomics features for association with rejection - none reached significance (closest: `firstorder_Minimum` at p=0.055). **NB 14b** tested 17 clinical features - ARFI elastography strongly distinguishes rejection in the late post-transplant period (p < 0.0001), and we replicated Clara's published results to 3 decimal places. **NB 15** attempted ML classification with radiomics features - AUC ~0.5 across all models, confirming the lack of signal.
 
 **Bottom line:** Radiomics texture features from grayscale ultrasound do not predict rejection. Clinical imaging biomarkers (ARFI, DCE-US perfusion) do, particularly beyond 90 days post-transplant.
 
@@ -305,13 +305,13 @@ We built a complete pipeline from raw ultrasound images to ML classification:
 
 4. **Single extraction configuration**: PyRadiomics was run with one set of parameters (binWidth=25, force2D, int16). Different bin widths or preprocessing could yield different features.
 
-5. **Motivo as time proxy**: unreliable — 13 studies are misclassified. We addressed this by adding actual days-based stratification, but the motivo-based analysis should be interpreted cautiously.
+5. **Motivo as time proxy**: unreliable - 13 studies are misclassified. We addressed this by adding actual days-based stratification, but the motivo-based analysis should be interpreted cautiously.
 
 ---
 
 ## Proposed Next Steps
 
-1. **Repeated measures sensitivity analysis**: implement the approaches in `docs/PLAN_REPEATED_MEASURES.md` — particularly one-study-per-patient (first/last/random) and mixed-effects models. This would either confirm or weaken the current findings. High priority as it affects all conclusions.
+1. **Repeated measures sensitivity analysis**: implement the approaches in `docs/PLAN_REPEATED_MEASURES.md` - particularly one-study-per-patient (first/last/random) and mixed-effects models. This would either confirm or weaken the current findings. High priority as it affects all conclusions.
 
 2. **Apply FDR correction to 14b**: straightforward addition. Would clarify which clinical features are robust to multiple testing.
 
@@ -327,7 +327,7 @@ We built a complete pipeline from raw ultrasound images to ML classification:
 
 - **Is the negative radiomics result sufficient for the thesis, or do we need to try more configurations?** We could vary binWidth, add wavelet filters, or try different feature subsets. But this risks p-hacking if not pre-registered.
 
-- **How to handle the repeated measures limitation?** Our tests assume each study is independent, but 55 patients contribute 134 studies — so they aren't. We've documented 7 possible approaches (e.g. pick one study per patient, use mixed-effects models). Which are essential vs nice-to-have for the thesis?
+- **How to handle the repeated measures limitation?** Our tests assume each study is independent, but 55 patients contribute 134 studies - so they aren't. We've documented 7 possible approaches (e.g. pick one study per patient, use mixed-effects models). Which are essential vs nice-to-have for the thesis?
 
 - **Should we try a combined radiomics + clinical ML model?** NB 15 currently uses only radiomics features (no ARFI, no perfusion). Since clinical features show strong signal in 14b, feeding both feature sets into a classifier would test whether radiomics adds anything on top of clinical biomarkers. If it doesn't, that's an additional finding. If it does, it changes the narrative.
 

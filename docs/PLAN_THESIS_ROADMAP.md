@@ -1,8 +1,20 @@
-# Plan: Thesis Roadmap — Independent Dataset, Paired Analysis, Extended Experiments, Writing
+# Plan: Thesis Roadmap - Independent Dataset, Paired Analysis, Extended Experiments, Writing
+
+## Status (May 15, 2026)
+
+| Phase | Status | Notes |
+|-------|--------|-------|
+| Phase 1: Data Preparation | DONE | 3 new images integrated, independent dataset built (NB 18) |
+| Phase 2: Core Results | DONE | NB 19 (stats), 20 (ML), 21 (paired) all complete |
+| Phase 3: Thesis Writing | IN PROGRESS | Methods + Results §3.1-3.4 written; §3.5 ready to write; Related Work + Discussion pending |
+| Phase 4: Extended Analysis | NOT STARTED | NB 22, 23 not yet created |
+| Phase 5: Complete Thesis | UPCOMING | Target: submit to Gemma June 8 |
+
+---
 
 ## Context
 
-Gemma's feedback (May 6 meeting): the thesis is 30 credits and needs ~40-50 pages. Current work is too small — need independent dataset results, paired analysis, extended analysis, and to start writing immediately. Deadline: mid June 2026 submission (~6 weeks from May 6).
+Gemma's feedback (May 6 meeting): the thesis is 30 credits and needs ~40-50 pages. Current work is too small - need independent dataset results, paired analysis, extended analysis, and to start writing immediately. Deadline: mid June 2026 submission (~6 weeks from May 6).
 
 **What's done:**
 - Notebooks 01-15: preprocessing, radiomics extraction, stats, baseline ML (all complete)
@@ -23,7 +35,7 @@ Gemma's feedback (May 6 meeting): the thesis is 30 credits and needs ~40-50 page
 ## Phase 1: Data Preparation (May 6-9)
 
 ### Step 1.1: Integrate 3 new images
-Follow `docs/PLAN_INTEGRATE_NEW_IMAGES.md`:
+Follow `docs/legacy/PLAN_INTEGRATE_NEW_IMAGES.md`:
 1. Copy 34_02, 40_02, 41_03 from `data/Páncreas restantes (22-04-2026)/` to `data/PANCREAS_2/PANCREAS_2/`
 2. Run NB 06b (segmentation) on 3 new studies only
 3. Run NB 09 (erosion) on 3 new studies
@@ -32,7 +44,7 @@ Follow `docs/PLAN_INTEGRATE_NEW_IMAGES.md`:
 
 **Effort:** ~2 hours if pipeline runs cleanly.
 
-### Step 1.2: Build independent dataset — `analysis/18_build_independent_dataset.ipynb`
+### Step 1.2: Build independent dataset - `analysis/18_build_independent_dataset.ipynb`
 Selection rule (from Gemma's meetings):
 - 1 study per patient
 - If patient has only one outcome: pick the first study by date (study_id order)
@@ -40,7 +52,7 @@ Selection rule (from Gemma's meetings):
 
 **Expected result:** ~55-56 studies (21 rejection, 34-35 no-rejection, ~38% rejection rate)
 
-Save to `reports/18_independent_dataset.csv` — same columns as 13_merged but filtered.
+Save to `reports/18_independent_dataset.csv` - same columns as 13_merged but filtered.
 
 **Effort:** ~1 hour. Simple filtering logic.
 
@@ -48,7 +60,7 @@ Save to `reports/18_independent_dataset.csv` — same columns as 13_merged but f
 
 ## Phase 2: Core Results on Independent Dataset (May 9-16)
 
-### Step 2.1: Statistical tests — `analysis/19_stats_independent_dataset.ipynb`
+### Step 2.1: Statistical tests - `analysis/19_stats_independent_dataset.ipynb`
 Repeat the NB 14a analysis on the independent dataset:
 - Mann-Whitney U test on all 93 features (or 31 post-correlation)
 - Benjamini-Hochberg FDR correction
@@ -59,7 +71,7 @@ Pattern: reuse NB 14a structure, swap data source to `18_independent_dataset.csv
 
 **Effort:** ~2 hours.
 
-### Step 2.2: ML joint optimization — `analysis/20_ml_independent_dataset.ipynb`
+### Step 2.2: ML joint optimization - `analysis/20_ml_independent_dataset.ipynb`
 Repeat the NB 17b approach on the independent dataset:
 - Pipeline: StandardScaler → SelectKBest → model
 - 4 models: LogReg, RF, SVM, NB
@@ -72,7 +84,7 @@ Pattern: reuse NB 17b structure, swap data source, change CV to 10-fold.
 
 **Effort:** ~2-3 hours.
 
-### Step 2.3: Paired analysis — `analysis/21_paired_analysis.ipynb`
+### Step 2.3: Paired analysis - `analysis/21_paired_analysis.ipynb`
 14 patients have both rejection and no-rejection studies.
 - For each patient: select one rejection study and one no-rejection study
 - Compute within-patient feature differences (rejection - no-rejection)
@@ -80,7 +92,7 @@ Pattern: reuse NB 17b structure, swap data source, change CV to 10-fold.
 - Also test ARFI and clinical features if available in paired data
 - Report: which features (if any) show significant within-patient changes
 
-Gemma said this should be straightforward — just a few lines of code after extracting the data.
+Gemma said this should be straightforward - just a few lines of code after extracting the data.
 
 **Effort:** ~2-3 hours.
 
@@ -91,14 +103,14 @@ Gemma said this should be straightforward — just a few lines of code after ext
 Gemma explicitly said: start writing NOW, don't wait until experiments are done.
 
 Sections to draft first (can write before all results are in):
-1. **Introduction** — pancreas transplant rejection, ultrasound monitoring, radiomics motivation
-2. **Background/Related Work** — literature review of 4 papers Gemma sent + radiomics in US
-3. **Methods** — dataset description, preprocessing pipeline, feature extraction, statistical tests, ML approach
-4. **Dataset** — 137 studies, 56 patients, clinical variables, class distribution
+1. **Introduction** - pancreas transplant rejection, ultrasound monitoring, radiomics motivation
+2. **Background/Related Work** - literature review of 4 papers Gemma sent + radiomics in US
+3. **Methods** - dataset description, preprocessing pipeline, feature extraction, statistical tests, ML approach
+4. **Dataset** - 137 studies, 56 patients, clinical variables, class distribution
 
 Sections to write after results:
-5. **Results** — stats tables, ML tables, ROC curves, paired analysis
-6. **Discussion** — interpret negative result, comparison to literature, limitations
+5. **Results** - stats tables, ML tables, ROC curves, paired analysis
+6. **Discussion** - interpret negative result, comparison to literature, limitations
 7. **Conclusion**
 
 **Thesis format:** LaTeX. Need to set up template (UPF thesis template or standard).
@@ -111,7 +123,7 @@ Sections to write after results:
 
 These add depth and pages for the 30-credit requirement. Detailed implementation specs are in `docs/legacy/PLAN_EXPERIMENTS_SURROUNDING_TISSUE_AND_ALT_FEATURES.md` (code snippets for all extraction functions).
 
-### Step 4.1: Alternative texture features — `analysis/22_alternative_texture_features.ipynb`
+### Step 4.1: Alternative texture features - `analysis/22_alternative_texture_features.ipynb`
 Extract non-PyRadiomics features:
 - LBP (Local Binary Patterns): 3 radius configs (R=1,2,3) → ~54 features
 - Gabor filters: 3 freq × 6 orientations × 3 stats → ~54 features
@@ -120,15 +132,15 @@ Total: ~153 new features per image
 
 Run stats + ML on these. If they also show no signal, it rules out "wrong features" as a concern.
 
-**Effort:** 3-4 hours. **Priority:** High — adds a full new experiment chapter.
+**Effort:** 3-4 hours. **Priority:** High - adds a full new experiment chapter.
 
-### Step 4.2: Surrounding tissue normalization — `analysis/23_surrounding_tissue_analysis.ipynb`
+### Step 4.2: Surrounding tissue normalization - `analysis/23_surrounding_tissue_analysis.ipynb`
 - Create surrounding tissue mask (dilate pancreas mask by 5/10/15 pixels)
 - Z-score normalize image by surrounding tissue stats
 - Re-extract radiomics on normalized images
 - Compute contrast features (pancreas vs surrounding): ~11 features per dilation
 
-**Effort:** 4-6 hours. **Priority:** Medium — novel approach, adds depth.
+**Effort:** 4-6 hours. **Priority:** Medium - novel approach, adds depth.
 
 ### Step 4.3: Repeat extended analyses on independent dataset
 If Steps 4.1/4.2 produce interesting features, repeat the ML pipeline on the independent dataset.
@@ -187,8 +199,8 @@ If Steps 4.1/4.2 produce interesting features, repeat the ML pipeline on the ind
 
 ## Files referenced
 
-- `docs/PLAN_INTEGRATE_NEW_IMAGES.md` — integration steps for 3 new images
-- `docs/PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md` — 7 approaches for non-independence
-- `docs/legacy/PLAN_EXPERIMENTS_SURROUNDING_TISSUE_AND_ALT_FEATURES.md` — detailed code for Categories 3-4 (LBP, Gabor, Laws', surrounding tissue)
-- `reports/13_merged_radiomics_clinical.csv` — current 137-study dataset
-- `data/Páncreas restantes (22-04-2026)/` — 3 new DICOMs from Carlos
+- `docs/legacy/PLAN_INTEGRATE_NEW_IMAGES.md` - integration steps for 3 new images
+- `docs/PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md` - 7 approaches for non-independence
+- `docs/legacy/PLAN_EXPERIMENTS_SURROUNDING_TISSUE_AND_ALT_FEATURES.md` - detailed code for Categories 3-4 (LBP, Gabor, Laws', surrounding tissue)
+- `reports/13_merged_radiomics_clinical.csv` - current 137-study dataset
+- `data/Páncreas restantes (22-04-2026)/` - 3 new DICOMs from Carlos

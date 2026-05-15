@@ -61,9 +61,13 @@ Run this in a notebook cell:
 - `import cv2, pydicom, numpy as np, pandas as pd, SimpleITK as sitk; import radiomics`
 
 ## 6) Resume work (what to run next)
-- Single-image radiomics test:
-  - `analysis/11_extract_radiomics_for_one_test_image.ipynb`
-- Then build the “all images → one CSV” radiomics extraction notebook (see `docs/RADIOMICS_PLAN.md`).
+
+All notebooks 01-21 are complete. Current next steps:
+- **Code:** Create NB 22 (alternative texture features) and NB 23 (surrounding tissue). See `docs/PLAN_THESIS_ROADMAP.md`.
+- **Thesis writing:** Results §3.5, Related Work, Discussion. See `docs/THESIS_HANDOFF.md`.
+- **For thesis compilation:** Install TeX Live 2026, then: `cd thesis && export PATH=”/usr/local/texlive/2026/bin/universal-darwin:$PATH” && latexmk -pdf MasterThesis.tex`
+
+Also copy `analysis/reports/` alongside the data - it's gitignored but contains all computed CSV results (saves re-running all notebooks).
 
 ## Common mistakes to avoid
 - Forgetting to transfer `data/`.

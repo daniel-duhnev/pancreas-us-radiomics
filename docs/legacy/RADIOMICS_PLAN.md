@@ -34,10 +34,10 @@ Steps:
 ## Analysis strategy (simple first)
 - Univariate statistics:
   - For each feature, compare rejection vs no rejection.
-  - If assumptions for t-test are not met, use Mann–Whitney U.
+  - If assumptions for t-test are not met, use Mann-Whitney U.
 - Multiple testing awareness:
   - Start without correction to see if any signal exists.
-  - If you find many “significant” features, apply correction (e.g., Benjamini–Hochberg FDR) and report both.
+  - If you find many “significant” features, apply correction (e.g., Benjamini-Hochberg FDR) and report both.
 - Feature reduction / selection (to avoid overfitting):
   - Drop highly correlated features.
   - Use a simple model (e.g., logistic regression with regularization, or random forest) to rank feature importance.

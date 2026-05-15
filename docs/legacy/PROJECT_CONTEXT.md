@@ -29,5 +29,5 @@ If uncertainty remains, contact the data provider / hospital clinic.
 ## Timeline hints (from supervisor notes)
 - Short term: understand dataset structure + confirm spreadsheet mapping.
 - Next: finish preprocessing (done now) and move quickly into radiomics.
-- After Easter / March–April: start writing introduction + methods while experiments run.
+- After Easter / March-April: start writing introduction + methods while experiments run.
 

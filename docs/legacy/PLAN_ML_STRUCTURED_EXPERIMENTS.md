@@ -1,10 +1,10 @@
-# Plan: Structured ML Experiments — One Variable at a Time
+# Plan: Structured ML Experiments - One Variable at a Time
 
 ## Context
 
-The ML work has become messy — 4 exploratory notebooks (16a, 16b, 16c, 16_1), a kitchen-sink comprehensive notebook, and no clear structure. Daniel wants to reset and take a scientific approach: define a baseline, change one thing at a time, keep the winner, move on. Each experiment answers one question. The final result is a single defensible ML pipeline.
+The ML work has become messy - 4 exploratory notebooks (16a, 16b, 16c, 16_1), a kitchen-sink comprehensive notebook, and no clear structure. Daniel wants to reset and take a scientific approach: define a baseline, change one thing at a time, keep the winner, move on. Each experiment answers one question. The final result is a single defensible ML pipeline.
 
-All results so far show AUC ~0.5. Boruta rejected all 31 features. The goal isn't to find a miracle — it's to be thorough and structured so the negative result is bulletproof for the thesis.
+All results so far show AUC ~0.5. Boruta rejected all 31 features. The goal isn't to find a miracle - it's to be thorough and structured so the negative result is bulletproof for the thesis.
 
 ## Step 0: Clean up
 
@@ -16,7 +16,7 @@ All results so far show AUC ~0.5. Boruta rejected all 31 features. The goal isn'
 
 Using 17 because the 16 series was exploratory. This is the "real" structured ML notebook.
 
-## Fixed methodology (not an experiment — this is the measuring stick)
+## Fixed methodology (not an experiment - this is the measuring stick)
 
 - **Evaluation:** LOOCV on the full dataset (134 samples). Most robust for small n, Gemma recommended it.
 - **Scaling:** StandardScaler fit inside each fold (no leakage).
@@ -47,7 +47,7 @@ Try:
 
 Try:
 - All 31 features (baseline)
-- Boruta selection (may select 0 — that's a result)
+- Boruta selection (may select 0 - that's a result)
 - RFE: iteratively drop least important feature, record AUC at each step, find the best subset size
 
 **Output:** Table with AUC for each feature set. If Boruta selects 0 features, that confirms no signal. RFE curve shows whether fewer features helps.
@@ -57,7 +57,7 @@ Try:
 ### Experiment 3: Do better hyperparameters help?
 
 **Change:** hyperparameters
-**Hold constant:** winning algorithm + feature set, 5-fold stratified CV (not LOOCV — grid search with LOOCV produces NaN with roc_auc scoring)
+**Hold constant:** winning algorithm + feature set, 5-fold stratified CV (not LOOCV - grid search with LOOCV produces NaN with roc_auc scoring)
 
 Try: small grid search for the winning algorithm. Example grids:
 - LogReg: C=[0.01, 0.1, 1, 10], penalty=[l1, l2]
@@ -71,14 +71,14 @@ Try: small grid search for the winning algorithm. Example grids:
 
 ### Experiment 4: Final pipeline + ROC + threshold
 
-**Change:** nothing — this is the final evaluation
+**Change:** nothing - this is the final evaluation
 **Hold constant:** best algorithm + features + hyperparameters from Exp 1-3
 
 - Run LOOCV with the final pipeline
 - Plot ROC curve, mark Youden threshold
 - Report: AUC, sensitivity, specificity at Youden threshold
 - Save ROC curve to `reports/17_roc_final.png`
-- Compare to the default threshold (0.5) — show that Youden doesn't help when AUC ~0.5
+- Compare to the default threshold (0.5) - show that Youden doesn't help when AUC ~0.5
 
 ### Experiment 5: Does the late subset change anything?
 
@@ -96,7 +96,7 @@ Each experiment is a block of 3-4 cells:
 1. Markdown: what we're testing, what's fixed, what changes
 2. Code: run the experiment, print results
 3. Code: plot (if applicable)
-4. Markdown: conclusion — what won, what we carry forward
+4. Markdown: conclusion - what won, what we carry forward
 
 Estimated ~20-25 cells total. Each cell under 40 lines per AGENT_HANDOFF.md.
 
@@ -120,7 +120,7 @@ Followed by 2-3 sentences: "We tested 4 algorithms, 3 feature selection methods,
 2. **Each experiment's conclusion is the next experiment's input.** Clear dependency chain.
 3. **Reproducible.** Fixed seeds, saved results, documented decisions.
 4. **Defensible for thesis.** "We systematically evaluated algorithms, feature selection, and hyperparameters. At each stage, the best result was carried forward."
-5. **Handles the negative result well.** If every experiment returns AUC ~0.5, the chain of experiments shows you were thorough — not that you were lazy.
+5. **Handles the negative result well.** If every experiment returns AUC ~0.5, the chain of experiments shows you were thorough - not that you were lazy.
 
 ## Verification
 
