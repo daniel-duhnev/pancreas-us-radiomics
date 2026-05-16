@@ -20,16 +20,18 @@
 - NB 19: stats on independent dataset - complete (4 uncorrected p<0.05, 0 after FDR)
 - NB 20: ML on independent dataset - complete (best AUC 0.569, all CIs include 0.5)
 - NB 21: paired analysis (14 patients) - complete (9 uncorrected p<0.05, 0 after FDR)
+- NB 22: alternative texture features (LBP, Gabor, Laws') - complete (0/153 FDR, ML AUC ~0.5)
+- NB 23: surrounding tissue analysis - complete (0/93 normalized FDR, 0/11 contrast FDR, ML AUC ~0.5)
 - 3 new images (34_02, 40_02, 41_03) integrated (137 studies total)
 - Study 47_01 excluded (no images, confirmed by hospital)
 - Thesis: Methods chapter written, Results sections 3.1-3.4 written, Introduction motivation + objectives written
-- Results §3.5 (paired analysis) ready to write - NB 21 data available at `analysis/reports/21_*`
-- Next notebooks to create: NB 22, 23 (see docs/PLAN_THESIS_ROADMAP.md)
+- Results §3.5-3.7 ready to write - NB 21/22/23 data available at `analysis/reports/`
+- ALL experiment notebooks complete (NB 01-23). No further coding needed.
 
 ## Current phase (May 2026)
-- Extended analysis (alt texture features, surrounding tissue) - NB 22, 23
-- Thesis writing in LaTeX (Results sections 3.5-3.7, Discussion, Related Work still needed)
-- All core analysis complete (NB 01-21). Only extended experiments remain.
+- ALL experiment notebooks complete (NB 01-23). No further coding needed.
+- Thesis writing in LaTeX: Results sections 3.5-3.7, Discussion, Related Work still needed
+- Only remaining work is thesis writing + final figures
 
 ## Coding standards
 - See `docs/AGENT_HANDOFF.md` for full rules
@@ -44,8 +46,8 @@
 
 ## Thesis timeline
 - Independent dataset + core results: DONE (NB 18-21 complete as of May 12)
-- Extended analysis (NB 22-23): May 19-30
-- Thesis writing: ongoing (Methods + Results §3.1-3.4 done; §3.5 ready; Related Work + Discussion pending)
+- Extended analysis (NB 22-23): DONE (complete as of May 15)
+- Thesis writing: ongoing (Methods + Results §3.1-3.4 done; §3.5-3.7 ready to write; Related Work + Discussion pending)
 - Submit to Gemma for review: June 8
 - Final submission: mid June 2026
 - Thesis defence: mid July 2026
