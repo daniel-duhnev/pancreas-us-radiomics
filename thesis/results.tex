@@ -235,9 +235,65 @@ Naive Bayes & 10 & 0.508 & [0.36, 0.66] & 0.492 & 0.143 & 1.000 \\
 
 The consistent near-chance performance across both datasets and multiple classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. The ML results rule out the possibility that a multivariate combination of individually non-significant features might achieve useful classification---no such combination was found.
 
-% Sections 3.5-3.7 will be added after NB 21-23 are complete:
-% - Independent Dataset Analysis (paired with clinical features)
-% - Paired Analysis
+\section{Paired Analysis}
+\label{sec:paired_results}
+
+The preceding analyses treat each study as an independent observation, which is appropriate for replicating the methodology of Bassaganyas et al.\ \cite{bassaganyas2025} but does not account for within-patient correlation. To address this, a paired analysis was conducted on the 14 patients who contributed both rejection and no-rejection studies to the dataset.
+
+\subsection{Pair Selection}
+
+For each of the 14 patients, one rejection study and one no-rejection study were selected to form a matched pair. The selection criterion maximised the temporal separation between the two studies (measured by study-number gap), ensuring that the paired observations represent distinct clinical episodes rather than closely spaced follow-ups. The resulting pairs had a median gap of 2 study visits (range 1--5). Table~\ref{tab:paired_summary} summarises the available sample sizes.
+
+\begin{table}[ht]
+\centering
+\caption{Sample sizes for the paired analysis. ARFI measurements were available for 12 of the 14 paired patients; DCE-US parameters were available for 10.}
+\label{tab:paired_summary}
+\begin{tabular}{lc}
+\toprule
+Feature group & Pairs available \\
+\midrule
+Radiomics (93 features) & 14 \\
+ARFI elastography (4 features) & 12 \\
+DCE-US perfusion (13 features) & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Radiomics Features}
+
+For each pair, the within-patient difference was computed (rejection value minus no-rejection value) and a Wilcoxon signed-rank test was applied to assess whether the median difference differed from zero. Nine of 93 features reached nominal significance at $p < 0.05$, with \texttt{ngtdm\_Coarseness} showing the lowest uncorrected $p$-value ($p = 0.011$, median difference $= -0.001$). However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values equalled 0.28, far from significance. Table~\ref{tab:paired_radiomics} lists the features reaching uncorrected $p < 0.05$.
+
+\begin{table}[ht]
+\centering
+\caption{Paired analysis: radiomics features with uncorrected $p < 0.05$ (Wilcoxon signed-rank test, $n = 14$ pairs). None survive FDR correction. Median diff = rejection $-$ no-rejection.}
+\label{tab:paired_radiomics}
+\small
+\begin{tabular}{lrrrr}
+\toprule
+Feature & Median diff & $W$ & $p$ & $p_{\text{FDR}}$ \\
+\midrule
+ngtdm\_Coarseness & $-0.001$ & 13 & 0.011 & 0.28 \\
+glcm\_Imc2 & 0.019 & 19 & 0.035 & 0.28 \\
+glszm\_SizeZoneNonUniformity & 32.3 & 19 & 0.035 & 0.28 \\
+firstorder\_Range & 6.0 & 19 & 0.035 & 0.28 \\
+glszm\_GrayLevelVariance & 0.026 & 19 & 0.035 & 0.28 \\
+glrlm\_GrayLevelVariance & 0.026 & 19 & 0.035 & 0.28 \\
+glrlm\_RunLengthNonUniformity & 32.3 & 19 & 0.035 & 0.28 \\
+gldm\_SmallDepLowGrayLevelEmph & $-0.008$ & 20 & 0.042 & 0.28 \\
+gldm\_LargeDepHighGrayLevelEmph & 18.3 & 21 & 0.049 & 0.28 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Notably, the features reaching nominal significance in the paired analysis differ entirely from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis, \texttt{firstorder\_Minimum} was the closest to significance ($p = 0.053$); in the independent-dataset analysis, \texttt{ngtdm\_Busyness} and \texttt{ngtdm\_Strength} ranked highest. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
+
+\subsection{Clinical Features}
+
+The same paired Wilcoxon signed-rank test was applied to the 17 clinical imaging features. No feature reached significance at $p < 0.05$. The ARFI features---which showed strong significance in the unpaired late-period analysis (Section~\ref{sec:clinical_results}, $p < 0.001$)---were markedly non-significant in the paired comparison: ARFI mediana ($p = 0.86$), ARFI media ($p = 0.91$), ARFI DE ($p = 0.73$), ARFI RIQ ($p = 0.85$). The best-performing clinical feature was WoR (wash-out rate, $p = 0.16$), which was non-significant in both unpaired analyses.
+
+This result has an important interpretation. The ARFI signal detected in the unpaired analysis likely reflects stable between-patient differences in tissue stiffness---patients who eventually experience rejection may have inherently stiffer grafts---rather than within-patient changes caused by acute rejection episodes. When each patient serves as their own control, the ARFI difference disappears. This does not invalidate ARFI as a clinical biomarker (it still discriminates patients at population level), but it suggests that the mechanism is not a transient rejection-induced stiffness increase detectable by comparing the same patient's studies over time.
+
+% Sections 3.6-3.7 will be added after NB 22-23 are complete:
 % - Extended Analysis (alternative features, surrounding tissue)
 
 \newpage

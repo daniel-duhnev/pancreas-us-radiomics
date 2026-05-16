@@ -6,7 +6,7 @@ Carlos sent DICOM images for 3 of the 4 missing studies (34_02, 40_02, 41_03) on
 
 Downloaded files are at `data/Páncreas restantes (22-04-2026)/` (already copied from Downloads). Structure matches existing DICOMs: `study_id/date/dicom_uid`.
 
-After integration, dataset goes from 134 to 137 studies. Study 47_01 remains in the clinical spreadsheet (138 rows) but has no image — mark as excluded.
+After integration, dataset goes from 134 to 137 studies. Study 47_01 remains in the clinical spreadsheet (138 rows) but has no image - mark as excluded.
 
 ---
 
@@ -66,7 +66,7 @@ cp -r data/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PANCREAS_2
 
 **Checks:**
 - The 3 new study IDs merge correctly (have matching rows in `bd_estudiUPF.csv`)
-- 47_01 remains unmatched (no image) — confirm it's not in the output
+- 47_01 remains unmatched (no image) - confirm it's not in the output
 - Verify rejection labels are correct for the 3 new studies
 
 ### Step 6: Mark 47_01 as excluded
@@ -81,7 +81,7 @@ cp -r data/Páncreas\ restantes\ \(22-04-2026\)/41_03 data/PANCREAS_2/PANCREAS_2
 - Results will likely be essentially identical (3 extra data points)
 
 **Checks:**
-- Compare p-values before/after — should be very similar
+- Compare p-values before/after - should be very similar
 - If any big changes, investigate the 3 new studies specifically
 
 ### Step 8: Continue with independent dataset (NB 18)

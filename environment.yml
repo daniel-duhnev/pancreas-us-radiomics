@@ -88,4 +88,3 @@ dependencies:
       - tzdata==2025.3
       - wcwidth==0.6.0
       - zipp==3.23.0
-prefix: /home/daniduhnev/miniconda3/envs/thesis_env
