@@ -3,7 +3,7 @@
 \section{Feature Extraction Summary}
 \label{sec:feature_extraction_results}
 
-Radiomics feature extraction was applied to all 137 studies in the preprocessed dataset. The extraction completed without errors for every study, yielding a total of 93 features per study across the six feature classes described in Section~\ref{sec:feature_extraction}: first-order statistics (18 features), GLCM (24), GLDM (14), GLRLM (16), GLSZM (16), and NGTDM (5).
+Radiomics feature extraction was applied to all 137 studies in the preprocessed dataset. The extraction completed without errors for every study, yielding a total of 93 features per study across the six feature classes described in Section~\ref{sec:feature_extraction}: first-order statistics (18 features), GLCM (24), GLRLM (16), GLSZM (16), GLDM (14), and NGTDM (5).
 
 An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 300 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 32 features.
 
@@ -242,7 +242,7 @@ The preceding analyses treat each study as an independent observation, which is 
 
 \subsection{Pair Selection}
 
-For each of the 14 patients, one rejection study and one no-rejection study were selected to form a matched pair. The selection criterion maximised the temporal separation between the two studies (measured by study-number gap), ensuring that the paired observations represent distinct clinical episodes rather than closely spaced follow-ups. The resulting pairs had a median gap of 2 study visits (range 1--5). Table~\ref{tab:paired_summary} summarises the available sample sizes.
+For each of the 14 patients, one rejection study and one no-rejection study were selected to form a matched pair. The selection criterion maximised the study-number gap between the two studies, ensuring that the paired observations represent distinct clinical episodes rather than closely spaced follow-ups. The resulting pairs had a median gap of 2 study visits (range 1--5). Table~\ref{tab:paired_summary} summarises the available sample sizes.
 
 \begin{table}[ht]
 \centering
