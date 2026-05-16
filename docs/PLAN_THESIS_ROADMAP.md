@@ -7,7 +7,7 @@
 | Phase 1: Data Preparation | DONE | 3 new images integrated, independent dataset built (NB 18) |
 | Phase 2: Core Results | DONE | NB 19 (stats), 20 (ML), 21 (paired) all complete |
 | Phase 3: Thesis Writing | IN PROGRESS | Methods + Results §3.1-3.4 written; §3.5 ready to write; Related Work + Discussion pending |
-| Phase 4: Extended Analysis | NOT STARTED | NB 22, 23 not yet created |
+| Phase 4: Extended Analysis | DONE | NB 22 (alternative features) + NB 23 (surrounding tissue) complete |
 | Phase 5: Complete Thesis | UPCOMING | Target: submit to Gemma June 8 |
 
 ---
@@ -171,8 +171,8 @@ If Steps 4.1/4.2 produce interesting features, repeat the ML pipeline on the ind
 | 19 | Stats on independent dataset | Complete |
 | 20 | ML on independent dataset (10-fold CV) | Complete |
 | 21 | Paired analysis (14 patients) | Complete |
-| **22** | **Alternative texture features** | **To create** |
-| **23** | **Surrounding tissue analysis** | **To create** |
+| 22 | Alternative texture features | Complete |
+| 23 | Surrounding tissue analysis | Complete |
 
 ---
 

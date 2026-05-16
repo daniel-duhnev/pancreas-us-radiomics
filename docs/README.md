@@ -10,12 +10,13 @@ Start here:
 - [THESIS_HANDOFF.md](THESIS_HANDOFF.md) - comprehensive instructions for thesis-writing agents (section status, source mappings, style rules)
 
 Current plans:
-- [NEXT_STEPS_NB22_23.md](NEXT_STEPS_NB22_23.md) - **start here for remaining experiments** (detailed spec for NB 22-23, the final notebooks)
-- [PLAN_THESIS_ROADMAP.md](PLAN_THESIS_ROADMAP.md) - master plan for all work (NB 22-23, thesis writing, timeline through June 2026)
-- [PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md](PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md) - approaches for handling repeated measures (Approach 7 implemented in NB 21)
+- [PLAN_THESIS_ROADMAP.md](PLAN_THESIS_ROADMAP.md) - master plan for all work (all experiments done, thesis writing in progress)
 - [THESIS_WRITING_PLAN.md](THESIS_WRITING_PLAN.md) - chapter-by-chapter writing plan with page budgets
 
 Legacy (superseded or completed, in legacy/ folder):
+- [legacy/PROOFREAD_FINDINGS.md](legacy/PROOFREAD_FINDINGS.md) - proofread audit (20 findings, 3 fixed, rest deferred)
+- [legacy/NEXT_STEPS_NB22_23.md](legacy/NEXT_STEPS_NB22_23.md) - detailed spec for NB 22-23 (both complete)
+- [legacy/PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md](legacy/PLAN_NON_INDEPENDENT_DATA_AND_PAIRED_ANALYSIS.md) - approaches for handling repeated measures (NB 18-21 done)
 - [legacy/PLAN_INTEGRATE_NEW_IMAGES.md](legacy/PLAN_INTEGRATE_NEW_IMAGES.md) - steps to add 3 new DICOMs (done, 137 studies)
 - [legacy/PROJECT_CONTEXT.md](legacy/PROJECT_CONTEXT.md) - original project context doc
 - [legacy/RADIOMICS_PLAN.md](legacy/RADIOMICS_PLAN.md) - original radiomics pipeline plan

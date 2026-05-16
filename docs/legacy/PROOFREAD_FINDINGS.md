@@ -2,6 +2,8 @@
 
 Full review conducted May 16, 2026. All numbers verified against source CSVs.
 
+**Issues #1, #9, #15 have been fixed** (edits applied May 16).
+
 ---
 
 ## Critical Issues (factual/accuracy)
