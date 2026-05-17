@@ -3,10 +3,16 @@
 \begin{abstract}
 \pagenumbering{gobble}
 
-The abstract should have at least 200 but not more than 600 words. Placed on a right page next to a blank left page. A list of keywords (approximately 3 to 5) should be just below the abstract, preceded by the word "Keywords". Keywords should be separated by ";".
+Pancreas transplantation restores normoglycaemia in patients with type~1 diabetes, but graft rejection remains a common complication that threatens long-term outcomes. The reference standard for diagnosis is percutaneous biopsy, an invasive procedure with inherent risks and sampling limitations. Recent work has shown that clinical ultrasound biomarkers---Acoustic Radiation Force Impulse (ARFI) elastography and dynamic contrast-enhanced ultrasound (DCE-US)---can discriminate rejection non-invasively in the late post-transplant period. However, these techniques require specialised acquisition protocols and manual measurement. Radiomics, the automated extraction of quantitative texture features from medical images, offers a potentially scalable alternative.
+
+This thesis investigates whether radiomics texture features extracted from conventional grayscale ultrasound images can predict pancreas transplant rejection. A dataset of 137 ultrasound studies from 55 patients (39 with biopsy-confirmed rejection) was analysed. The preprocessing pipeline isolated the pancreas graft from clinician-annotated images, and 93 standardised features were extracted using PyRadiomics. Statistical testing (Mann-Whitney U and Welch's $t$-test with Benjamini-Hochberg correction) and machine learning classification (logistic regression, random forest, SVM, and naive Bayes within a joint optimisation framework) were applied. To ensure robustness, the analysis was extended with an independent dataset (one study per patient), paired within-patient comparisons, alternative texture features (Local Binary Patterns, Gabor filters, Laws' texture energy; 153 features), and surrounding tissue normalisation.
+
+No radiomics feature discriminated rejection after multiple testing correction in any analysis. Machine learning classifiers achieved AUC values indistinguishable from chance (best: 0.569, 95\% CI [0.40, 0.72]). In contrast, replication of the clinical biomarker analysis of Bassaganyas et al.\ confirmed that ARFI elastography significantly discriminates rejection in the late post-transplant period ($p < 0.001$, effect size $r = 0.72$), with results matching published values to three decimal places. A paired analysis revealed that the ARFI signal reflects between-patient differences in baseline stiffness ($p = 0.86$ within-patient) rather than transient rejection-induced changes.
+
+Automated texture analysis of grayscale ultrasound does not capture the tissue changes associated with pancreas transplant rejection. Clinical biomarkers measuring tissue stiffness and perfusion remain necessary for non-invasive rejection monitoring. Future work should explore deep learning approaches, multi-parametric imaging models, and larger multi-centre cohorts.
 
 \bigskip
-Keywords: Imaging techniques; Cloud computing; Alzheimer
+Keywords: Pancreas transplantation; Graft rejection; Radiomics; Ultrasound; Machine learning; ARFI elastography
 
 
 \newpage

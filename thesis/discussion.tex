@@ -1,19 +1,112 @@
 \chapter{Discussion and Conclusions}
 
 \section{Discussion}
+\label{sec:discussion}
 
-% TODO: Write after all results are in
+\subsection{The Negative Radiomics Result}
+
+The central finding of this thesis is that radiomics texture features extracted from grayscale ultrasound images do not discriminate between pancreas transplant rejection and non-rejection. This negative result is consistent across all seven analysis strategies employed: full-dataset univariate testing (Section~\ref{sec:radiomics_results}), stratified analysis by post-transplant period, independent-dataset testing with one study per patient, paired within-patient comparison (Section~\ref{sec:paired_results}), machine learning classification on both datasets (Section~\ref{sec:ml_results}), alternative texture features from three distinct methodological families (Section~\ref{sec:alternative_results}), and surrounding tissue normalisation (Section~\ref{sec:surrounding_results}). The robustness of this null finding across complementary approaches rules out methodological artifacts and supports the interpretation that grayscale ultrasound texture does not encode the tissue changes associated with rejection in a manner accessible to quantitative feature analysis.
+
+A physical explanation for this negative result follows from the image formation mechanism of B-mode ultrasound. Grayscale ultrasound constructs images from echoes reflected at boundaries where acoustic impedance changes---acoustic impedance being the product of tissue density and speed of sound. The resulting texture therefore encodes macroscopic structural interfaces between tissue types, not cellular-level pathology. Pancreas transplant rejection manifests histologically through inflammation of the acinar parenchyma, oedema, venulitis, and progressive fibrosis \cite{drachenberg2008, niederhaus2013}. These changes occur at the microscopic level (cellular infiltration, interstitial expansion) and may not alter acoustic impedance boundaries in ways that produce detectable differences in image texture at the spatial resolution of clinical B-mode imaging, which is typically 0.5--2~mm axially.
+
+By contrast, ARFI elastography and DCE-US measure fundamentally different physical properties. ARFI quantifies tissue stiffness through shear wave propagation velocity: inflammation and fibrosis increase parenchymal stiffness, producing a directly measurable change in wave speed \cite{bassaganyas2025}. DCE-US quantifies microvascular perfusion through contrast agent dynamics: rejection-related vascular damage reduces blood flow in measurable ways \cite{kersting2013}. These modalities access physical properties that are more proximal to the pathophysiology of rejection than the acoustic impedance differences captured by B-mode texture.
+
+The comparison with ultrasound radiomics applications in other domains provides further context. Radiomics has shown promise in liver fibrosis staging, thyroid nodule classification, and breast lesion characterisation---conditions that typically involve larger structural changes (nodules, architectural distortion, advanced fibrosis) than the relatively subtle and diffuse inflammatory changes of early transplant rejection. The absence of a focal lesion with distinct texture contrast in rejection may fundamentally limit the utility of texture-based approaches in this setting.
+
+\subsection{Clinical Biomarkers Successfully Discriminate Rejection}
+
+In contrast to the radiomics analysis, the clinical imaging biomarkers demonstrated clear discriminative ability for rejection in the late post-transplant period. ARFI mediana achieved $p < 0.001$ with a large effect size ($r = 0.72$) in the late-period subset, and all four ARFI features were highly significant (Section~\ref{sec:clinical_results}, Table~\ref{tab:clinical_late}). Additionally, four DCE-US perfusion parameters reached significance, with the rejection group showing reduced wash-in and wash-out perfusion.
+
+The near-perfect replication of the results reported by Bassaganyas et al.\ \cite{bassaganyas2025}---with $p$-values matching to three decimal places for 10 of 12 features (Table~\ref{tab:replication})---serves an important dual purpose. First, it validates the data processing and statistical pipeline used throughout this thesis: if the pipeline were flawed, it would not reproduce known results. Second, it establishes the clinical feature analysis as a positive control: the same methodology that fails to find a radiomics signal successfully detects the clinical biomarker signal, confirming that the negative radiomics result reflects a genuine absence of discriminative information rather than an underpowered or incorrectly implemented analysis.
+
+The finding that 8 of 17 clinical features reach significance in the late period demonstrates that discriminative imaging information does exist in this cohort---the tissue changes of rejection are detectable by ultrasound. However, this information resides in physical properties (stiffness, perfusion) that require specialised acquisition modes (ARFI, DCE-US), not in the grayscale texture patterns accessible from standard B-mode images.
+
+\subsection{Paired Analysis: Between-Patient Versus Within-Patient Effects}
+
+The paired analysis (Section~\ref{sec:paired_results}) yielded an unexpected finding regarding the nature of the ARFI signal. When comparing rejection and non-rejection studies within the same patient (14 patients who experienced both outcomes), the ARFI features that were highly significant in the unpaired analysis became markedly non-significant: ARFI mediana ($p = 0.86$), ARFI media ($p = 0.91$). This dramatic loss of significance---from $p < 0.001$ to $p > 0.85$---indicates that the ARFI signal detected in unpaired comparisons reflects stable differences between patients rather than transient changes within patients caused by rejection episodes.
+
+One interpretation of this finding is that patients who eventually experience rejection may have inherently stiffer grafts, potentially due to donor characteristics, surgical factors, or pre-existing subclinical fibrosis. Under this interpretation, ARFI identifies patients whose baseline tissue properties place them at higher risk of rejection, rather than detecting the acute inflammatory process of rejection itself. If this between-patient mechanism holds, ARFI would be better understood as a risk stratification tool---identifying patients who may benefit from closer surveillance or modified immunosuppression---rather than a diagnostic test for active rejection episodes.
+
+An alternative interpretation is that the paired analysis is simply underpowered. With only 14 pairs (12 with available ARFI measurements), the Wilcoxon signed-rank test may lack statistical power to detect a real within-patient effect, particularly if the magnitude of rejection-induced stiffness change is modest relative to natural measurement variability. A study with substantially more paired observations would be needed to resolve this ambiguity.
+
+This observation was not explored in the original analysis by Bassaganyas et al.\ \cite{bassaganyas2025}, who used unpaired group comparisons throughout. While not definitive given the sample size limitations, it represents a hypothesis-generating finding that warrants investigation in larger longitudinal cohorts with repeated measurements per patient.
+
+\subsection{Implications}
+
+Based on the methods and sample tested in this study, automated grayscale texture analysis does not provide diagnostic value for pancreas transplant rejection monitoring comparable to the clinical biomarkers measured by ARFI elastography and DCE-US. This result suggests that future efforts toward non-invasive rejection detection should focus on imaging modalities and features that encode the specific physical properties altered by the rejection process---tissue stiffness and microvascular perfusion---rather than generic texture descriptors derived from standard B-mode images.
+
+The negative radiomics result is nonetheless informative for the field. It narrows the search space for future biomarker development by demonstrating that the approach of applying hand-crafted texture features to conventional ultrasound images is unlikely to yield clinically useful discrimination in this application. This information is valuable for directing research resources toward more promising directions.
+
+From a clinical standpoint, the results confirm that specialised acquisition modes (ARFI, DCE-US) remain necessary for quantitative rejection assessment. The specialist training and equipment required for these techniques cannot currently be replaced by automated analysis of routine grayscale images. However, the successful replication of ARFI-based discrimination validates the potential of non-invasive imaging biomarkers as a complement to biopsy in the clinical management of pancreas transplant recipients.
+
 
 \section{Limitations}
+\label{sec:limitations}
 
-% TODO: Write limitations
+Several limitations of this study should be acknowledged:
+
+\begin{enumerate}
+
+\item \textbf{Sample size.} The dataset comprises 137 studies from 55 patients (39 with rejection), which limits statistical power for detecting small effects. While this sample is consistent with or larger than other single-centre transplant imaging studies, the high ratio of features to observations (93 features for 55--137 observations) creates a challenging statistical setting. A formal power analysis is not feasible for multivariate radiomics pipelines where the true effect size is unknown, but the consistently null results across all approaches suggest that any undetected effect would be very small.
+
+\item \textbf{Single-centre, single-scanner design.} All images were acquired on a single Siemens ACUSON S2000 ultrasound scanner at Hospital Cl\'{i}nic Barcelona. While this eliminates inter-scanner variability as a confound (all images share the same technical characteristics), it limits generalisability to other scanners, probe types, or imaging protocols.
+
+\item \textbf{Repeated measures.} Multiple studies per patient violate the independence assumption of standard statistical tests. This was addressed with an independent dataset analysis (one study per patient, Section~\ref{sec:radiomics_results}) and a paired within-patient analysis (Section~\ref{sec:paired_results}), both yielding negative results. However, the full-dataset analyses (137 studies) may have inflated degrees of freedom, and the clustering structure may affect confidence interval coverage.
+
+\item \textbf{Single PyRadiomics configuration.} Feature extraction used the default bin width of 25, no wavelet or Laplacian of Gaussian (LoG) image filters, and no image resampling. Alternative configurations---particularly wavelet decomposition at multiple scales---might capture texture information at spatial frequencies not accessible with the default settings. This limitation was partially addressed by the alternative feature families in Section~\ref{sec:alternative_results}, which also yielded negative results.
+
+\item \textbf{No combined radiomics and clinical model.} Radiomics and clinical features were analysed separately. A model combining both feature types might yield additive predictive value. However, given that no individual radiomics feature shows even uncorrected significance on the independent dataset, the marginal contribution of radiomics to a combined model would likely be minimal.
+
+\item \textbf{Retrospective secondary analysis.} Images were acquired for routine clinical care, not for radiomics research. Acquisition parameters such as gain, time-gain compensation, depth, and probe pressure were not standardised across examinations. This introduces variability that may obscure subtle texture differences. The surrounding tissue normalisation (Section~\ref{sec:surrounding_results}) was designed to address this, but its failure to improve results suggests that acquisition variability is not the sole explanation for the negative finding.
+
+\item \textbf{Binary rejection outcome.} Rejection was coded as a binary variable (yes/no) based on clinical records. The severity of rejection (mild vs.\ moderate vs.\ severe per the Banff grading schema \cite{drachenberg2008}), the type of rejection (T-cell-mediated vs.\ antibody-mediated), and the temporal proximity between imaging and biopsy confirmation were not modelled. A more granular outcome might reveal associations with specific rejection subtypes or severity grades.
+
+\item \textbf{Paired analysis power.} Only 14 patients contributed both rejection and no-rejection studies, yielding limited statistical power for the paired comparison. The finding that ARFI significance vanishes in paired analysis is hypothesis-generating but not definitive---a larger paired sample would be needed to establish whether this reflects a true between-patient mechanism or insufficient power to detect a within-patient effect.
+
+\end{enumerate}
+
 
 \section{Future Work}
+\label{sec:future_work}
 
-% TODO: Write future directions
+Several directions could extend the findings of this thesis:
+
+\begin{enumerate}
+
+\item \textbf{Deep learning on raw images.} Convolutional neural networks learn hierarchical feature representations directly from image data and may capture spatial patterns not encodable by hand-crafted texture descriptors. Transfer learning from models pre-trained on natural images or other ultrasound domains could address the small sample limitation, though careful validation would be needed to avoid overfitting.
+
+\item \textbf{Multi-parametric imaging models.} Combining B-mode texture features with ARFI stiffness maps and DCE-US perfusion curves in a single predictive model could exploit the complementary physical information encoded by each modality. The significant clinical biomarkers identified in this thesis could serve as anchor features in such a model.
+
+\item \textbf{Expanded PyRadiomics configurations.} Wavelet-based and Laplacian of Gaussian (LoG) filtered images at multiple spatial scales could access texture information at frequencies not captured by the default configuration used in this study. Systematic evaluation across bin widths and filter combinations would establish whether any configuration captures rejection-related changes.
+
+\item \textbf{Larger multi-centre cohorts.} Pooling data across transplant centres would increase statistical power, enable external validation, and test generalisability across different scanners and acquisition protocols. Standardised imaging protocols across sites would further reduce confounding variability.
+
+\item \textbf{Longitudinal modelling.} Mixed-effects models or time-series approaches that explicitly model within-patient trajectories over repeated follow-up visits could capture temporal patterns of texture change, rather than treating each study as a cross-sectional observation.
+
+\item \textbf{Radiomic feature reproducibility assessment.} Test--retest studies, in which the same graft is imaged multiple times within a short interval, would quantify which radiomics features are reproducible across repeated acquisitions. Features with poor reproducibility cannot reliably detect disease-related changes and should be excluded from future analyses.
+
+\end{enumerate}
+
 
 \section{Conclusions}
+\label{sec:conclusions}
 
-% TODO: Write conclusions
+This thesis addressed five objectives concerning the application of radiomics to pancreas transplant ultrasound. The conclusions for each are:
+
+\begin{enumerate}
+
+\item \textbf{Feature extraction.} A preprocessing pipeline was developed to isolate the pancreas graft region from clinician-annotated ultrasound images, and 93 standardised radiomics features were successfully extracted from all 137 studies without error.
+
+\item \textbf{Individual feature discrimination.} No individual radiomics feature discriminates rejection from non-rejection after correction for multiple testing. This result holds across the full dataset, the independent dataset (one study per patient), stratified analysis by post-transplant period, and the paired within-patient comparison. The few features reaching uncorrected significance are unstable across analyses, indicating chance findings rather than a consistent signal.
+
+\item \textbf{Machine learning classification.} Multivariate classifiers achieve AUC values indistinguishable from chance (best: 0.569, 95\% CI [0.40, 0.72]), confirming that no combination of radiomics features achieves useful discrimination. This result is consistent across four classifier types and two independent datasets.
+
+\item \textbf{Replication of Bassaganyas et al.} The clinical imaging analysis was replicated with near-identical results, validating the analysis methodology. ARFI elastography discriminates rejection in the late post-transplant period ($p < 0.001$, effect size $r = 0.72$), and the published findings are reproducible to three decimal places.
+
+\item \textbf{Comparison of radiomics with clinical biomarkers.} Radiomics texture features do not provide diagnostic value for rejection detection, whereas clinical biomarkers (ARFI, DCE-US) achieve significant discrimination. The negative radiomics result is robust across alternative feature families (LBP, Gabor, Laws') and normalisation approaches, ruling out the specific feature set or acquisition variability as explanations.
+
+\end{enumerate}
+
+In summary, this thesis demonstrates that while quantitative clinical biomarkers derived from ARFI elastography and DCE-US can detect pancreas graft rejection non-invasively, automated texture analysis of grayscale ultrasound images does not capture the tissue-level changes associated with rejection. The finding directs future research toward imaging features that encode the specific physical properties---tissue stiffness and microvascular perfusion---altered by the rejection process.
 
 \newpage

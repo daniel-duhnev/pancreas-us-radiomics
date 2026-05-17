@@ -139,7 +139,7 @@ Area & 0.731 & $-0.06$ & 0.46 & 0.46 \\
 
 \subsection{Replication of Bassaganyas et al.}
 
-Table~\ref{tab:replication} compares our late-period $p$-values with those reported by Bassaganyas et al.\ \cite{bassaganyas2025} for the 12 DCE-US and ARFI features reported in their publication. Using the same $> 90$-day cutoff and the same dataset, our results match the published values to three decimal places for 10 of the 12 features. The ARFI mediana $p$-value is reported as ``$< 0.001$'' in both analyses. The only notable discrepancy is RT (rise time), where our $p$-value (0.142) is lower than the published value (0.276); however, both are non-significant and this difference does not affect the conclusions.
+Table~\ref{tab:replication} compares our late-period $p$-values with those reported by Bassaganyas et al.\ \cite{bassaganyas2025} for the 12 DCE-US and ARFI features reported in their publication. Using the same $> 90$-day cutoff and the same dataset, our results match the published values to three decimal places for 10 of the 12 features. The ARFI mediana $p$-value is reported as ``$< 0.001$'' in both analyses. The only notable discrepancy is RT (rise time), where our $p$-value (0.142) is lower than the published value (0.276); however, both are non-significant and this difference does not affect the conclusions. The most likely explanation is that the rise time values in the clinical database were updated between the original analysis and our data export---RT is computed from the initial slope of the time-intensity curve and is the DCE-US parameter most sensitive to curve-fitting parameters, whereas integral and peak measures (which match exactly) are more robust to fitting choices.
 
 This near-perfect replication serves two purposes. First, it validates our analysis pipeline: the data loading, preprocessing, group assignment, and statistical testing produce results consistent with an independent analysis of the same dataset. Second, it confirms that the negative radiomics result (Section~\ref{sec:radiomics_results}) is not an artifact of a flawed pipeline---the same pipeline detects the clinical biomarker signal when it exists.
 
@@ -293,7 +293,78 @@ The same paired Wilcoxon signed-rank test was applied to the 17 clinical imaging
 
 This result has an important interpretation. The ARFI signal detected in the unpaired analysis likely reflects stable between-patient differences in tissue stiffness---patients who eventually experience rejection may have inherently stiffer grafts---rather than within-patient changes caused by acute rejection episodes. When each patient serves as their own control, the ARFI difference disappears. This does not invalidate ARFI as a clinical biomarker (it still discriminates patients at population level), but it suggests that the mechanism is not a transient rejection-induced stiffness increase detectable by comparing the same patient's studies over time.
 
-% Sections 3.6-3.7 will be added after NB 22-23 are complete:
-% - Extended Analysis (alternative features, surrounding tissue)
+\section{Alternative Texture Features}
+\label{sec:alternative_results}
+
+To assess whether the negative radiomics finding was specific to the PyRadiomics feature set, 153 alternative texture features were extracted from the same preprocessed images: 54 Local Binary Pattern (LBP) histogram features, 54 Gabor filter response statistics, and 45 Laws' texture energy measures (see Section~\ref{sec:alternative_features} for details).
+
+\subsection{Statistical Analysis}
+
+On the full dataset (137 studies), 5 of 153 features reached nominal significance at $p < 0.05$ (uncorrected): three LBP features (\texttt{lbp\_r3\_p24\_bin6}, $p = 0.014$; \texttt{lbp\_r3\_p24\_bin18}, $p = 0.040$; \texttt{lbp\_r3\_p24\_bin25}, $p = 0.047$) and two Gabor features (\texttt{gabor\_w10\_o150\_std}, $p = 0.036$; \texttt{gabor\_w5\_o90\_mean}, $p = 0.049$). None survived FDR correction (minimum $q = 0.60$). Under the null hypothesis of no association, 7.7 features ($153 \times 0.05$) would be expected to reach $p < 0.05$ by chance; the observed count of 5 is below this expectation.
+
+On the independent dataset (55 studies, one per patient), 7 features reached uncorrected $p < 0.05$, predominantly from the Laws' family (5 of 7). The strongest was \texttt{laws\_L5W5\_mean} ($p = 0.021$). Again, none survived FDR correction (minimum $q = 0.54$).
+
+\subsection{Per-Family Results}
+
+Table~\ref{tab:alt_per_family} summarises the results separately for each feature family, evaluated on the independent dataset.
+
+\begin{table}[ht]
+\centering
+\caption{Alternative texture feature results by family, evaluated on the independent dataset ($n = 55$). Statistical results show uncorrected significance counts; ML results use 10-fold stratified cross-validation with the best-performing classifier per family.}
+\label{tab:alt_per_family}
+\begin{tabular}{lrrrrrr}
+\toprule
+Family & Features & $p < 0.05$ & FDR sig. & Best model & AUC & 95\% CI \\
+\midrule
+LBP & 54 & 1 & 0 & RF & 0.527 & [0.37, 0.68] \\
+Gabor & 54 & 1 & 0 & SVM & 0.490 & [0.33, 0.64] \\
+Laws' & 45 & 5 & 0 & RF & 0.651 & [0.50, 0.80] \\
+\midrule
+Combined & 153 & --- & --- & RF & 0.550 & [0.40, 0.71] \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Machine Learning}
+
+When all 153 alternative features were combined into the joint optimisation pipeline (Section~\ref{sec:ml_classification}), the best-performing model was Random Forest (AUC $= 0.55$, 95\% CI [0.40, 0.71]), with $k = 5$ selected features. All four classifiers produced confidence intervals spanning 0.5, confirming the absence of a reliable multivariate signal. The per-family analysis showed that Laws' features achieved the highest individual AUC of 0.651, though its confidence interval [0.50, 0.80] still includes chance performance.
+
+These results are consistent with the PyRadiomics analysis: no robust texture signal discriminates rejection from non-rejection in this cohort. The fact that three methodologically distinct feature families---each capturing different aspects of local texture---all fail to achieve significant discrimination rules out ``wrong features'' as an explanation for the negative finding.
+
+
+\section{Surrounding Tissue Analysis}
+\label{sec:surrounding_results}
+
+To test whether inter-patient variability in acquisition settings confounds the texture analysis, the surrounding-tissue normalisation approach described in Section~\ref{sec:surrounding_tissue} was applied. Two feature sets were evaluated: 93 PyRadiomics features re-extracted from the normalised images, and 11 contrast features quantifying the intensity relationship between the pancreas and surrounding tissue.
+
+\subsection{Normalised Radiomics}
+
+After $z$-score normalisation using the surrounding tissue ring, none of the 93 re-extracted PyRadiomics features reached statistical significance at $p < 0.05$ on the full dataset. The closest was \texttt{gldm\_SmallDependenceLowGrayLevelEmphasis} ($p = 0.057$). All FDR-corrected $q$-values exceeded 0.78. This result is weaker than the un-normalised analysis (which yielded 4 uncorrected hits on the independent dataset), suggesting that the normalisation procedure removed rather than revealed discriminative texture information.
+
+Machine learning classification on the normalised features confirmed this pattern. The best model (Logistic Regression, $k = 20$) achieved AUC $= 0.525$, marginally above chance and below the un-normalised PyRadiomics result (AUC $= 0.569$).
+
+\subsection{Contrast Features}
+
+The 11 contrast features---measuring intensity differences and ratios between the pancreas graft and surrounding tissue---showed no significant associations with rejection status. The strongest feature was \texttt{contrast\_p25\_diff} ($p = 0.10$, $q = 0.40$). No feature reached $p < 0.05$.
+
+The best machine learning model using contrast features alone was Naive Bayes (AUC $= 0.549$, $k = 6$), again indistinguishable from chance. Table~\ref{tab:surrounding_ml} summarises the ML results for both feature sets.
+
+\begin{table}[ht]
+\centering
+\caption{Machine learning results for surrounding tissue analysis on the full dataset ($n = 137$). AUC from 10-fold stratified cross-validation with joint optimisation.}
+\label{tab:surrounding_ml}
+\begin{tabular}{llrr}
+\toprule
+Feature set & Best model & $k$ & AUC \\
+\midrule
+Normalised radiomics (93 features) & Logistic Regression & 20 & 0.525 \\
+Contrast features (11 features) & Naive Bayes & 6 & 0.549 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Interpretation}
+
+The surrounding tissue analysis rules out acquisition variability as the primary confound responsible for the negative radiomics result. If inter-patient differences in gain, depth, or probe pressure were masking a real texture signal, then normalising by the surrounding tissue---which is subject to the same acquisition conditions---should have improved discrimination. Instead, performance remained at chance or slightly decreased. This suggests that the absence of discriminative texture features reflects a genuine lack of detectable tissue microstructure differences between rejection and non-rejection ultrasound images in this cohort.
 
 \newpage

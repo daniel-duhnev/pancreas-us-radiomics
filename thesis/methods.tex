@@ -209,4 +209,59 @@ In both cases, the entire pipeline (scaling, feature selection, and model fittin
 
 Model performance was assessed using the area under the ROC curve (AUC) as the primary metric, as it is threshold-independent and suitable for imbalanced datasets. Additionally, sensitivity and specificity were computed at the operating point determined by Youden's index (the threshold maximising sensitivity $+$ specificity $- 1$).
 
+
+\section{Alternative Texture Features}
+\label{sec:alternative_features}
+
+To investigate whether the negative radiomics result reflected limitations of the PyRadiomics feature set rather than an absence of textural signal, three additional texture extraction methods were applied to the same preprocessed grayscale images.
+
+\subsection{Local Binary Patterns}
+
+Local Binary Patterns (LBP) encode local texture by comparing each pixel's intensity to its circularly symmetric neighbours \cite{ojala2002}. For each pixel, a binary code is formed by thresholding the $P$ neighbours at radius $R$ against the centre pixel value. The ``uniform'' variant was used, which groups all non-uniform patterns into a single bin, yielding $P + 2$ histogram bins per configuration. Three configurations were evaluated: $(R = 1, P = 8)$, $(R = 2, P = 16)$, and $(R = 3, P = 24)$, capturing texture at progressively coarser spatial scales. The normalised LBP histogram within the pancreas mask constituted the feature vector: $10 + 18 + 26 = 54$ features in total.
+
+\subsection{Gabor Filters}
+
+Gabor filters are orientation- and frequency-selective bandpass filters widely used for texture characterisation \cite{manjunath1996}. A bank of Gabor kernels was constructed by combining three spatial wavelengths ($\lambda \in \{5, 10, 20\}$ pixels) with six orientations ($\theta \in \{0^{\circ}, 30^{\circ}, 60^{\circ}, 90^{\circ}, 120^{\circ}, 150^{\circ}\}$), yielding 18 filters. The bandwidth parameter was set as $\sigma = 0.56\lambda$. For each filtered image, three summary statistics (mean, standard deviation, and energy) were computed over the masked pancreas region, producing $18 \times 3 = 54$ features.
+
+\subsection{Laws' Texture Energy}
+
+Laws' texture energy measures detect local texture properties by convolving the image with small separable filters \cite{laws1980}. Five one-dimensional kernels of length 5 capture different texture primitives: Level (L5~$= [1,4,6,4,1]$), Edge (E5~$= [-1,-2,0,2,1]$), Spot (S5~$= [-1,0,2,0,-1]$), Ripple (R5~$= [1,-4,6,-4,1]$), and Wave (W5~$= [-1,2,0,-2,1]$). Two-dimensional filters were formed by computing the outer product of each unique pair of kernels, yielding 15 filters (excluding symmetric duplicates, i.e., E5L5 and L5E5 were treated as a single filter). For each filtered image, the mean, energy, and standard deviation within the masked region were computed, producing $15 \times 3 = 45$ features.
+
+\subsection{Analysis}
+
+The resulting 153 alternative features (54 LBP $+$ 54 Gabor $+$ 45 Laws') were subjected to the same statistical testing procedure (Section~\ref{sec:statistical_analysis}) and machine learning pipeline (Section~\ref{sec:ml_classification}) as the PyRadiomics features, applied to both the full dataset and the independent dataset. Additionally, performance was evaluated separately for each feature family to identify whether any single method captured discriminative texture information.
+
+
+\section{Surrounding Tissue Analysis}
+\label{sec:surrounding_tissue}
+
+To test whether inter-patient variability in ultrasound acquisition settings (gain, depth, probe pressure) obscures rejection-related texture differences, a surrounding-tissue normalisation approach was applied. This method uses the tissue immediately adjacent to the pancreas graft as a local intensity reference, under the assumption that acquisition-related intensity variations affect the pancreas and its surroundings equally.
+
+\subsection{Surrounding Tissue Mask}
+
+A ring-shaped mask representing the tissue surrounding the pancreas was created by dilating the pancreas mask by 10 pixels using an elliptical structuring element, then subtracting the original mask. Pixels with zero intensity (corresponding to regions outside the ultrasound imaging cone) were excluded from the surrounding mask. Figure~\ref{fig:surrounding_masks} illustrates the resulting masks for three example studies.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.85\textwidth]{Figures/surrounding_mask_examples.png}
+\caption{Examples of the surrounding tissue mask construction. The pancreas graft region (red overlay) and the 10-pixel surrounding ring (blue overlay) are shown for three representative studies. Black regions outside the ultrasound cone are excluded from the surrounding mask.}
+\label{fig:surrounding_masks}
+\end{figure}
+
+\subsection{Intensity Normalisation}
+
+Each grayscale image was normalised using the $z$-score of the surrounding tissue region:
+\begin{equation}
+I_{\text{norm}}(x,y) = \frac{I(x,y) - \mu_{\text{surr}}}{\sigma_{\text{surr}}}
+\end{equation}
+where $\mu_{\text{surr}}$ and $\sigma_{\text{surr}}$ are the mean and standard deviation of pixel intensities within the surrounding mask. The normalised image was then scaled to the 16-bit integer range ($\times 1000$, clipped to $[-32768, 32767]$) for compatibility with PyRadiomics, and the same 93 radiomics features were re-extracted from the pancreas region of the normalised image.
+
+\subsection{Contrast Features}
+
+In addition to the normalised radiomics, 11 features were computed that directly quantify the intensity relationship between the pancreas graft and its surrounding tissue. These included differences and ratios of summary statistics (mean, median, standard deviation, 10th/25th/75th/90th percentiles) between the two regions, as well as the Kolmogorov--Smirnov statistic comparing their intensity distributions. The rationale is that rejection-induced changes in tissue echogenicity might manifest as altered contrast between the graft and adjacent tissue, regardless of absolute intensity levels.
+
+\subsection{Analysis}
+
+Both feature sets (93 normalised radiomics and 11 contrast features) were analysed using the same statistical testing and machine learning pipeline as the original features. The normalised radiomics were compared to the un-normalised results to assess whether surrounding-tissue normalisation improved discrimination.
+
 \newpage
