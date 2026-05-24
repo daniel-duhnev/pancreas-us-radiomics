@@ -5,7 +5,7 @@
 
 Radiomics feature extraction was applied to all 137 studies in the preprocessed dataset. The extraction completed without errors for every study, yielding a total of 93 features per study across the six feature classes described in Section~\ref{sec:feature_extraction}: first-order statistics (18 features), GLCM (24), GLRLM (16), GLSZM (16), GLDM (14), and NGTDM (5).
 
-An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 300 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 32 features.
+An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 298 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 27 features.
 
 \begin{figure}[ht]
 \centering
@@ -20,44 +20,46 @@ An analysis of inter-feature correlations revealed substantial multicollinearity
 
 \subsection{Full Dataset}
 
-Univariate statistical tests were performed on all 93 radiomics features using the full dataset of 137 studies (98 no rejection, 39 rejection). Based on the Shapiro-Wilk normality test, 13 features were analysed with Welch's $t$-test and 80 with the Mann-Whitney $U$ test.
+Univariate statistical tests were performed on all 93 radiomics features using the full dataset of 137 studies (98 no rejection, 39 rejection). Based on the Shapiro-Wilk normality test, 22 features were analysed with Welch's $t$-test and 71 with the Mann-Whitney $U$ test.
 
-No feature reached nominal significance at $p < 0.05$ before multiple testing correction. The closest feature was \texttt{firstorder\_Minimum} (Mann-Whitney $U$, $p = 0.053$, rank-biserial $r = -0.21$), followed by \texttt{firstorder\_10Percentile} ($p = 0.133$) and \texttt{glrlm\_RunEntropy} ($p = 0.159$). After Benjamini-Hochberg FDR correction, all adjusted $p$-values exceeded 0.84, far from the significance threshold. Effect sizes were uniformly small across all features. Table~\ref{tab:radiomics_top10} lists the ten features with the lowest uncorrected $p$-values.
+Four features reached nominal significance at $p < 0.05$ before multiple testing correction, all from the first-order statistics class: \texttt{firstorder\_Minimum} (Mann-Whitney $U$, $p = 0.022$, rank-biserial $r = -0.25$), \texttt{firstorder\_10Percentile} ($p = 0.040$, $r = -0.23$), \texttt{firstorder\_Median} ($p = 0.041$, $r = -0.22$), and \texttt{firstorder\_Mean} ($p = 0.049$, $r = -0.22$). In all four cases, the rejection group showed lower median intensity values than the no-rejection group. However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values exceeded 0.80, far from the significance threshold. Effect sizes were small across all features. Table~\ref{tab:radiomics_top10} lists the ten features with the lowest uncorrected $p$-values.
 
 \begin{table}[ht]
 \centering
-\caption{Top 10 radiomics features ranked by uncorrected $p$-value on the full dataset ($n = 137$). No feature reaches nominal significance ($p < 0.05$). Effect sizes are rank-biserial correlation (Mann-Whitney) or Cohen's $d$ ($t$-test).}
+\caption{Top 10 radiomics features ranked by uncorrected $p$-value on the full dataset ($n = 137$). Four features reach nominal significance ($p < 0.05$) but none survives FDR correction. Effect sizes are rank-biserial correlation (Mann-Whitney) or Cohen's $d$ ($t$-test).}
 \label{tab:radiomics_top10}
 \begin{tabular}{llrrrr}
 \toprule
 Feature & Test & $p$ & $p_{\text{FDR}}$ & Effect & Med.\ NR / R \\
 \midrule
-firstorder\_Minimum & M-W & 0.053 & 0.842 & $-0.21$ & 18.0 / 11.0 \\
-firstorder\_10Percentile & M-W & 0.133 & 0.842 & $-0.16$ & 42.5 / 36.0 \\
-glrlm\_RunEntropy & $t$ & 0.159 & 0.842 & 0.27 & 5.82 / 5.90 \\
-glszm\_ZoneEntropy & $t$ & 0.159 & 0.842 & 0.27 & 5.82 / 5.90 \\
-ngtdm\_Busyness & M-W & 0.164 & 0.842 & 0.15 & 37.3 / 52.1 \\
-firstorder\_Median & M-W & 0.192 & 0.842 & $-0.14$ & --- \\
-gldm\_DepNonUniformity & M-W & 0.199 & 0.842 & 0.14 & --- \\
-firstorder\_Mean & M-W & 0.199 & 0.842 & $-0.14$ & --- \\
-gldm\_GLNonUniformity & M-W & 0.212 & 0.842 & 0.14 & --- \\
-glrlm\_ShortRunEmphasis & M-W & 0.214 & 0.842 & $-0.14$ & --- \\
+firstorder\_Minimum & M-W & 0.022 & 0.80 & $-0.25$ & $-42.4$ / $-66.7$ \\
+firstorder\_10Percentile & M-W & 0.040 & 0.80 & $-0.23$ & 18.0 / $-4.0$ \\
+firstorder\_Median & M-W & 0.041 & 0.80 & $-0.22$ & 64.0 / 45.7 \\
+firstorder\_Mean & M-W & 0.049 & 0.80 & $-0.22$ & 66.2 / 48.6 \\
+firstorder\_RootMeanSquared & M-W & 0.076 & 0.80 & $-0.20$ & 74.7 / 65.0 \\
+firstorder\_90Percentile & M-W & 0.113 & 0.80 & $-0.17$ & 116.2 / 104.8 \\
+gldm\_DepNonUniformity & M-W & 0.212 & 0.80 & 0.14 & --- \\
+ngtdm\_Coarseness & M-W & 0.259 & 0.80 & $-0.12$ & --- \\
+gldm\_GLNonUniformity & M-W & 0.265 & 0.80 & 0.12 & --- \\
+glcm\_Imc1 & $t$ & 0.268 & 0.80 & $-0.20$ & --- \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \subsection{Stratified Analysis}
 
-The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.137 (\texttt{glcm\_ClusterProminence}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), one feature reached nominal significance---\texttt{firstorder\_Minimum} ($p = 0.037$, rank-biserial $r = -0.30$)---but this did not survive FDR correction across the 93 tests. The late-period result for this feature is consistent with its borderline status in the full dataset analysis.
+The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.303 (\texttt{gldm\_LargeDependenceLowGrayLevelEmphasis}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), five features reached nominal significance: \texttt{ngtdm\_Complexity} ($p = 0.035$), \texttt{firstorder\_Range} ($p = 0.044$), \texttt{glszm\_SizeZoneNonUniformity} ($p = 0.047$), \texttt{glrlm\_RunLengthNonUniformity} ($p = 0.047$), and \texttt{firstorder\_Minimum} ($p = 0.048$). None survived FDR correction. The presence of first-order features among the late-period hits is consistent with the full-dataset pattern of weak intensity-related differences.
 
 \subsection{Independent Dataset}
 
-To address the potential confound of repeated measures, the same analysis was performed on the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). Four features reached nominal significance at $p < 0.05$: \texttt{ngtdm\_Busyness} ($p = 0.024$), \texttt{ngtdm\_Strength} ($p = 0.025$), \texttt{glszm\_SmallAreaHighGrayLevelEmphasis} ($p = 0.033$), and \texttt{glrlm\_ShortRunHighGrayLevelEmphasis} ($p = 0.033$). However, none survived FDR correction (all adjusted $p \approx 0.38$). The features ranking highest in the independent dataset differ entirely from those in the full dataset, indicating instability rather than a reproducible signal. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature discriminates rejection from no rejection.
+To address the potential confound of repeated measures, the same analysis was performed on the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). Based on Shapiro-Wilk tests, 45 features were analysed with Welch's $t$-test and 48 with the Mann-Whitney $U$ test.
+
+Twenty-four features reached nominal significance at $p < 0.05$, predominantly from the first-order statistics class (7 of 24). The top-ranked features were \texttt{firstorder\_90Percentile} ($p = 0.004$, rank-biserial $r = -0.47$), \texttt{firstorder\_RootMeanSquared} ($p = 0.005$, $r = -0.46$), and \texttt{firstorder\_Mean} ($p = 0.005$, $r = -0.45$). In 19 of the 24 significant features, the rejection group showed lower values, suggesting a weak trend toward lower image intensities in rejection cases. However, none survived FDR correction (all adjusted $p \geq 0.16$), and the number of nominally significant features (24 of 93, 26\%) only modestly exceeds the 5\% expected under the null hypothesis when considering the correlation structure among features. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature achieves statistically significant discrimination after correction for multiple testing.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{Figures/boxplots_radiomics_top5.png}
-\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the full dataset ($n = 137$). Blue: no rejection ($n = 98$); orange: rejection ($n = 39$). The overlapping distributions illustrate the absence of discriminative signal. None reached $p < 0.05$.}
+\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$). Blue: no rejection ($n = 34$); orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
 \label{fig:boxplots_radiomics}
 \end{figure}
 
@@ -182,24 +184,24 @@ The motivo-based stratification (motivo 3--5, $n = 71$) yielded 7 significant fe
 
 \subsection{Full Dataset}
 
-Four classifiers were trained and evaluated on the full dataset of 137 studies using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The feature set was reduced from 93 to 32 features after correlation-based filtering. Table~\ref{tab:ml_full} summarises the results.
+Four classifiers were trained and evaluated on the full dataset of 137 studies using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The feature set was reduced from 93 to 27 features after correlation-based filtering. Table~\ref{tab:ml_full} summarises the results.
 
-All models achieved AUC values close to 0.5, indicating performance indistinguishable from chance. The best-performing model by LOOCV was Naive Bayes (AUC $= 0.537$), closely followed by SVM (AUC $= 0.531$). The 5-fold cross-validation AUCs were marginally higher (0.51--0.56) due to optimistic bias from the nested hyperparameter tuning, but the LOOCV results provide a more honest estimate of generalisation performance. Figure~\ref{fig:roc_full} shows the LOOCV ROC curves for all four classifiers, which cluster around the diagonal chance line.
+All models achieved AUC values close to 0.5, indicating performance indistinguishable from chance. The best-performing model by LOOCV was Random Forest (AUC $= 0.564$), followed by Logistic Regression (AUC $= 0.535$) and Naive Bayes (AUC $= 0.533$). The 5-fold cross-validation AUCs were marginally higher (0.52--0.60) due to optimistic bias from the nested hyperparameter tuning, but the LOOCV results provide a more honest estimate of generalisation performance. Figure~\ref{fig:roc_full} shows the LOOCV ROC curves for all four classifiers, which cluster around the diagonal chance line.
 
-The sensitivity--specificity trade-offs further illustrate the lack of signal. Logistic Regression and Random Forest achieved high specificity (0.89--0.92) but very low sensitivity (0.13--0.15), indicating that these models defaulted to predicting the majority class. Naive Bayes showed the opposite pattern (sensitivity $= 0.74$, specificity $= 0.41$), reflecting liberal prediction of rejection. Neither pattern represents clinically useful discrimination.
+The sensitivity--specificity trade-offs further illustrate the lack of signal. Random Forest achieved high specificity (0.83) but low sensitivity (0.36), indicating a tendency to predict the majority class. SVM showed the opposite extreme (sensitivity $= 0.95$, specificity $= 0.15$), predicting nearly all studies as rejection. Neither pattern represents clinically useful discrimination.
 
 \begin{table}[ht]
 \centering
-\caption{Machine learning results on the full dataset ($n = 137$, 93$\to$32 features). AUC is reported for both 5-fold stratified cross-validation and leave-one-out cross-validation (LOOCV). Sensitivity and specificity are computed at the Youden-optimal threshold from LOOCV predictions.}
+\caption{Machine learning results on the full dataset ($n = 137$, 93$\to$27 features). AUC is reported for both 5-fold stratified cross-validation and leave-one-out cross-validation (LOOCV). Sensitivity and specificity are computed at the Youden-optimal threshold from LOOCV predictions.}
 \label{tab:ml_full}
 \begin{tabular}{lrrrrr}
 \toprule
 Model & $k$ & AUC (5-fold) & AUC (LOOCV) & Sens. & Spec. \\
 \midrule
-Logistic Regression & 32 & 0.540 & 0.501 & 0.154 & 0.918 \\
-Random Forest & 20 & 0.512 & 0.399 & 0.128 & 0.888 \\
-SVM & 32 & 0.563 & 0.531 & 0.308 & 0.847 \\
-Naive Bayes & 15 & 0.537 & 0.537 & 0.744 & 0.408 \\
+Logistic Regression & 10 & 0.546 & 0.535 & 0.769 & 0.378 \\
+Random Forest & 10 & 0.599 & 0.564 & 0.359 & 0.827 \\
+SVM & 10 & 0.552 & 0.417 & 0.949 & 0.153 \\
+Naive Bayes & 32 & 0.517 & 0.533 & 0.718 & 0.408 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -207,33 +209,33 @@ Naive Bayes & 15 & 0.537 & 0.537 & 0.744 & 0.408 \\
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.55\textwidth]{Figures/roc_full_dataset.png}
-\caption{ROC curves from LOOCV on the full dataset ($n = 137$). All four classifiers cluster around the diagonal chance line (dashed). The best AUC is 0.537 (Naive Bayes).}
+\caption{ROC curves from LOOCV on the full dataset ($n = 137$). All four classifiers cluster around the diagonal chance line (dashed). The best AUC is 0.564 (Random Forest).}
 \label{fig:roc_full}
 \end{figure}
 
 \subsection{Independent Dataset}
 
-To eliminate the effect of repeated measures, the same pipeline was applied to the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). The correlation-based filter reduced the feature set from 93 to 31 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
+To eliminate the effect of repeated measures, the same pipeline was applied to the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). The correlation-based filter reduced the feature set from 93 to 27 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
 
-Performance remained near chance. Logistic Regression achieved the highest 10-fold CV AUC of 0.569, with a bootstrap 95\% confidence interval of [0.40, 0.72] that includes 0.5. SVM collapsed entirely (AUC $= 0.283$, sensitivity $= 1.0$, specificity $= 0.029$), predicting nearly all studies as rejection---a sign of model instability with small samples. Random Forest and Naive Bayes hovered around 0.5.
+Performance remained near chance. Logistic Regression achieved the highest 10-fold CV AUC of 0.636, with a bootstrap 95\% confidence interval of [0.48, 0.78] that includes 0.5. SVM collapsed entirely (AUC $= 0.408$, sensitivity $= 1.0$, specificity $= 0.029$), predicting nearly all studies as rejection---a sign of model instability with small samples. Naive Bayes achieved AUC $= 0.618$ [0.45, 0.78], also spanning chance.
 
 \begin{table}[ht]
 \centering
-\caption{Machine learning results on the independent dataset ($n = 55$, 93$\to$31 features). Primary evaluation: 10-fold stratified CV. LOOCV is shown for comparison with the full-dataset results. Bootstrap 95\% confidence intervals are computed from 1000 resamples.}
+\caption{Machine learning results on the independent dataset ($n = 55$, 93$\to$27 features). Primary evaluation: 10-fold stratified CV. LOOCV is shown for comparison with the full-dataset results. Bootstrap 95\% confidence intervals are computed from 1000 resamples.}
 \label{tab:ml_independent}
 \begin{tabular}{lrrrrrr}
 \toprule
 Model & $k$ & AUC (10-fold) & 95\% CI & AUC (LOOCV) & Sens. & Spec. \\
 \midrule
-Log.\ Regression & 15 & 0.569 & [0.40, 0.72] & 0.595 & 0.714 & 0.471 \\
-Random Forest & 10 & 0.506 & [0.33, 0.68] & 0.522 & 0.238 & 0.941 \\
-SVM & 5 & 0.283 & [0.15, 0.43] & 0.433 & 1.000 & 0.029 \\
-Naive Bayes & 10 & 0.508 & [0.36, 0.66] & 0.492 & 0.143 & 1.000 \\
+Log.\ Regression & 10 & 0.636 & [0.48, 0.78] & 0.609 & 0.714 & 0.559 \\
+Random Forest & 10 & 0.588 & [0.43, 0.75] & 0.618 & 0.238 & 0.971 \\
+SVM & 31 & 0.408 & [0.25, 0.58] & --- & 1.000 & 0.029 \\
+Naive Bayes & 15 & 0.618 & [0.45, 0.78] & 0.592 & 0.571 & 0.765 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The consistent near-chance performance across both datasets and multiple classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. The ML results rule out the possibility that a multivariate combination of individually non-significant features might achieve useful classification---no such combination was found.
+The consistent near-chance performance across both datasets and multiple classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. Although the independent dataset showed 24 features with uncorrected $p < 0.05$ (Section~\ref{sec:radiomics_results}), this weak univariate trend does not translate into useful multivariate classification---all confidence intervals include 0.5.
 
 \section{Paired Analysis}
 \label{sec:paired_results}
