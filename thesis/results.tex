@@ -5,12 +5,12 @@
 
 Radiomics feature extraction was applied to all 137 studies in the preprocessed dataset. The extraction completed without errors for every study, yielding a total of 93 features per study across the six feature classes described in Section~\ref{sec:feature_extraction}: first-order statistics (18 features), GLCM (24), GLRLM (16), GLSZM (16), GLDM (14), and NGTDM (5).
 
-An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 298 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 27 features.
+An analysis of inter-feature correlations revealed substantial multicollinearity among the extracted features. A total of 316 feature pairs exhibited absolute Pearson correlation coefficients exceeding 0.9 (Figure~\ref{fig:correlation_heatmap}). The highest correlations occurred within feature classes---particularly among the GLRLM and GLSZM families, where many features capture related aspects of texture run-length and zone-size distributions. To reduce redundancy prior to machine learning classification, a correlation-based filter was applied (described in Section~\ref{sec:ml_classification}), reducing the feature set from 93 to 27 features.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.65\textwidth]{Figures/correlation_heatmap.png}
-\caption{Pearson correlation matrix of the 93 radiomics features extracted from the full dataset ($n = 137$ studies). Red indicates positive correlation and blue indicates negative correlation. The prominent block structure reflects high within-class correlations, particularly among GLRLM and GLSZM features. A total of 300 feature pairs exceeded $|r| > 0.9$.}
+\caption{Pearson correlation matrix of the 93 radiomics features extracted from the full dataset ($n = 137$ studies). Red indicates positive correlation and blue indicates negative correlation. The prominent block structure reflects high within-class correlations, particularly among GLRLM and GLSZM features. A total of 316 feature pairs exceeded $|r| > 0.9$.}
 \label{fig:correlation_heatmap}
 \end{figure}
 
@@ -59,7 +59,7 @@ Twenty-four features reached nominal significance at $p < 0.05$, predominantly f
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{Figures/boxplots_radiomics_top5.png}
-\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$). Blue: no rejection ($n = 34$); orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
+\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$, one per patient). Blue: no rejection ($n = 34$); orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
 \label{fig:boxplots_radiomics}
 \end{figure}
 
@@ -201,7 +201,7 @@ Model & $k$ & AUC (5-fold) & AUC (LOOCV) & Sens. & Spec. \\
 Logistic Regression & 10 & 0.546 & 0.535 & 0.769 & 0.378 \\
 Random Forest & 10 & 0.599 & 0.564 & 0.359 & 0.827 \\
 SVM & 10 & 0.552 & 0.417 & 0.949 & 0.153 \\
-Naive Bayes & 32 & 0.517 & 0.533 & 0.718 & 0.408 \\
+Naive Bayes & 27 & 0.517 & 0.533 & 0.718 & 0.408 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -229,7 +229,7 @@ Model & $k$ & AUC (10-fold) & 95\% CI & AUC (LOOCV) & Sens. & Spec. \\
 \midrule
 Log.\ Regression & 10 & 0.636 & [0.48, 0.78] & 0.609 & 0.714 & 0.559 \\
 Random Forest & 10 & 0.588 & [0.43, 0.75] & 0.618 & 0.238 & 0.971 \\
-SVM & 31 & 0.408 & [0.25, 0.58] & --- & 1.000 & 0.029 \\
+SVM & 27 & 0.408 & [0.25, 0.58] & --- & 1.000 & 0.029 \\
 Naive Bayes & 15 & 0.618 & [0.45, 0.78] & 0.592 & 0.571 & 0.765 \\
 \bottomrule
 \end{tabular}
@@ -263,7 +263,7 @@ DCE-US perfusion (13 features) & 10 \\
 
 \subsection{Radiomics Features}
 
-For each pair, the within-patient difference was computed (rejection value minus no-rejection value) and a Wilcoxon signed-rank test was applied to assess whether the median difference differed from zero. Nine of 93 features reached nominal significance at $p < 0.05$, with \texttt{ngtdm\_Coarseness} showing the lowest uncorrected $p$-value ($p = 0.011$, median difference $= -0.001$). However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values equalled 0.28, far from significance. Table~\ref{tab:paired_radiomics} lists the features reaching uncorrected $p < 0.05$.
+For each pair, the within-patient difference was computed (rejection value minus no-rejection value) and a Wilcoxon signed-rank test was applied to assess whether the median difference differed from zero. Eight of 93 features reached nominal significance at $p < 0.05$, with \texttt{ngtdm\_Coarseness} showing the lowest uncorrected $p$-value ($p = 0.017$, median difference $= -0.001$). However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values equalled 0.49, far from significance. Table~\ref{tab:paired_radiomics} lists the features reaching uncorrected $p < 0.05$.
 
 \begin{table}[ht]
 \centering
@@ -274,20 +274,19 @@ For each pair, the within-patient difference was computed (rejection value minus
 \toprule
 Feature & Median diff & $W$ & $p$ & $p_{\text{FDR}}$ \\
 \midrule
-ngtdm\_Coarseness & $-0.001$ & 13 & 0.011 & 0.28 \\
-glcm\_Imc2 & 0.019 & 19 & 0.035 & 0.28 \\
-glszm\_SizeZoneNonUniformity & 32.3 & 19 & 0.035 & 0.28 \\
-firstorder\_Range & 6.0 & 19 & 0.035 & 0.28 \\
-glszm\_GrayLevelVariance & 0.026 & 19 & 0.035 & 0.28 \\
-glrlm\_GrayLevelVariance & 0.026 & 19 & 0.035 & 0.28 \\
-glrlm\_RunLengthNonUniformity & 32.3 & 19 & 0.035 & 0.28 \\
-gldm\_SmallDepLowGrayLevelEmph & $-0.008$ & 20 & 0.042 & 0.28 \\
-gldm\_LargeDepHighGrayLevelEmph & 18.3 & 21 & 0.049 & 0.28 \\
+ngtdm\_Coarseness & $-0.001$ & 15 & 0.017 & 0.49 \\
+gldm\_LowGrayLevelEmphasis & $-0.011$ & 17 & 0.025 & 0.49 \\
+gldm\_LargeDepHighGrayLevelEmph & 32.6 & 18 & 0.030 & 0.49 \\
+glrlm\_LowGrayLevelRunEmphasis & $-0.011$ & 18 & 0.030 & 0.49 \\
+glszm\_LowGrayLevelZoneEmphasis & $-0.011$ & 18 & 0.030 & 0.49 \\
+glcm\_SumAverage & 1.22 & 20 & 0.042 & 0.49 \\
+glcm\_JointAverage & 0.61 & 20 & 0.042 & 0.49 \\
+glcm\_Imc2 & 0.016 & 20 & 0.042 & 0.49 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Notably, the features reaching nominal significance in the paired analysis differ entirely from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis, \texttt{firstorder\_Minimum} was the closest to significance ($p = 0.053$); in the independent-dataset analysis, \texttt{ngtdm\_Busyness} and \texttt{ngtdm\_Strength} ranked highest. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
+Notably, the features reaching nominal significance in the paired analysis differ from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis, \texttt{firstorder\_Minimum} ranked highest ($p = 0.022$); in the independent-dataset analysis, \texttt{firstorder\_90Percentile} was strongest ($p = 0.004$). By contrast, the paired analysis is dominated by gray-level-related features rather than first-order intensity features, and \texttt{ngtdm\_Coarseness} appears as the top hit. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
 
 \subsection{Clinical Features}
 
@@ -341,9 +340,9 @@ To test whether inter-patient variability in acquisition settings confounds the 
 
 \subsection{Normalised Radiomics}
 
-After $z$-score normalisation using the surrounding tissue ring, none of the 93 re-extracted PyRadiomics features reached statistical significance at $p < 0.05$ on the full dataset. The closest was \texttt{gldm\_SmallDependenceLowGrayLevelEmphasis} ($p = 0.057$). All FDR-corrected $q$-values exceeded 0.78. This result is weaker than the un-normalised analysis (which yielded 4 uncorrected hits on the independent dataset), suggesting that the normalisation procedure removed rather than revealed discriminative texture information.
+After $z$-score normalisation using the surrounding tissue ring, none of the 93 re-extracted PyRadiomics features reached statistical significance at $p < 0.05$ on the full dataset. The closest was \texttt{gldm\_SmallDependenceLowGrayLevelEmphasis} ($p = 0.057$). All FDR-corrected $q$-values exceeded 0.78. This result is weaker than the standard per-image normalised analysis (which yielded 24 uncorrected hits on the independent dataset), suggesting that the surrounding-tissue normalisation procedure removed rather than revealed discriminative texture information.
 
-Machine learning classification on the normalised features confirmed this pattern. The best model (Logistic Regression, $k = 20$) achieved AUC $= 0.525$, marginally above chance and below the un-normalised PyRadiomics result (AUC $= 0.569$).
+Machine learning classification on the surrounding-tissue normalised features confirmed this pattern. The best model (Logistic Regression, $k = 20$) achieved AUC $= 0.525$, marginally above chance and below the standard analysis result (AUC $= 0.636$).
 
 \subsection{Contrast Features}
 
