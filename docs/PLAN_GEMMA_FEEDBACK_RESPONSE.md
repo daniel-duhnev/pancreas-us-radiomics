@@ -1,5 +1,12 @@
 # Plan: Address Gemma's 17 Feedback Points on Thesis Draft
 
+## Status (updated 2026-05-26)
+
+Points 1, 2, 3, 4, 5, 6, 9, 11, 12, 13, 15 (caveat only), 17A are COMPLETED (text edits applied, thesis compiles).
+Points 7 and 8 require NO changes (defended in email / already addressed).
+Points 10, 14, 15 (new analysis), 16, 17B are REMAINING and blocked on Wednesday meeting with Gemma.
+See the "Summary" and "Execution Plan" sections at the bottom for details.
+
 ## Context
 
 Gemma reviewed the thesis draft (the older version before image normalisation) and provided 17 feedback points. Some require text changes, some require structural reorganisation of the Results chapter, and some can be defended or are already addressed in the updated version she hasn't seen yet.
@@ -8,7 +15,7 @@ Gemma reviewed the thesis draft (the older version before image normalisation) a
 
 ## Point-by-Point Analysis and Actions
 
-### Point 1: "Clinical imaging analysis" wording
+### Point 1: "Clinical imaging analysis" wording — STATUS: DONE
 **Gemma's point:** We say "replicates the clinical imaging analysis" but we didn't extract features from images - we took pre-recorded measurements and ran stats.
 **Verdict:** She's correct. We took tabular ARFI/DCE-US values from the clinical spreadsheet and ran Mann-Whitney tests on them. Bassaganyas et al. performed the actual imaging measurements. We reproduced their statistical analysis on the same data.
 **Action:** Change wording in introduction (line 17) and objective 4 (line 68) from "replicates the clinical imaging analysis" to "reproduces the statistical analysis of the clinical imaging biomarkers reported by". Similar change needed in abstract and discussion.
@@ -16,7 +23,7 @@ Gemma reviewed the thesis draft (the older version before image normalisation) a
 
 ---
 
-### Point 2: Abbreviation definitions
+### Point 2: Abbreviation definitions — STATUS: DONE
 **Gemma's point:** Define abbreviations once (first use) and then use them consistently. Don't redefine. Don't define TIC if barely used.
 **Findings:**
 - ARFI defined in introduction (line 11) AND methods (line 8) - remove second definition
@@ -28,7 +35,7 @@ Gemma reviewed the thesis draft (the older version before image normalisation) a
 
 ---
 
-### Point 3: Radiomics workflow - mention image preprocessing
+### Point 3: Radiomics workflow - mention image preprocessing — STATUS: DONE
 **Gemma's point:** The radiomics workflow description on "page 5" (introduction line 39) doesn't mention image preprocessing.
 **Current text:** "The radiomics workflow typically involves image acquisition, region-of-interest segmentation, feature extraction, feature selection, and statistical or machine learning analysis."
 **Verdict:** She's right. Image preprocessing (normalisation, noise reduction, etc.) is a standard step between segmentation and feature extraction that should be mentioned.
@@ -37,7 +44,7 @@ Gemma reviewed the thesis draft (the older version before image normalisation) a
 
 ---
 
-### Point 4: Missing references for radiomics in other domains
+### Point 4: Missing references for radiomics in other domains — STATUS: DONE
 **Gemma's point:** First paragraph of "page 6" (introduction line 43) mentions radiomics applied to liver fibrosis, thyroid, breast - no references given.
 **Current text:** "Nevertheless, several studies have applied radiomics to ultrasound for liver fibrosis staging, thyroid nodule classification, and breast lesion characterisation, with variable success depending on the degree of acquisition standardisation."
 **Verdict:** She's right. This is an unbacked claim. Needs citations.
@@ -51,7 +58,7 @@ BibTeX keys: `wang2019liver`, `park2021thyroid`, `romeo2021breast`
 
 ---
 
-### Point 5: Objective 2 should mention ML too
+### Point 5: Objective 2 should mention ML too — STATUS: DONE
 **Gemma's point:** Objective 2 says "Conduct statistical hypothesis testing" but this should also cover ML, not just stats.
 **Current text (line 64):** "Test whether radiomics features discriminate rejection from no rejection. Conduct statistical hypothesis testing on each extracted feature to determine whether any individual texture or intensity measure differs significantly between the two outcome groups."
 **Verdict:** She has a point. The bold title says "discriminate" (which is broader) but the description only mentions statistical testing. ML classification (objective 3) is separate, but the discrimination question is answered by BOTH. The description could acknowledge this.
@@ -61,7 +68,7 @@ BibTeX keys: `wang2019liver`, `park2021thyroid`, `romeo2021breast`
 
 ---
 
-### Point 6: Objective 4 - same as point 1
+### Point 6: Objective 4 - same as point 1 — STATUS: DONE
 **Gemma's point:** Same issue as point 1 - "Replicate the clinical imaging analysis" is misleading.
 **Current text (line 68):** "Replicate the clinical imaging analysis of Bassaganyas et al. Apply the same statistical methodology to the clinical imaging features..."
 **Verdict:** Correct. We should say "Reproduce the statistical analysis of the clinical biomarkers reported by Bassaganyas et al."
@@ -70,7 +77,7 @@ BibTeX keys: `wang2019liver`, `park2021thyroid`, `romeo2021breast`
 
 ---
 
-### Point 7: DICOM and RGB - do we really have DICOMs? Are they RGB?
+### Point 7: DICOM and RGB - do we really have DICOMs? Are they RGB? — STATUS: NO CHANGE NEEDED (defended in email)
 **Gemma's point:** "you talk about DICOM but you did not have DICOMs but png... Do you really have RGB?"
 **Findings from code:**
 - Notebook 03 audit: ALL 134 files (now 137) are DICOM format (pydicom reads them successfully, Modality=US)
@@ -82,7 +89,7 @@ BibTeX keys: `wang2019liver`, `park2021thyroid`, `romeo2021breast`
 
 ---
 
-### Point 8: Explain normalisation before feature extraction
+### Point 8: Explain normalisation before feature extraction — STATUS: NO CHANGE NEEDED (already in updated version)
 **Gemma's point:** Before feature extraction, explain about normalisation of images.
 **Current state:** In the UPDATED thesis (which Gemma hasn't read), methods.tex line 115 now describes the PyRadiomics normalisation (z-score, scale=100, 3sigma clipping) immediately before feature computation in Section 2.3.
 **Verdict:** Already addressed in current version. Gemma was reading the OLD draft.
@@ -90,7 +97,7 @@ BibTeX keys: `wang2019liver`, `park2021thyroid`, `romeo2021breast`
 
 ---
 
-### Point 9: Reason for disabling shape features
+### Point 9: Reason for disabling shape features — STATUS: DONE
 **Gemma's point:** The reason for not using shape is "in each image, the region of visible pancreas is different" - not because "ROI shapes are determined by the clinician's annotation."
 **Current text (methods.tex line 115):** "Shape-based features were disabled, as ultrasound ROI shapes are determined by the clinician's annotation rather than by the underlying tissue morphology."
 **Verdict:** Gemma's point is subtly different and more fundamental. The issue is:
@@ -103,7 +110,7 @@ Our current wording focuses on the annotation aspect, but misses the deeper poin
 
 ---
 
-### Point 10: MAJOR - Cannot do statistical tests on all 137 non-independent images
+### Point 10: MAJOR - Cannot do statistical tests on all 137 non-independent images — STATUS: BLOCKED on meeting
 **Gemma's point:** The tests assume independence. You should NOT include the statistical test on all 137 images. Only apply tests to independent images (one per patient, ~55-56 studies).
 **Verdict:** She's correct methodologically. Standard Mann-Whitney and t-tests assume independent observations. With multiple studies per patient, the effective sample size is inflated and p-values may be unreliable. The independent dataset (55 studies, 1 per patient) is the methodologically correct analysis.
 **Implications for thesis:**
@@ -121,7 +128,7 @@ Our current wording focuses on the annotation aspect, but misses the deeper poin
 
 ---
 
-### Point 11: Which test for homogeneity of variances?
+### Point 11: Which test for homogeneity of variances? — STATUS: DONE
 **Gemma's point:** You test normality and then use Welch's t-test when normal. Which test did you use to check homogeneity of variances?
 **Findings from code:** We use `scipy.stats.ttest_ind(equal_var=False)` which IS Welch's t-test. Welch's t-test does NOT assume equal variances - that's the whole point of using Welch's over Student's t-test. We don't need to test for homogeneity of variances because Welch's test handles unequal variances by definition.
 **Verdict:** We don't test for homogeneity because we always use Welch's (which doesn't assume it). But the thesis doesn't explain this clearly enough. Gemma may not have noticed the "(unequal variances)" qualifier.
@@ -130,7 +137,7 @@ Our current wording focuses on the annotation aspect, but misses the deeper poin
 
 ---
 
-### Point 12: "ensures" is too strong
+### Point 12: "ensures" is too strong — STATUS: DONE
 **Gemma's point:** "This adaptive approach ensures that parametric assumptions are not violated" - "ensure" is too strong.
 **Current text (methods.tex line 149):** "This adaptive approach ensures that parametric assumptions are not violated while preserving statistical power when appropriate."
 **Verdict:** She's right. The Shapiro-Wilk test is itself imperfect (it can fail to reject normality in small samples, or reject it for trivial deviations in large samples). The word "ensures" overstates what the procedure does.
@@ -139,7 +146,7 @@ Our current wording focuses on the annotation aspect, but misses the deeper poin
 
 ---
 
-### Point 13: "corrected significance threshold" is wrong terminology
+### Point 13: "corrected significance threshold" is wrong terminology — STATUS: DONE
 **Gemma's point:** You correct the p-values, not the threshold. The threshold (alpha=0.05) itself is not corrected.
 **Current text (methods.tex line 153):** "A corrected significance threshold of alpha=0.05 was used throughout."
 **Verdict:** She's technically correct. We apply BH correction to the p-values, then compare the adjusted p-values to 0.05. The threshold is the same 0.05 - what changes are the p-values.
@@ -148,7 +155,7 @@ Our current wording focuses on the annotation aspect, but misses the deeper poin
 
 ---
 
-### Point 14: Stratification by motivo - what exactly is being compared?
+### Point 14: Stratification by motivo - what exactly is being compared? — STATUS: BLOCKED on meeting
 **Gemma's point:** Is stratification done for all patients or only those with rejection? When comparing two time points, you should use paired measures.
 **Clarification:** We are NOT comparing early vs late within the same patient. We are:
 1. Splitting the dataset into early (motivo 1-2) and late (motivo 3-5) subsets
@@ -160,7 +167,7 @@ So the comparison is still between-group (rej vs no-rej), just restricted to a t
 
 ---
 
-### Point 15: Same independence problem for clinical features (17 features on 138 studies)
+### Point 15: Same independence problem for clinical features (17 features on 138 studies) — STATUS: PARTIALLY DONE (caveat added; new analysis blocked on meeting)
 **Gemma's point:** Same as point 10 but for the clinical feature analysis.
 **Verdict:** Same issue. The clinical analysis on 138 studies violates independence.
 **However:** This analysis is a REPLICATION of Bassaganyas et al., who used ALL studies (not per-patient). To replicate their methodology, we must use the same approach they did. The purpose is validation of our pipeline, not discovery.
@@ -170,7 +177,7 @@ So the comparison is still between-group (rej vs no-rej), just restricted to a t
 
 ---
 
-### Point 16: Why both motivo-based AND days-based stratification?
+### Point 16: Why both motivo-based AND days-based stratification? — STATUS: BLOCKED on meeting
 **Gemma's point:** "I do not fully understand why you do both."
 **Explanation:** Bassaganyas et al. used a >90 days post-transplant cutoff. Our motivo variable is a categorical visit-type indicator, not a precise time measurement. To replicate their exact methodology, we use the days-based cutoff. The motivo-based grouping was done as an alternative to see if results are consistent. The days-based late subset matches Bassaganyas sample sizes exactly (52 ARFI, 50 DCE-US).
 **Action:** Make the rationale clearer in the text: explain that the days-based stratification is used for replication purposes (matching Bassaganyas), and briefly note the motivo-based result as a consistency check. Consider removing the motivo-based result entirely if it adds confusion without adding value.
@@ -178,7 +185,7 @@ So the comparison is still between-group (rej vs no-rej), just restricted to a t
 
 ---
 
-### Point 17: ANOVA F-statistic assumptions + patient-level splits
+### Point 17: ANOVA F-statistic assumptions + patient-level splits — STATUS: PART A DONE, PART B BLOCKED on meeting
 **Gemma's point (part A):** SelectKBest with ANOVA F-statistic - does it require ANOVA assumptions?
 **Findings:** Yes, technically the F-statistic assumes normality, equal variances, and independence. However:
 - In sklearn, f_classif is used for RANKING features (not hypothesis testing)
