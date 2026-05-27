@@ -6,10 +6,13 @@ This folder contains documentation for reproducing and understanding the project
 
 - [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) - Environment setup, data paths, coding conventions, and how to run things
 - [NEW_MACHINE_SETUP.md](NEW_MACHINE_SETUP.md) - Step-by-step checklist for setting up the project on a new machine
+- [MACHINE_MIGRATION_GUIDE.md](MACHINE_MIGRATION_GUIDE.md) - Detailed guide for migrating to a new laptop (data transfer, environment, hurdles)
 - [PREPROCESSING_PIPELINE.md](PREPROCESSING_PIPELINE.md) - How the image preprocessing pipeline works (DICOM to clean masks)
 - [REPORTS_GUIDE.md](REPORTS_GUIDE.md) - What each CSV report file contains and how to regenerate them
 - [IMAGE_NORMALISATION_RESULTS.md](IMAGE_NORMALISATION_RESULTS.md) - What image normalisation does and how it affects results
 - [PLAN_THESIS_FINAL_STEPS.md](PLAN_THESIS_FINAL_STEPS.md) - Remaining steps to finish the thesis (polishing phase)
+- [PLAN_GEMMA_FEEDBACK_RESPONSE.md](PLAN_GEMMA_FEEDBACK_RESPONSE.md) - Supervisor feedback response plan (Phase 3 pending)
+- [MEETING_PREP_GEMMA.md](MEETING_PREP_GEMMA.md) - Talking points for next Gemma meeting
 
 ## Legacy (completed work - kept for reference)
 
