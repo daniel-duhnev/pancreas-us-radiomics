@@ -48,12 +48,19 @@ Key code if she asks:
 
 ### 5. ANOVA F-statistic in SelectKBest (5 min)
 
-Our defence:
+**What SelectKBest does:** Before training, pick the top `k` most discriminative features. It ranks all 27 features by how well each one separates the two classes, then keeps only the best `k`.
+
+**What the F-statistic is:** For each feature: `F = (between-group variance) / (within-group variance)`. High F = the rejection and non-rejection groups are well separated on that feature. It's a one-way ANOVA on each feature individually.
+
+**ANOVA formally assumes:** normality, equal variances, independence.
+
+**Our defence:**
 - Used as a RANKING function, not for hypothesis testing
 - Only the relative F-scores matter (which features have most between-group variance)
-- P-values from f_classif are not used for any significance claims
+- P-values from f_classif are not used for any significance claims — we never say "feature X is significant based on SelectKBest"
+- The ranking is robust: if feature A separates groups better than feature B, that holds even if the data isn't perfectly normal
 - StandardScaler runs before SelectKBest so scale is normalised
-- Alternative: mutual_info_classif (nonparametric) - could mention we considered it
+- Alternative: mutual_info_classif (nonparametric) — could mention we considered it
 
 Code: NB `17b_ml_joint_optimization_normalised.ipynb`, cell 5:
 ```python
@@ -63,6 +70,40 @@ Pipeline([
     ("model", model)
 ])
 ```
+
+If she pushes: "Would you prefer mutual_info_classif? We can swap it — one line of code. But the ML result is at chance regardless, so feature selection method doesn't change the conclusion."
+
+### 5b. Patient-level splits / data leakage (5 min)
+
+**Gemma's point:** "If you include all 137 images, the split in training and testing should be done at patient level, not at image level."
+
+**She's right.** This is the ML-side of the independence problem (point 10 is the stats-side).
+
+**What happened in NB 17b (full dataset):**
+- LOOCV leaves out one STUDY, not one PATIENT
+- 42 of 55 patients have 2-6 studies each
+- When testing on study A1, studies A2, A3, A4 from the same patient are in the training set
+- The model can "recognise" Patient A from training, not learn what rejection looks like
+- This is data leakage (same patient in both train and test)
+
+**Patient distribution:**
+- 13 patients: 1 study (no leakage possible)
+- 14 patients: 2 studies
+- 20 patients: 3 studies
+- 5 patients: 4 studies
+- 2 patients: 5 studies, 1 patient: 6 studies
+
+**Correct approach would be:** `GroupKFold(groups=patient_id)` — ensures all of a patient's studies go to the same fold.
+
+**What we actually did (NB 20 — independent dataset):**
+- 55 studies, exactly 1 per patient
+- LOOCV here = leave one patient out (no leakage by construction)
+- 10-fold CV also clean — no patient can appear in both train and test
+- This is the methodologically correct ML evaluation
+
+**Key point for Gemma:** The flaw only affects NB 17b (full-dataset ML), which we're moving to appendix anyway. The primary result (NB 20) is clean. And interestingly, the full-dataset AUC is LOWER (0.53) than independent (0.64) — so the leakage didn't even help. Both are at chance level.
+
+**Proposal:** Move full-dataset ML to appendix with caveat. Independent dataset ML is primary.
 
 ### 6. Motivo stratification (5 min)
 
