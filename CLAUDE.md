@@ -2,7 +2,7 @@
 
 ## Environment
 - Conda env: `thesis_env` (Python 3.9.25). Do NOT create other envs.
-- Python path: `/opt/homebrew/Caskroom/miniconda/base/envs/thesis_env/bin/python`
+- Python path: `/home/daniduhnev/miniconda3/envs/thesis_env/bin/python`
 - Run notebooks in Jupyter/VS Code with kernel set to `thesis_env`.
 
 ## Key data paths

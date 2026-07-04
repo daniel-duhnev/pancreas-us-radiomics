@@ -38,6 +38,17 @@ These use the same analysis but without image normalisation. Kept for comparison
 | `21_paired_analysis_clinical.csv` | 21 | 17 | Original paired clinical results |
 | `21_selected_pairs.csv` | 21 | 14 | Selected study pairs (patient, studies, time gap) |
 
+## Independent-dataset extension reports (added for the restructure)
+
+These come from the two new notebooks that put every analysis on the independent 55-patient
+dataset. See [PLAN_INDEPENDENT_DATASET_RESTRUCTURE.md](PLAN_INDEPENDENT_DATASET_RESTRUCTURE.md).
+
+| File | Notebook | Rows | Description |
+|------|----------|------|-------------|
+| `24_clinical_stats_independent.csv` | 24 | 17 | Clinical ARFI/DCE-US stats on the independent 55 (uncorrected + FDR). No feature significant. |
+| `25_radiomics_stratified_independent_early.csv` | 25 | 93 | Radiomics stats, independent studies <= 90 days post-transplant (n=42) |
+| `25_radiomics_stratified_independent_late.csv` | 25 | 93 | Radiomics stats, independent studies > 90 days post-transplant (n=13) |
+
 ## Extended analysis reports
 
 | File | Notebook | Description |
