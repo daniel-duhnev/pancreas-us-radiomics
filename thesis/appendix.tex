@@ -1,4 +1,71 @@
 \begin{appendices}
+
+\chapter{Full-Dataset Exploratory Analysis}
+\label{app:full_dataset}
+
+The analyses in this appendix use all 137 studies, including the multiple studies contributed by many patients. Because the statistical tests and cross-validation procedures used in this thesis assume independent observations, these full-dataset results violate the independence assumption and are reported here only as an exploratory supplement to the primary independent-dataset analyses in the main text. In particular, the machine learning evaluation uses leave-one-out cross-validation that holds out a single study rather than a whole patient, so studies from the same patient may appear in both the training and test sets (patient-level leakage). All results below nonetheless support the same negative conclusion as the primary analysis.
+
+\section{Radiomics Statistical Analysis (Full Dataset)}
+
+Univariate statistical tests were performed on all 93 radiomics features using the full dataset of 137 studies (98 no rejection, 39 rejection). Based on the Shapiro-Wilk normality test, 22 features were analysed with Welch's $t$-test and 71 with the Mann-Whitney $U$ test.
+
+Four features reached nominal significance at $p < 0.05$ before multiple testing correction, all from the first-order statistics class: \texttt{firstorder\_Minimum} (Mann-Whitney $U$, $p = 0.022$, rank-biserial $r = -0.25$), \texttt{firstorder\_10Percentile} ($p = 0.040$, $r = -0.23$), \texttt{firstorder\_Median} ($p = 0.041$, $r = -0.22$), and \texttt{firstorder\_Mean} ($p = 0.049$, $r = -0.22$). In all four cases, the rejection group showed lower median intensity values than the no-rejection group. However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values exceeded 0.80, far from the significance threshold. Effect sizes were small across all features. Table~\ref{tab:radiomics_top10} lists the ten features with the lowest uncorrected $p$-values.
+
+\begin{table}[ht]
+\centering
+\caption{Top 10 radiomics features ranked by uncorrected $p$-value on the full dataset ($n = 137$). Four features reach nominal significance ($p < 0.05$) but none survives FDR correction. Effect sizes are rank-biserial correlation (Mann-Whitney) or Cohen's $d$ ($t$-test).}
+\label{tab:radiomics_top10}
+\begin{tabular}{llrrrr}
+\toprule
+Feature & Test & $p$ & $p_{\text{FDR}}$ & Effect & Med.\ NR / R \\
+\midrule
+firstorder\_Minimum & M-W & 0.022 & 0.80 & $-0.25$ & $-42.4$ / $-66.7$ \\
+firstorder\_10Percentile & M-W & 0.040 & 0.80 & $-0.23$ & 18.0 / $-4.0$ \\
+firstorder\_Median & M-W & 0.041 & 0.80 & $-0.22$ & 64.0 / 45.7 \\
+firstorder\_Mean & M-W & 0.049 & 0.80 & $-0.22$ & 66.2 / 48.6 \\
+firstorder\_RootMeanSquared & M-W & 0.076 & 0.80 & $-0.20$ & 74.7 / 65.0 \\
+firstorder\_90Percentile & M-W & 0.113 & 0.80 & $-0.17$ & 116.2 / 104.8 \\
+gldm\_DepNonUniformity & M-W & 0.212 & 0.80 & 0.14 & --- \\
+ngtdm\_Coarseness & M-W & 0.259 & 0.80 & $-0.12$ & --- \\
+gldm\_GLNonUniformity & M-W & 0.265 & 0.80 & 0.12 & --- \\
+glcm\_Imc1 & $t$ & 0.268 & 0.80 & $-0.20$ & --- \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.303 (\texttt{gldm\_LargeDependenceLowGrayLevelEmphasis}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), five features reached nominal significance: \texttt{ngtdm\_Complexity} ($p = 0.035$), \texttt{firstorder\_Range} ($p = 0.044$), \texttt{glszm\_SizeZoneNonUniformity} ($p = 0.047$), \texttt{glrlm\_RunLengthNonUniformity} ($p = 0.047$), and \texttt{firstorder\_Minimum} ($p = 0.048$). None survived FDR correction. The presence of first-order features among the late-period hits is consistent with the full-dataset pattern of weak intensity-related differences.
+
+\section{Machine Learning Classification (Full Dataset)}
+
+Four classifiers were trained and evaluated on the full dataset of 137 studies using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The feature set was reduced from 93 to 27 features after correlation-based filtering. Table~\ref{tab:ml_full} summarises the results.
+
+All models achieved AUC values close to 0.5, indicating performance indistinguishable from chance. The best-performing model by LOOCV was Random Forest (AUC $= 0.564$), followed by Logistic Regression (AUC $= 0.535$) and Naive Bayes (AUC $= 0.533$). The 5-fold cross-validation AUCs were marginally higher (0.52--0.60) due to optimistic bias from the nested hyperparameter tuning, but the LOOCV results provide a more honest estimate of generalisation performance. Figure~\ref{fig:roc_full} shows the LOOCV ROC curves for all four classifiers, which cluster around the diagonal chance line.
+
+The sensitivity--specificity trade-offs further illustrate the lack of signal. Random Forest achieved high specificity (0.83) but low sensitivity (0.36), indicating a tendency to predict the majority class. SVM showed the opposite extreme (sensitivity $= 0.95$, specificity $= 0.15$), predicting nearly all studies as rejection. Neither pattern represents clinically useful discrimination.
+
+\begin{table}[ht]
+\centering
+\caption{Machine learning results on the full dataset ($n = 137$, 93$\to$27 features). AUC is reported for both 5-fold stratified cross-validation and leave-one-out cross-validation (LOOCV). Sensitivity and specificity are computed at the Youden-optimal threshold from LOOCV predictions.}
+\label{tab:ml_full}
+\begin{tabular}{lrrrrr}
+\toprule
+Model & $k$ & AUC (5-fold) & AUC (LOOCV) & Sens. & Spec. \\
+\midrule
+Logistic Regression & 10 & 0.546 & 0.535 & 0.769 & 0.378 \\
+Random Forest & 10 & 0.599 & 0.564 & 0.359 & 0.827 \\
+SVM & 10 & 0.552 & 0.417 & 0.949 & 0.153 \\
+Naive Bayes & 27 & 0.517 & 0.533 & 0.718 & 0.408 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.55\textwidth]{Figures/roc_full_dataset.png}
+\caption{ROC curves from LOOCV on the full dataset ($n = 137$). All four classifiers cluster around the diagonal chance line (dashed). The best AUC is 0.564 (Random Forest).}
+\label{fig:roc_full}
+\end{figure}
+
 \chapter{Complete Radiomics Feature Results}
 \label{app:full_features}
 

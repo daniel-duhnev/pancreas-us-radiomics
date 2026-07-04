@@ -1,8 +1,26 @@
 # Plan: Independent-Dataset Restructure + WSL Migration Recovery
 
-**Updated:** 2026-07-03
-**Status:** Stage 0 DONE, Stage 1 DONE, Stage 2 + 3 PENDING
+**Updated:** 2026-07-04
+**Status:** Stage 0 DONE, Stage 1 DONE, **Stage 2 DONE**, Stage 3 PENDING (personal sections + final proofread)
 **Owner:** Daniel (with agent assistance)
+
+**Stage 2.4/2.5 (2026-07-04):** discussion.tex reframed (5 edits: negative-result list now independent-primary; paired-analysis paragraph now cites the corroborating independent-clinical null; repeated-measures limitation reframed as handled; conclusions objectives 2 and 3 fixed) and abstract.tex reframed (independent dataset = primary basis; clinical result framed as positive control; paired + independent-clinical corroboration). Wavelet/LoG left as the existing brief limitation + future-work mention (not implemented; not expanded; no new citation) - the alternative feature families (LBP/Gabor/Laws') are the primary "wrong-features" robustness response. Verified: latexmk exit 0, 80 pages, zero undefined refs/citations, zero `??`; consistency sweep found no stale full-dataset-as-primary phrasing; all remaining 137/138 mentions audited as appropriate (cohort description, clinical replication, or explicitly-exploratory framing). Minor optional polish not done: §3.6/§3.7 still lead with the full dataset (supplementary robustness sections, report both datasets).
+
+**Stage 2 progress (2026-07-04):**
+- 2.1 methods.tex DONE (scanner = Acuson S3000 Helx; independent-dataset construction paragraph
+  added; stratification reframed to independent/days-based primary; clinical-on-independent noted;
+  ML independent = primary leakage-free, full LOOCV leakage flagged).
+- 2.2 results.tex DONE (radiomics stats + ML now lead with the independent dataset; new
+  "Time-Stratified Analysis" subsection (NB 25) and new "Independent Patient Analysis" clinical
+  subsection with `tab:clinical_independent` (NB 24); full-dataset radiomics stats/stratified/ML
+  moved out; cross-references updated).
+- 2.3 appendix.tex DONE (new `\chapter{Full-Dataset Exploratory Analysis}` = `app:full_dataset`
+  holding the moved full-dataset radiomics stats + motivo stratification + ML + ROC, with the
+  non-independence/leakage caveat). Appendix order now A: Full-Dataset Exploratory, B: Complete
+  Radiomics Feature Results (independent), C: PyRadiomics Configuration.
+- Verified: latexmk exit 0, 79 pages, zero undefined refs/citations, zero `??`, all moved labels
+  defined exactly once.
+- REMAINING: 2.4 discussion.tex + abstract.tex reframing; 2.5 final read-through.
 
 This is the active plan for the final thesis stretch. It supersedes the "Phase 3" section
 of [PLAN_GEMMA_FEEDBACK_RESPONSE.md](PLAN_GEMMA_FEEDBACK_RESPONSE.md), which was blocked on a

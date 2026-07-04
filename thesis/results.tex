@@ -18,43 +18,9 @@ An analysis of inter-feature correlations revealed substantial multicollinearity
 \section{Radiomics Statistical Analysis}
 \label{sec:radiomics_results}
 
-\subsection{Full Dataset}
+The univariate statistical tests were performed primarily on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection), which satisfies the independence assumption underlying the tests (Section~\ref{sec:statistical_analysis}). Based on Shapiro-Wilk tests, 45 features were analysed with Welch's $t$-test and 48 with the Mann-Whitney $U$ test.
 
-Univariate statistical tests were performed on all 93 radiomics features using the full dataset of 137 studies (98 no rejection, 39 rejection). Based on the Shapiro-Wilk normality test, 22 features were analysed with Welch's $t$-test and 71 with the Mann-Whitney $U$ test.
-
-Four features reached nominal significance at $p < 0.05$ before multiple testing correction, all from the first-order statistics class: \texttt{firstorder\_Minimum} (Mann-Whitney $U$, $p = 0.022$, rank-biserial $r = -0.25$), \texttt{firstorder\_10Percentile} ($p = 0.040$, $r = -0.23$), \texttt{firstorder\_Median} ($p = 0.041$, $r = -0.22$), and \texttt{firstorder\_Mean} ($p = 0.049$, $r = -0.22$). In all four cases, the rejection group showed lower median intensity values than the no-rejection group. However, after Benjamini-Hochberg FDR correction, all adjusted $p$-values exceeded 0.80, far from the significance threshold. Effect sizes were small across all features. Table~\ref{tab:radiomics_top10} lists the ten features with the lowest uncorrected $p$-values.
-
-\begin{table}[ht]
-\centering
-\caption{Top 10 radiomics features ranked by uncorrected $p$-value on the full dataset ($n = 137$). Four features reach nominal significance ($p < 0.05$) but none survives FDR correction. Effect sizes are rank-biserial correlation (Mann-Whitney) or Cohen's $d$ ($t$-test).}
-\label{tab:radiomics_top10}
-\begin{tabular}{llrrrr}
-\toprule
-Feature & Test & $p$ & $p_{\text{FDR}}$ & Effect & Med.\ NR / R \\
-\midrule
-firstorder\_Minimum & M-W & 0.022 & 0.80 & $-0.25$ & $-42.4$ / $-66.7$ \\
-firstorder\_10Percentile & M-W & 0.040 & 0.80 & $-0.23$ & 18.0 / $-4.0$ \\
-firstorder\_Median & M-W & 0.041 & 0.80 & $-0.22$ & 64.0 / 45.7 \\
-firstorder\_Mean & M-W & 0.049 & 0.80 & $-0.22$ & 66.2 / 48.6 \\
-firstorder\_RootMeanSquared & M-W & 0.076 & 0.80 & $-0.20$ & 74.7 / 65.0 \\
-firstorder\_90Percentile & M-W & 0.113 & 0.80 & $-0.17$ & 116.2 / 104.8 \\
-gldm\_DepNonUniformity & M-W & 0.212 & 0.80 & 0.14 & --- \\
-ngtdm\_Coarseness & M-W & 0.259 & 0.80 & $-0.12$ & --- \\
-gldm\_GLNonUniformity & M-W & 0.265 & 0.80 & 0.12 & --- \\
-glcm\_Imc1 & $t$ & 0.268 & 0.80 & $-0.20$ & --- \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Stratified Analysis}
-
-The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.303 (\texttt{gldm\_LargeDependenceLowGrayLevelEmphasis}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), five features reached nominal significance: \texttt{ngtdm\_Complexity} ($p = 0.035$), \texttt{firstorder\_Range} ($p = 0.044$), \texttt{glszm\_SizeZoneNonUniformity} ($p = 0.047$), \texttt{glrlm\_RunLengthNonUniformity} ($p = 0.047$), and \texttt{firstorder\_Minimum} ($p = 0.048$). None survived FDR correction. The presence of first-order features among the late-period hits is consistent with the full-dataset pattern of weak intensity-related differences.
-
-\subsection{Independent Dataset}
-
-To address the potential confound of repeated measures, the same analysis was performed on the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). Based on Shapiro-Wilk tests, 45 features were analysed with Welch's $t$-test and 48 with the Mann-Whitney $U$ test.
-
-Twenty-four features reached nominal significance at $p < 0.05$, predominantly from the first-order statistics class (7 of 24). The top-ranked features were \texttt{firstorder\_90Percentile} ($p = 0.004$, rank-biserial $r = -0.47$), \texttt{firstorder\_RootMeanSquared} ($p = 0.005$, $r = -0.46$), and \texttt{firstorder\_Mean} ($p = 0.005$, $r = -0.45$). In 19 of the 24 significant features, the rejection group showed lower values, suggesting a weak trend toward lower image intensities in rejection cases. However, none survived FDR correction (all adjusted $p \geq 0.16$), and the number of nominally significant features (24 of 93, 26\%) only modestly exceeds the 5\% expected under the null hypothesis when considering the correlation structure among features. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature achieves statistically significant discrimination after correction for multiple testing.
+Twenty-four features reached nominal significance at $p < 0.05$, predominantly from the first-order statistics class (7 of 24). The top-ranked features were \texttt{firstorder\_90Percentile} ($p = 0.004$, rank-biserial $r = -0.47$), \texttt{firstorder\_RootMeanSquared} ($p = 0.005$, $r = -0.46$), and \texttt{firstorder\_Mean} ($p = 0.005$, $r = -0.45$). In 19 of the 24 significant features, the rejection group showed lower values, suggesting a weak trend toward lower image intensities in rejection cases. However, none survived FDR correction (all adjusted $p \geq 0.16$), and the number of nominally significant features (24 of 93, 26\%) only modestly exceeds the 5\% expected under the null hypothesis when considering the correlation structure among features. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature achieves statistically significant discrimination after correction for multiple testing. The complete 93-feature table for the independent dataset is provided in Appendix~\ref{app:full_features}. An exploratory analysis on the full dataset of 137 studies, which does not satisfy the independence assumption, is reported in Appendix~\ref{app:full_dataset} and yields the same negative conclusion.
 
 \begin{figure}[ht]
 \centering
@@ -62,6 +28,10 @@ Twenty-four features reached nominal significance at $p < 0.05$, predominantly f
 \caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$, one per patient). Blue: no rejection ($n = 34$); orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
 \label{fig:boxplots_radiomics}
 \end{figure}
+
+\subsection{Time-Stratified Analysis}
+
+To test whether discrimination emerges within a specific post-transplant period, the independent dataset was split by days post-transplant into an early group ($\leq 90$ days, $n = 42$: 28 no rejection, 14 rejection) and a late group ($> 90$ days, $n = 13$: 6 no rejection, 7 rejection), using the same 90-day cutoff as the clinical analysis (Section~\ref{sec:clinical_results}). In the early group, a single feature reached uncorrected significance (\texttt{firstorder\_RootMeanSquared}, $p = 0.044$); in the late group, a single feature reached uncorrected significance (\texttt{firstorder\_Maximum}, $p = 0.038$). Neither survived FDR correction (minimum adjusted $p = 0.61$ in the early group and $0.34$ in the late group), and the two nominally significant features differ between subgroups, indicating chance findings rather than a consistent time-dependent signal. The late subgroup contains only 13 studies and is therefore underpowered, so this comparison is best regarded as a robustness check; its result is consistent with the primary independent-dataset analysis. The corresponding motivo-based stratification of the full dataset is reported in Appendix~\ref{app:full_dataset}.
 
 
 \section{Clinical Feature Replication}
@@ -178,50 +148,53 @@ The motivo-based stratification (motivo 3--5, $n = 71$) yielded 7 significant fe
 \label{fig:boxplots_clinical}
 \end{figure}
 
+\subsection{Independent Patient Analysis}
 
-\section{Machine Learning Classification}
-\label{sec:ml_results}
+To assess whether the clinical biomarkers discriminate rejection under the same independence constraint applied to the radiomics analysis, the 17 clinical features were tested on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection). ARFI measurements were available for 47 of these studies and DCE-US measurements for 54. In contrast to the full-dataset and late-period analyses, no clinical feature reached significance, even before correction (Table~\ref{tab:clinical_independent}). The ARFI features, which were highly significant in the late post-transplant period, were far from significant here (ARFI mediana $p = 0.69$, ARFI media $p = 0.77$); the smallest $p$-value across all 17 features was 0.060 (RT, rise time).
 
-\subsection{Full Dataset}
-
-Four classifiers were trained and evaluated on the full dataset of 137 studies using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The feature set was reduced from 93 to 27 features after correlation-based filtering. Table~\ref{tab:ml_full} summarises the results.
-
-All models achieved AUC values close to 0.5, indicating performance indistinguishable from chance. The best-performing model by LOOCV was Random Forest (AUC $= 0.564$), followed by Logistic Regression (AUC $= 0.535$) and Naive Bayes (AUC $= 0.533$). The 5-fold cross-validation AUCs were marginally higher (0.52--0.60) due to optimistic bias from the nested hyperparameter tuning, but the LOOCV results provide a more honest estimate of generalisation performance. Figure~\ref{fig:roc_full} shows the LOOCV ROC curves for all four classifiers, which cluster around the diagonal chance line.
-
-The sensitivity--specificity trade-offs further illustrate the lack of signal. Random Forest achieved high specificity (0.83) but low sensitivity (0.36), indicating a tendency to predict the majority class. SVM showed the opposite extreme (sensitivity $= 0.95$, specificity $= 0.15$), predicting nearly all studies as rejection. Neither pattern represents clinically useful discrimination.
+This null result does not contradict the positive late-period finding; rather, it reflects the time dependence of the ARFI signal. The independent dataset pools studies across all post-transplant periods and, for patients with both outcomes, preferentially selects the first rejection study, which frequently occurs early. Of the 21 rejection studies in the independent dataset, only 7 fall in the late ($> 90$ day) period where ARFI discrimination is concentrated. Pooling early and late studies therefore dilutes the ARFI effect, consistent with the paired analysis (Section~\ref{sec:paired_results}), which likewise found the within-patient ARFI difference to be non-significant.
 
 \begin{table}[ht]
 \centering
-\caption{Machine learning results on the full dataset ($n = 137$, 93$\to$27 features). AUC is reported for both 5-fold stratified cross-validation and leave-one-out cross-validation (LOOCV). Sensitivity and specificity are computed at the Youden-optimal threshold from LOOCV predictions.}
-\label{tab:ml_full}
+\caption{Clinical imaging features on the independent dataset ($n = 55$, one study per patient; 34 no rejection, 21 rejection). Mann-Whitney $U$ tests sorted by $p$-value, with Benjamini-Hochberg FDR-adjusted $p$-values. No feature reaches significance before or after correction. $n_{\text{NR}}$ / $n_{\text{R}}$ are the available sample sizes after excluding missing values.}
+\label{tab:clinical_independent}
+\small
 \begin{tabular}{lrrrrr}
 \toprule
-Model & $k$ & AUC (5-fold) & AUC (LOOCV) & Sens. & Spec. \\
+Feature & $n_{\text{NR}}$ / $n_{\text{R}}$ & $p$ & $p_{\text{FDR}}$ & Effect & Med.\ NR / R \\
 \midrule
-Logistic Regression & 10 & 0.546 & 0.535 & 0.769 & 0.378 \\
-Random Forest & 10 & 0.599 & 0.564 & 0.359 & 0.827 \\
-SVM & 10 & 0.552 & 0.417 & 0.949 & 0.153 \\
-Naive Bayes & 27 & 0.517 & 0.533 & 0.718 & 0.408 \\
+RT & 34 / 20 & 0.060 & 0.363 & 0.31 & 5.02 / 6.23 \\
+FT & 34 / 20 & 0.105 & 0.363 & 0.27 & 9.49 / 11.52 \\
+WiR & 34 / 20 & 0.109 & 0.363 & $-0.26$ & 327.6 / 193.7 \\
+WoR & 34 / 20 & 0.113 & 0.363 & $-0.26$ & 140.6 / 81.0 \\
+TTP & 34 / 20 & 0.126 & 0.363 & 0.25 & 8.38 / 9.21 \\
+Area & 34 / 20 & 0.146 & 0.363 & $-0.24$ & 0.485 / 0.460 \\
+WiPi & 34 / 20 & 0.165 & 0.363 & $-0.23$ & 667.0 / 482.0 \\
+PE & 34 / 20 & 0.171 & 0.363 & $-0.23$ & 1033.1 / 756.4 \\
+QOF & 34 / 20 & 0.385 & 0.663 & 0.14 & 89.89 / 89.21 \\
+WiWoAUC & 34 / 20 & 0.395 & 0.663 & $-0.14$ & 10469.5 / 10352.8 \\
+WiAUC & 34 / 20 & 0.457 & 0.663 & $-0.12$ & 3486.1 / 3128.5 \\
+WoAUC & 34 / 20 & 0.468 & 0.663 & $-0.12$ & 6654.4 / 6583.1 \\
+ARFI RIQ & 29 / 18 & 0.615 & 0.793 & $-0.09$ & 0.310 / 0.295 \\
+ARFI mediana & 29 / 18 & 0.686 & 0.793 & 0.07 & 1.460 / 1.485 \\
+mTTI & 34 / 20 & 0.700 & 0.793 & $-0.06$ & 32.00 / 25.13 \\
+ARFI media & 29 / 18 & 0.768 & 0.816 & 0.05 & 1.450 / 1.540 \\
+ARFI DE & 29 / 18 & 0.895 & 0.895 & $-0.02$ & 0.250 / 0.225 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.55\textwidth]{Figures/roc_full_dataset.png}
-\caption{ROC curves from LOOCV on the full dataset ($n = 137$). All four classifiers cluster around the diagonal chance line (dashed). The best AUC is 0.564 (Random Forest).}
-\label{fig:roc_full}
-\end{figure}
 
-\subsection{Independent Dataset}
+\section{Machine Learning Classification}
+\label{sec:ml_results}
 
-To eliminate the effect of repeated measures, the same pipeline was applied to the independent dataset of 55 studies (one per patient; 34 no rejection, 21 rejection). The correlation-based filter reduced the feature set from 93 to 27 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
+Four classifiers were trained and evaluated on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection) using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The correlation-based filter reduced the feature set from 93 to 27 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
 
 Performance remained near chance. Logistic Regression achieved the highest 10-fold CV AUC of 0.636, with a bootstrap 95\% confidence interval of [0.48, 0.78] that includes 0.5. SVM collapsed entirely (AUC $= 0.408$, sensitivity $= 1.0$, specificity $= 0.029$), predicting nearly all studies as rejection---a sign of model instability with small samples. Naive Bayes achieved AUC $= 0.618$ [0.45, 0.78], also spanning chance.
 
 \begin{table}[ht]
 \centering
-\caption{Machine learning results on the independent dataset ($n = 55$, 93$\to$27 features). Primary evaluation: 10-fold stratified CV. LOOCV is shown for comparison with the full-dataset results. Bootstrap 95\% confidence intervals are computed from 1000 resamples.}
+\caption{Machine learning results on the independent dataset ($n = 55$, 93$\to$27 features). Primary evaluation: 10-fold stratified CV, with LOOCV shown as a secondary comparison. Bootstrap 95\% confidence intervals are computed from 1000 resamples.}
 \label{tab:ml_independent}
 \begin{tabular}{lrrrrrr}
 \toprule
@@ -235,7 +208,7 @@ Naive Bayes & 15 & 0.618 & [0.45, 0.78] & 0.592 & 0.571 & 0.765 \\
 \end{tabular}
 \end{table}
 
-The consistent near-chance performance across both datasets and multiple classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. Although the independent dataset showed 24 features with uncorrected $p < 0.05$ (Section~\ref{sec:radiomics_results}), this weak univariate trend does not translate into useful multivariate classification---all confidence intervals include 0.5.
+The consistent near-chance performance across all four classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. Although the independent dataset showed 24 features with uncorrected $p < 0.05$ (Section~\ref{sec:radiomics_results}), this weak univariate trend does not translate into useful multivariate classification---all confidence intervals include 0.5. The corresponding classification on the full dataset of 137 studies, which uses leave-one-out cross-validation and is subject to patient-level leakage, is reported in Appendix~\ref{app:full_dataset}; it is likewise at chance (best AUC 0.564).
 
 \section{Paired Analysis}
 \label{sec:paired_results}
@@ -286,7 +259,7 @@ glcm\_Imc2 & 0.016 & 20 & 0.042 & 0.49 \\
 \end{tabular}
 \end{table}
 
-Notably, the features reaching nominal significance in the paired analysis differ from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis, \texttt{firstorder\_Minimum} ranked highest ($p = 0.022$); in the independent-dataset analysis, \texttt{firstorder\_90Percentile} was strongest ($p = 0.004$). By contrast, the paired analysis is dominated by gray-level-related features rather than first-order intensity features, and \texttt{ngtdm\_Coarseness} appears as the top hit. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
+Notably, the features reaching nominal significance in the paired analysis differ from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis (Appendix~\ref{app:full_dataset}), \texttt{firstorder\_Minimum} ranked highest ($p = 0.022$); in the independent-dataset analysis, \texttt{firstorder\_90Percentile} was strongest ($p = 0.004$). By contrast, the paired analysis is dominated by gray-level-related features rather than first-order intensity features, and \texttt{ngtdm\_Coarseness} appears as the top hit. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
 
 \subsection{Clinical Features}
 
