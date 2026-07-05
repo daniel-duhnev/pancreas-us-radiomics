@@ -33,7 +33,7 @@ glcm\_Imc1 & $t$ & 0.268 & 0.80 & $-0.20$ & --- \\
 \end{tabular}
 \end{table}
 
-The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$; the lowest $p$-value was 0.303 (\texttt{gldm\_LargeDependenceLowGrayLevelEmphasis}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), five features reached nominal significance: \texttt{ngtdm\_Complexity} ($p = 0.035$), \texttt{firstorder\_Range} ($p = 0.044$), \texttt{glszm\_SizeZoneNonUniformity} ($p = 0.047$), \texttt{glrlm\_RunLengthNonUniformity} ($p = 0.047$), and \texttt{firstorder\_Minimum} ($p = 0.048$). None survived FDR correction. The presence of first-order features among the late-period hits is consistent with the full-dataset pattern of weak intensity-related differences.
+The analysis was repeated on two subsets stratified by the \texttt{motivo} variable (see Section~\ref{sec:statistical_analysis}). In the early period (motivo 1--2, $n = 67$: 57 no rejection, 10 rejection), no feature reached $p < 0.05$. The lowest $p$-value was 0.303 (\texttt{gldm\_LargeDependenceLowGrayLevelEmphasis}). In the late period (motivo 3--5, $n = 70$: 41 no rejection, 29 rejection), five features reached nominal significance: \texttt{ngtdm\_Complexity} ($p = 0.035$), \texttt{firstorder\_Range} ($p = 0.044$), \texttt{glszm\_SizeZoneNonUniformity} ($p = 0.047$), \texttt{glrlm\_RunLengthNonUniformity} ($p = 0.047$), and \texttt{firstorder\_Minimum} ($p = 0.048$). None survived FDR correction. The presence of first-order features among the late-period hits is consistent with the full-dataset pattern of weak intensity-related differences.
 
 \section{Machine Learning Classification (Full Dataset)}
 
@@ -69,7 +69,7 @@ Naive Bayes & 27 & 0.517 & 0.533 & 0.718 & 0.408 \\
 \chapter{Complete Radiomics Feature Results}
 \label{app:full_features}
 
-Table~\ref{tab:full_features} presents the complete statistical analysis of all 93 radiomics features on the independent dataset ($n = 55$, one study per patient; 34 no rejection, 21 rejection). Features are sorted by uncorrected $p$-value. The test column indicates Mann-Whitney $U$ (M-W) or Welch's $t$-test ($t$). Effect size is rank-biserial correlation (M-W) or Cohen's $d$ ($t$-test). No feature survives Benjamini-Hochberg FDR correction.
+Table~\ref{tab:full_features} presents the complete statistical analysis of all 93 radiomics features on the independent dataset ($n = 55$, one study per patient, 34 no rejection and 21 rejection). Features are sorted by uncorrected $p$-value. The test column indicates Mann-Whitney $U$ (M-W) or Welch's $t$-test ($t$). Effect size is rank-biserial correlation (M-W) or Cohen's $d$ ($t$-test). No feature survives Benjamini-Hochberg FDR correction.
 
 \small
 \begin{longtable}{p{6.5cm}rrrr}
@@ -226,7 +226,7 @@ Shape (2D/3D) & Disabled \\
 \end{tabular}
 \end{table}
 
-The \texttt{force2D} setting was required because the input images are single 2D ultrasound slices stored as 3D arrays with depth $= 1$. Without this setting, PyRadiomics attempts 3D co-occurrence calculations that fail on single-slice volumes. Shape features were disabled because the region-of-interest masks were manually drawn by clinicians to delineate the pancreas graft boundary; shape features would therefore reflect annotation style rather than tissue properties.
+The \texttt{force2D} setting was required because the input images are single 2D ultrasound slices stored as 3D arrays with depth $= 1$. Without this setting, PyRadiomics attempts 3D co-occurrence calculations that fail on single-slice volumes. Shape features were disabled because the region-of-interest masks were manually drawn by clinicians to delineate the pancreas graft boundary. Shape features would therefore reflect annotation style rather than tissue properties.
 
 The \texttt{normalize} setting applies a per-image $z$-score transformation prior to feature computation: each image's pixel intensities are centred to zero mean and unit variance, then scaled by a factor of 100 (\texttt{normalizeScale}). Outlier pixels beyond 3 standard deviations are clipped (\texttt{removeOutliers}). This normalisation is essential for ultrasound radiomics because ultrasound images lack a standardised intensity scale---unlike Hounsfield units in CT---and differences in gain, depth, and probe pressure between acquisitions produce varying absolute intensity ranges that would otherwise confound texture features.
 

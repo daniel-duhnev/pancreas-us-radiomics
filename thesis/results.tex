@@ -18,20 +18,20 @@ An analysis of inter-feature correlations revealed substantial multicollinearity
 \section{Radiomics Statistical Analysis}
 \label{sec:radiomics_results}
 
-The univariate statistical tests were performed primarily on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection), which satisfies the independence assumption underlying the tests (Section~\ref{sec:statistical_analysis}). Based on Shapiro-Wilk tests, 45 features were analysed with Welch's $t$-test and 48 with the Mann-Whitney $U$ test.
+The univariate statistical tests were performed primarily on the independent dataset of 55 studies (one study per patient, 34 no rejection and 21 rejection), which satisfies the independence assumption underlying the tests (Section~\ref{sec:statistical_analysis}). Based on Shapiro-Wilk tests, 45 features were analysed with Welch's $t$-test and 48 with the Mann-Whitney $U$ test.
 
-Twenty-four features reached nominal significance at $p < 0.05$, predominantly from the first-order statistics class (7 of 24). The top-ranked features were \texttt{firstorder\_90Percentile} ($p = 0.004$, rank-biserial $r = -0.47$), \texttt{firstorder\_RootMeanSquared} ($p = 0.005$, $r = -0.46$), and \texttt{firstorder\_Mean} ($p = 0.005$, $r = -0.45$). In 19 of the 24 significant features, the rejection group showed lower values, suggesting a weak trend toward lower image intensities in rejection cases. However, none survived FDR correction (all adjusted $p \geq 0.16$), and the number of nominally significant features (24 of 93, 26\%) only modestly exceeds the 5\% expected under the null hypothesis when considering the correlation structure among features. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature achieves statistically significant discrimination after correction for multiple testing. The complete 93-feature table for the independent dataset is provided in Appendix~\ref{app:full_features}. An exploratory analysis on the full dataset of 137 studies, which does not satisfy the independence assumption, is reported in Appendix~\ref{app:full_dataset} and yields the same negative conclusion.
+Twenty-four features reached nominal significance at $p < 0.05$, predominantly from the first-order statistics class (7 of 24). The top-ranked features were \texttt{firstorder\_90Percentile} ($p = 0.004$, rank-biserial $r = -0.46$), \texttt{firstorder\_RootMeanSquared} ($p = 0.005$, $r = -0.46$), and \texttt{firstorder\_Mean} ($p = 0.005$, $r = -0.45$). In 19 of the 24 significant features, the rejection group showed lower values, suggesting a weak trend toward lower image intensities in rejection cases. However, none survived FDR correction (all adjusted $p \geq 0.16$), and the number of nominally significant features (24 of 93, 26\%) only modestly exceeds the 5\% expected under the null hypothesis when considering the correlation structure among features. The independent dataset thus rules out within-patient correlation as the explanation for the negative result: even when each patient contributes exactly one observation, no radiomics feature achieves statistically significant discrimination after correction for multiple testing. The complete 93-feature table for the independent dataset is provided in Appendix~\ref{app:full_features}. An exploratory analysis on the full dataset of 137 studies, which does not satisfy the independence assumption, is reported in Appendix~\ref{app:full_dataset} and yields the same negative conclusion.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{Figures/boxplots_radiomics_top5.png}
-\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$, one per patient). Blue: no rejection ($n = 34$); orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
+\caption{Distribution of the five radiomics features with the lowest uncorrected $p$-values on the independent dataset ($n = 55$, one per patient). Blue: no rejection ($n = 34$). Orange: rejection ($n = 21$). The overlapping distributions illustrate the absence of strong discriminative signal despite several features reaching uncorrected $p < 0.05$.}
 \label{fig:boxplots_radiomics}
 \end{figure}
 
 \subsection{Time-Stratified Analysis}
 
-To test whether discrimination emerges within a specific post-transplant period, the independent dataset was split by days post-transplant into an early group ($\leq 90$ days, $n = 42$: 28 no rejection, 14 rejection) and a late group ($> 90$ days, $n = 13$: 6 no rejection, 7 rejection), using the same 90-day cutoff as the clinical analysis (Section~\ref{sec:clinical_results}). In the early group, a single feature reached uncorrected significance (\texttt{firstorder\_RootMeanSquared}, $p = 0.044$); in the late group, a single feature reached uncorrected significance (\texttt{firstorder\_Maximum}, $p = 0.038$). Neither survived FDR correction (minimum adjusted $p = 0.61$ in the early group and $0.34$ in the late group), and the two nominally significant features differ between subgroups, indicating chance findings rather than a consistent time-dependent signal. The late subgroup contains only 13 studies and is therefore underpowered, so this comparison is best regarded as a robustness check; its result is consistent with the primary independent-dataset analysis. The corresponding motivo-based stratification of the full dataset is reported in Appendix~\ref{app:full_dataset}.
+To test whether discrimination emerges within a specific post-transplant period, the independent dataset was split by days post-transplant into an early group ($\leq 90$ days, $n = 42$: 28 no rejection, 14 rejection) and a late group ($> 90$ days, $n = 13$: 6 no rejection, 7 rejection), using the same 90-day cutoff as the clinical analysis (Section~\ref{sec:clinical_results}). In the early group, a single feature reached uncorrected significance (\texttt{firstorder\_RootMeanSquared}, $p = 0.044$). In the late group, a single feature reached uncorrected significance (\texttt{firstorder\_Maximum}, $p = 0.038$). Neither survived FDR correction (minimum adjusted $p = 0.61$ in the early group and $0.34$ in the late group), and the two nominally significant features differ between subgroups, indicating chance findings rather than a consistent time-dependent signal. The late subgroup contains only 13 studies and is therefore underpowered, so this comparison is best regarded as a robustness check. Its result is consistent with the primary independent-dataset analysis. The corresponding motivo-based stratification of the full dataset is reported in Appendix~\ref{app:full_dataset}.
 
 
 \section{Clinical Feature Replication}
@@ -81,7 +81,7 @@ The early post-transplant period ($\leq 90$ days, $n = 80$) showed no significan
 
 \begin{table}[ht]
 \centering
-\caption{Clinical imaging features in the late post-transplant period ($> 90$ days, $n = 58$). Eight features reach significance ($p < 0.05$, shown in bold). ARFI sample sizes: 52 (33 NR, 19 R); DCE-US sample sizes: 50 (31 NR, 19 R).}
+\caption{Clinical imaging features in the late post-transplant period ($> 90$ days, $n = 58$). Eight features reach significance ($p < 0.05$, shown in bold). ARFI sample sizes: 52 (33 NR, 19 R). DCE-US sample sizes: 50 (31 NR, 19 R).}
 \label{tab:clinical_late}
 \small
 \begin{tabular}{lrrrr}
@@ -111,7 +111,7 @@ Area & 0.731 & $-0.06$ & 0.46 & 0.46 \\
 
 \subsection{Replication of Bassaganyas et al.}
 
-Table~\ref{tab:replication} compares our late-period $p$-values with those reported by Bassaganyas et al.\ \cite{bassaganyas2025} for the 12 DCE-US and ARFI features reported in their publication. Using the same $> 90$-day cutoff and the same dataset, our results match the published values to three decimal places for 10 of the 12 features. The ARFI mediana $p$-value is reported as ``$< 0.001$'' in both analyses. The only notable discrepancy is RT (rise time), where our $p$-value (0.142) is lower than the published value (0.276); however, both are non-significant and this difference does not affect the conclusions. The most likely explanation is that the rise time values in the clinical database were updated between the original analysis and our data export---RT is computed from the initial slope of the time-intensity curve and is the DCE-US parameter most sensitive to curve-fitting parameters, whereas integral and peak measures (which match exactly) are more robust to fitting choices.
+Table~\ref{tab:replication} compares our late-period $p$-values with those reported by Bassaganyas et al.\ \cite{bassaganyas2025} for the 12 DCE-US and ARFI features reported in their publication. Using the same $> 90$-day cutoff and the same dataset, our results match the published values to three decimal places for 10 of the 12 features. The ARFI mediana $p$-value is reported as ``$< 0.001$'' in both analyses. The only notable discrepancy is RT (rise time), where our $p$-value (0.142) is lower than the published value (0.276). However, both are non-significant and this difference does not affect the conclusions. The most likely explanation is that the rise time values in the clinical database were updated between the original analysis and our data export---RT is computed from the initial slope of the time-intensity curve and is the DCE-US parameter most sensitive to curve-fitting parameters, whereas integral and peak measures (which match exactly) are more robust to fitting choices.
 
 This near-perfect replication serves two purposes. First, it validates our analysis pipeline: the data loading, preprocessing, group assignment, and statistical testing produce results consistent with an independent analysis of the same dataset. Second, it confirms that the negative radiomics result (Section~\ref{sec:radiomics_results}) is not an artifact of a flawed pipeline---the same pipeline detects the clinical biomarker signal when it exists.
 
@@ -144,19 +144,19 @@ The motivo-based stratification (motivo 3--5, $n = 71$) yielded 7 significant fe
 \begin{figure}[ht]
 \centering
 \includegraphics[width=0.85\textwidth]{Figures/boxplots_clinical_features.png}
-\caption{Distribution of clinical imaging features by rejection status on the full dataset. The four ARFI elastography features (left) and two DCE-US perfusion parameters (right) are shown. ARFI mediana and ARFI media reach significance ($p < 0.03$); the remaining features are significant only in the late post-transplant period ($> 90$ days).}
+\caption{Distribution of clinical imaging features by rejection status on the full dataset. The four ARFI elastography features (left) and two DCE-US perfusion parameters (right) are shown. ARFI mediana and ARFI media reach significance ($p < 0.03$). The remaining features are significant only in the late post-transplant period ($> 90$ days).}
 \label{fig:boxplots_clinical}
 \end{figure}
 
 \subsection{Independent Patient Analysis}
 
-To assess whether the clinical biomarkers discriminate rejection under the same independence constraint applied to the radiomics analysis, the 17 clinical features were tested on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection). ARFI measurements were available for 47 of these studies and DCE-US measurements for 54. In contrast to the full-dataset and late-period analyses, no clinical feature reached significance, even before correction (Table~\ref{tab:clinical_independent}). The ARFI features, which were highly significant in the late post-transplant period, were far from significant here (ARFI mediana $p = 0.69$, ARFI media $p = 0.77$); the smallest $p$-value across all 17 features was 0.060 (RT, rise time).
+To assess whether the clinical biomarkers discriminate rejection under the same independence constraint applied to the radiomics analysis, the 17 clinical features were tested on the independent dataset of 55 studies (one study per patient, 34 no rejection and 21 rejection). ARFI measurements were available for 47 of these studies and DCE-US measurements for 54. In contrast to the full-dataset and late-period analyses, no clinical feature reached significance, even before correction (Table~\ref{tab:clinical_independent}). The ARFI features, which were highly significant in the late post-transplant period, were far from significant here (ARFI mediana $p = 0.69$, ARFI media $p = 0.77$). The smallest $p$-value across all 17 features was 0.060 (RT, rise time).
 
-This null result does not contradict the positive late-period finding; rather, it reflects the time dependence of the ARFI signal. The independent dataset pools studies across all post-transplant periods and, for patients with both outcomes, preferentially selects the first rejection study, which frequently occurs early. Of the 21 rejection studies in the independent dataset, only 7 fall in the late ($> 90$ day) period where ARFI discrimination is concentrated. Pooling early and late studies therefore dilutes the ARFI effect, consistent with the paired analysis (Section~\ref{sec:paired_results}), which likewise found the within-patient ARFI difference to be non-significant.
+This null result does not contradict the positive late-period finding. Rather, it reflects the time dependence of the ARFI signal. The independent dataset pools studies across all post-transplant periods and, for patients with both outcomes, preferentially selects the first rejection study, which frequently occurs early. Of the 21 rejection studies in the independent dataset, only 7 fall in the late ($> 90$ day) period where ARFI discrimination is concentrated. Pooling early and late studies therefore dilutes the ARFI effect, consistent with the paired analysis (Section~\ref{sec:paired_results}), which likewise found the within-patient ARFI difference to be non-significant.
 
 \begin{table}[ht]
 \centering
-\caption{Clinical imaging features on the independent dataset ($n = 55$, one study per patient; 34 no rejection, 21 rejection). Mann-Whitney $U$ tests sorted by $p$-value, with Benjamini-Hochberg FDR-adjusted $p$-values. No feature reaches significance before or after correction. $n_{\text{NR}}$ / $n_{\text{R}}$ are the available sample sizes after excluding missing values.}
+\caption{Clinical imaging features on the independent dataset ($n = 55$, one study per patient, 34 no rejection and 21 rejection). Mann-Whitney $U$ tests sorted by $p$-value, with Benjamini-Hochberg FDR-adjusted $p$-values. No feature reaches significance before or after correction. $n_{\text{NR}}$ / $n_{\text{R}}$ are the available sample sizes after excluding missing values.}
 \label{tab:clinical_independent}
 \small
 \begin{tabular}{lrrrrr}
@@ -188,7 +188,7 @@ ARFI DE & 29 / 18 & 0.895 & 0.895 & $-0.02$ & 0.250 / 0.225 \\
 \section{Machine Learning Classification}
 \label{sec:ml_results}
 
-Four classifiers were trained and evaluated on the independent dataset of 55 studies (one study per patient; 34 no rejection, 21 rejection) using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The correlation-based filter reduced the feature set from 93 to 27 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
+Four classifiers were trained and evaluated on the independent dataset of 55 studies (one study per patient, 34 no rejection and 21 rejection) using the joint optimisation pipeline described in Section~\ref{sec:ml_classification}. The correlation-based filter reduced the feature set from 93 to 27 features on this dataset. Evaluation used 10-fold stratified cross-validation as the primary metric, with LOOCV as a secondary comparison. Table~\ref{tab:ml_independent} presents the results.
 
 Performance remained near chance. Logistic Regression achieved the highest 10-fold CV AUC of 0.636, with a bootstrap 95\% confidence interval of [0.48, 0.78] that includes 0.5. SVM collapsed entirely (AUC $= 0.408$, sensitivity $= 1.0$, specificity $= 0.029$), predicting nearly all studies as rejection---a sign of model instability with small samples. Naive Bayes achieved AUC $= 0.618$ [0.45, 0.78], also spanning chance.
 
@@ -208,7 +208,7 @@ Naive Bayes & 15 & 0.618 & [0.45, 0.78] & 0.592 & 0.571 & 0.765 \\
 \end{tabular}
 \end{table}
 
-The consistent near-chance performance across all four classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. Although the independent dataset showed 24 features with uncorrected $p < 0.05$ (Section~\ref{sec:radiomics_results}), this weak univariate trend does not translate into useful multivariate classification---all confidence intervals include 0.5. The corresponding classification on the full dataset of 137 studies, which uses leave-one-out cross-validation and is subject to patient-level leakage, is reported in Appendix~\ref{app:full_dataset}; it is likewise at chance (best AUC 0.564).
+The consistent near-chance performance across all four classifiers confirms the conclusion from the statistical analysis: radiomics texture features extracted from grayscale ultrasound do not contain discriminative information for pancreas transplant rejection. Although the independent dataset showed 24 features with uncorrected $p < 0.05$ (Section~\ref{sec:radiomics_results}), this weak univariate trend does not translate into useful multivariate classification---all confidence intervals include 0.5. The corresponding classification on the full dataset of 137 studies, which uses leave-one-out cross-validation and is subject to patient-level leakage, is reported in Appendix~\ref{app:full_dataset}. It is likewise at chance (best AUC 0.564).
 
 \section{Paired Analysis}
 \label{sec:paired_results}
@@ -221,7 +221,7 @@ For each of the 14 patients, one rejection study and one no-rejection study were
 
 \begin{table}[ht]
 \centering
-\caption{Sample sizes for the paired analysis. ARFI measurements were available for 12 of the 14 paired patients; DCE-US parameters were available for 10.}
+\caption{Sample sizes for the paired analysis. ARFI measurements were available for 12 of the 14 paired patients. DCE-US parameters were available for 10.}
 \label{tab:paired_summary}
 \begin{tabular}{lc}
 \toprule
@@ -259,7 +259,7 @@ glcm\_Imc2 & 0.016 & 20 & 0.042 & 0.49 \\
 \end{tabular}
 \end{table}
 
-Notably, the features reaching nominal significance in the paired analysis differ from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis (Appendix~\ref{app:full_dataset}), \texttt{firstorder\_Minimum} ranked highest ($p = 0.022$); in the independent-dataset analysis, \texttt{firstorder\_90Percentile} was strongest ($p = 0.004$). By contrast, the paired analysis is dominated by gray-level-related features rather than first-order intensity features, and \texttt{ngtdm\_Coarseness} appears as the top hit. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
+Notably, the features reaching nominal significance in the paired analysis differ from those in the unpaired analyses (Section~\ref{sec:radiomics_results}). In the full-dataset analysis (Appendix~\ref{app:full_dataset}), \texttt{firstorder\_Minimum} ranked highest ($p = 0.022$). In the independent-dataset analysis, \texttt{firstorder\_90Percentile} was strongest ($p = 0.004$). By contrast, the paired analysis is dominated by gray-level-related features rather than first-order intensity features, and \texttt{ngtdm\_Coarseness} appears as the top hit. This instability across analysis approaches further confirms the absence of a reproducible signal rather than a consistent but weak effect.
 
 \subsection{Clinical Features}
 
@@ -274,7 +274,7 @@ To assess whether the negative radiomics finding was specific to the PyRadiomics
 
 \subsection{Statistical Analysis}
 
-On the full dataset (137 studies), 5 of 153 features reached nominal significance at $p < 0.05$ (uncorrected): three LBP features (\texttt{lbp\_r3\_p24\_bin6}, $p = 0.014$; \texttt{lbp\_r3\_p24\_bin18}, $p = 0.040$; \texttt{lbp\_r3\_p24\_bin25}, $p = 0.047$) and two Gabor features (\texttt{gabor\_w10\_o150\_std}, $p = 0.036$; \texttt{gabor\_w5\_o90\_mean}, $p = 0.049$). None survived FDR correction (minimum $q = 0.60$). Under the null hypothesis of no association, 7.7 features ($153 \times 0.05$) would be expected to reach $p < 0.05$ by chance; the observed count of 5 is below this expectation.
+On the full dataset (137 studies), 5 of 153 features reached nominal significance at $p < 0.05$ (uncorrected): three LBP features (\texttt{lbp\_r3\_p24\_bin6} at $p = 0.014$, \texttt{lbp\_r3\_p24\_bin18} at $p = 0.040$, and \texttt{lbp\_r3\_p24\_bin25} at $p = 0.047$) and two Gabor features (\texttt{gabor\_w10\_o150\_std} at $p = 0.036$ and \texttt{gabor\_w5\_o90\_mean} at $p = 0.049$). None survived FDR correction (minimum $q = 0.60$). Under the null hypothesis of no association, 7.7 features ($153 \times 0.05$) would be expected to reach $p < 0.05$ by chance. The observed count of 5 is below this expectation.
 
 On the independent dataset (55 studies, one per patient), 7 features reached uncorrected $p < 0.05$, predominantly from the Laws' family (5 of 7). The strongest was \texttt{laws\_L5W5\_mean} ($p = 0.021$). Again, none survived FDR correction (minimum $q = 0.54$).
 
@@ -284,7 +284,7 @@ Table~\ref{tab:alt_per_family} summarises the results separately for each featur
 
 \begin{table}[ht]
 \centering
-\caption{Alternative texture feature results by family, evaluated on the independent dataset ($n = 55$). Statistical results show uncorrected significance counts; ML results use 10-fold stratified cross-validation with the best-performing classifier per family.}
+\caption{Alternative texture feature results by family, evaluated on the independent dataset ($n = 55$). Statistical results show uncorrected significance counts. ML results use 10-fold stratified cross-validation with the best-performing classifier per family.}
 \label{tab:alt_per_family}
 \begin{tabular}{lrrrrrr}
 \toprule
@@ -313,9 +313,9 @@ To test whether inter-patient variability in acquisition settings confounds the 
 
 \subsection{Normalised Radiomics}
 
-After $z$-score normalisation using the surrounding tissue ring, none of the 93 re-extracted PyRadiomics features reached statistical significance at $p < 0.05$ on the full dataset. The closest was \texttt{gldm\_SmallDependenceLowGrayLevelEmphasis} ($p = 0.057$). All FDR-corrected $q$-values exceeded 0.78. This result is weaker than the standard per-image normalised analysis (which yielded 24 uncorrected hits on the independent dataset), suggesting that the surrounding-tissue normalisation procedure removed rather than revealed discriminative texture information.
+After $z$-score normalisation using the surrounding tissue ring, none of the 93 re-extracted PyRadiomics features reached statistical significance at $p < 0.05$ on the full dataset. The closest was \texttt{gldm\_SmallDependenceLowGrayLevelEmphasis} ($p = 0.057$). All FDR-corrected $q$-values exceeded 0.78. This result is weaker than the standard per-image normalised analysis on the same full dataset (which yielded 4 uncorrected hits; Appendix~\ref{app:full_dataset}), suggesting that the surrounding-tissue normalisation procedure removed rather than revealed discriminative texture information.
 
-Machine learning classification on the surrounding-tissue normalised features confirmed this pattern. The best model (Logistic Regression, $k = 20$) achieved AUC $= 0.525$, marginally above chance and below the standard analysis result (AUC $= 0.636$).
+Machine learning classification on the surrounding-tissue normalised features confirmed this pattern. The best model (Logistic Regression, $k = 20$) achieved AUC $= 0.525$, marginally above chance and comparable to the standard per-image normalised analysis on the same full dataset, which was likewise near chance (best AUC $0.564$; Appendix~\ref{app:full_dataset}).
 
 \subsection{Contrast Features}
 
