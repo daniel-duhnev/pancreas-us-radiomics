@@ -10,7 +10,8 @@ differently — the goal is understanding, not memorised phrasing. Numbers, howe
 1. **Pitch (6 beats):** problem (rejection, biopsy is bad) → opportunity (US already done; ARFI/DCE-US
    work but need specialists) → question (can radiomics on plain B-mode predict rejection?) → method
    (93 features, 137 studies, independent dataset, stats + 4 ML models) → result (null; best AUC 0.636,
-   CI includes chance) → punchline (same pipeline reproduced ARFI to 3 decimals → the null is real).
+   CI includes chance) → punchline (same statistical analysis recovered ARFI from the clinical
+   measurements to 3 decimals → the analysis is sound/powered, so the null is real).
 2. **Biopsy limits:** invasive/risky (bleeding, pancreatitis, fistula); deep graft not always
    accessible; sampling error (focal rejection missed). (Bonus: low real-world uptake.)
 3. **ARFI:** tissue stiffness via shear-wave velocity; rejection (inflammation/fibrosis) increases
@@ -21,9 +22,11 @@ differently — the goal is understanding, not memorised phrasing. Numbers, howe
    encodes macroscopic tissue interfaces, ~0.5–2 mm resolution.
 6. **90-day cutoff:** first 90 days are noisy (surgical healing, post-op oedema); after 90 days the
    graft settles and stiffness/perfusion changes emerge → ARFI significant only in the late period.
-7. **"Failed experiment" rebuttal:** It's a *controlled* negative — the positive control (ARFI p<0.001,
-   reproduced to 3 decimals) proves the method works, so "no signal" is a real finding, not a bug.
-   It's robust across six analyses, and the physics explains it. That narrows the field's search space.
+7. **"Failed experiment" rebuttal:** It's a *controlled* negative — the positive control (the same
+   statistical analysis recovers ARFI at p<0.001, matching the published values to 3 decimals) proves
+   the analysis is sound and powered, so "no signal" is a real finding, not a broken/underpowered
+   analysis. It's robust across six analyses, and the physics explains it. That narrows the field's
+   search space. (The control validates the stats, not the image pipeline.)
 
 ## Quiz 2 — Radiomics & pipeline
 
@@ -77,8 +80,9 @@ differently — the goal is understanding, not memorised phrasing. Numbers, howe
 2. **Logistic Regression, AUC 0.636, 95% CI [0.48, 0.78]** (k=10).
 3. **SVM collapsed** (AUC 0.408, sensitivity 1.0, specificity 0.029) — predicted almost everything as
    rejection, the signature of no separable signal in a small imbalanced set.
-4. **ARFI late period: p < 0.001, r = 0.72** (mediana). Positive control because the *same* pipeline
-   detected the published clinical signal, proving it can find a real effect when one exists.
+4. **ARFI late period: p < 0.001, r = 0.72** (mediana). Positive control because the *same statistical
+   analysis* (same patients/labels) detected the published clinical signal, proving the analysis can
+   find a real effect when one exists — it validates the stats, not the image pipeline.
 5. **Reconcile:** the independent set pools all time periods and prefers first (often early) rejection
    studies; only **7 of 21** rejection studies are late, so the late-concentrated ARFI effect is
    diluted. Consistent with the paired result.
@@ -105,8 +109,8 @@ differently — the goal is understanding, not memorised phrasing. Numbers, howe
 ## Quiz 6 — Defence
 
 1. **Master framing:** "Every debatable choice in my pipeline biases performance upward; it's still at
-   chance, so the negative conclusion is conservative — and the positive control proves the method can
-   detect a real signal."
+   chance, so the negative conclusion is conservative — and the positive control shows the shared
+   statistical analysis can detect a real signal when one exists."
 2. **Not nested:** Concede k/hyperparameters tuned on all data (disclosed); bias is upward; nested CV
    would push AUCs toward 0.5 and reinforce the conclusion.
 3. **Patient in train+test:** only in the *full* set, which is exploratory/appendix; the independent

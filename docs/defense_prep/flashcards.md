@@ -12,9 +12,10 @@ Cover the answer, say it out loud, then check. Re-drill anything you miss.
   transplant rejection.
 - **[E]** Q: What was the headline result?
   A: They cannot — no feature survives FDR, best ML AUC 0.636 with CI including chance.
-- **[M]** Q: What is the "positive control" and why does it matter?
-  A: The same pipeline reproduced the published ARFI/DCE-US clinical-biomarker signal to 3 decimals,
-  proving the method works — so the negative radiomics result is real, not a broken pipeline.
+- **[M]** Q: What is the "positive control" and what exactly does it validate?
+  A: The *same statistical analysis* (same patients, same labels) recovers the clinical ARFI/DCE-US
+  signal to 3 decimals but finds nothing in radiomics → the analysis is sound and powered, so the
+  radiomics null is real. Scope: it validates the stats/data handling, NOT the image pipeline.
 - **[M]** Q: List the five objectives.
   A: (1) Extract radiomics features; (2) test individual features; (3) build ML classifiers;
   (4) reproduce Bassaganyas' clinical analysis; (5) compare radiomics vs clinical biomarkers.
@@ -139,10 +140,15 @@ Cover the answer, say it out loud, then check. Re-drill anything you miss.
 
 - **[H]** Q: State your master framing in one breath.
   A: Every debatable choice biases performance *upward*; results are still at chance, so the negative
-  conclusion is conservative — and the positive control proves the method can detect a real signal.
+  conclusion is conservative — and the positive control shows the shared statistical analysis detects
+  a real signal when one exists.
 - **[M]** Q: "Isn't it underpowered?" — best answer?
-  A: The positive control found ARFI at p<0.001 in the same sample; and six independent analyses all
-  agree — not a power artifact.
+  A: The same statistical analysis recovered ARFI at p<0.001 from the clinical measurements in the
+  same patients; and six independent analyses all agree — not a power artifact.
+- **[H]** Q: Does the positive control validate your image pipeline?
+  A: No — the clinical values are tabular and never touch segmentation/PyRadiomics; they share only
+  the downstream stats. It validates the analysis, not the imaging. The imaging is defended by the 3
+  alternative descriptors + QC (residual: no dedicated segmentation control).
 - **[M]** Q: Is your CV truly nested?
   A: No — k and hyperparameters were tuned on all data (disclosed in Limitation 5). That bias is
   upward, so a nested version would push AUCs toward 0.5.

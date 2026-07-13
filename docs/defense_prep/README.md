@@ -16,10 +16,14 @@ then you leave, they deliberate, and the grade is announced.
 ## The one thing to internalise
 
 Your thesis is a **negative result protected by a positive control**. Radiomics texture from
-grayscale ultrasound does **not** predict pancreas transplant rejection — but the *same pipeline*
-reproduces the published ARFI/DCE-US clinical-biomarker result (Bassaganyas et al. 2025) to three
-decimal places. That positive control is what turns "my model didn't work" into "I proved the
-signal isn't there in B-mode texture." Everything else in your defense hangs off this.
+grayscale ultrasound does **not** predict pancreas transplant rejection — but the *same statistical
+analysis*, run on the clinical ARFI/DCE-US measurements, reproduces the published Bassaganyas et al.
+(2025) result to three decimal places. That control validates your **statistical analysis and data
+handling** (and proves it's powered to detect a real effect) — it turns "my model didn't work" into
+"I proved the signal isn't there in B-mode texture." Note the scope: the clinical measurements are
+tabular and never pass through your segmentation/PyRadiomics pipeline, so the control does **not**
+validate the image-processing stage — that is defended separately (see M6). Everything else in your
+defense hangs off this.
 
 ---
 

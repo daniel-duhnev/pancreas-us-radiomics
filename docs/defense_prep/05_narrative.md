@@ -13,7 +13,8 @@ lost here.
 > by a positive control on the same data.
 
 Three words to keep saying: **robust** (holds across every analysis), **mechanistic** (the physics
-predicts it), **controlled** (the positive control proves the method works).
+predicts it), **controlled** (the positive control proves the statistical analysis is sound and
+powered).
 
 ---
 
@@ -57,17 +58,30 @@ texture-based methods are fundamentally limited here.
 
 ## 3. The positive control — why anyone should believe your negative
 
-A negative result is only worth anything if you can rule out "your method was just broken." You can:
+A negative result is only worth anything if you can rule out "your analysis was just broken or too
+weak." You can — but be **precise about scope**, because a sharp examiner will test it:
 
-- The **same pipeline** (same data loading, grouping, statistics) that found *nothing* in radiomics
-  **reproduced Bassaganyas et al. to 3 decimal places** (ARFI late p < 0.001, r = 0.72; 10/12 features
-  match exactly).
-- So the pipeline demonstrably **can** detect a real ultrasound rejection signal when one exists. It
-  found the clinical signal and not the texture signal → the texture signal genuinely isn't there.
+- Your radiomics features and the clinical ARFI/DCE-US measurements come from the **same patients**,
+  with the **same rejection labels and grouping**, and go through the **same statistical analysis**.
+- That analysis found *nothing* in the radiomics features but **reproduced Bassaganyas et al. to 3
+  decimal places** in the clinical measurements (ARFI late p < 0.001, r = 0.72; 10/12 features match
+  exactly).
+- Since the analysis and the labelled cohort are identical for both feature sets, the difference must
+  lie in the **features**, not the analysis. The statistics demonstrably **can** detect a real signal
+  in this cohort at this sample size → the radiomics null isn't a broken or underpowered analysis.
 
-**This is your answer to "how do you know it's not just underpowered / a coding bug?"** The positive
-control detects an effect in the *same* sample size, on the *same* patients. Power and correctness are
-demonstrated, not assumed.
+**This is your answer to "how do you know it's not just underpowered / a stats bug?"** — power and
+correctness of the *statistical analysis* are demonstrated, not assumed.
+
+**What the positive control does NOT cover (say this before they do).** The clinical measurements are
+tabular numbers that **never pass through your segmentation or PyRadiomics extraction**. So the
+control validates the statistical + data-handling stage, **not** the image-processing pipeline. The
+imaging stage is defended *separately*: three independent feature descriptors (PyRadiomics, LBP,
+Gabor, Laws') are all null — a single extraction bug wouldn't fool all three — plus error-free
+extraction, sensible feature distributions, and visual mask QC. Honest residual limitation: those
+texture methods share the same segmentation masks, so there is **no dedicated positive control for
+the imaging stage itself**. Concede that cleanly; it reads as rigour, not weakness. (Full defense in
+M6.)
 
 ---
 
@@ -143,7 +157,8 @@ Clinical need: non-invasive rejection detection (biopsy is bad)
 ## 7. The three sentences to end your talk on
 
 1. "Automated texture analysis of grayscale ultrasound does not capture the tissue changes of pancreas
-   transplant rejection — and I showed this robustly, with a positive control proving the method works."
+   transplant rejection — and I showed this robustly, with a positive control confirming my analysis is
+   sound and powered to detect a real signal when one exists."
 2. "The reason is physical: B-mode texture encodes macroscopic acoustic boundaries, while rejection is
    a microscopic change in stiffness and perfusion that ARFI and DCE-US measure directly."
 3. "So clinical biomarkers remain necessary, and future non-invasive work should target those physical

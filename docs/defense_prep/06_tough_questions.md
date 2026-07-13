@@ -8,8 +8,8 @@ loud until they're natural.
 
 > "Almost every debatable choice in my pipeline could only make performance look *better* than it
 > truly is. Since the result is still at chance even so, those choices make my negative conclusion
-> **conservative**, not fragile. And the positive control proves the method can detect a real signal
-> when one exists."
+> **conservative**, not fragile. And the positive control shows the shared statistical analysis can
+> detect a real signal when one exists."
 
 Most of these weaknesses are **already disclosed in your Limitations section** — so you're not
 admitting anything new, you're demonstrating you understand your own work. A few (marked ⚠ *not in
@@ -20,16 +20,37 @@ the thesis*) are things to handle honestly if they come up.
 ## A. "Is this just an underpowered / failed study?"
 
 **Q: With only 55–137 samples and 93 features, isn't your negative result just low power?**
-- Model answer: "Two things rule that out. First, the **positive control**: the same pipeline, the
-  same patients, the same sample size, reproduced the published ARFI result at p < 0.001 to three
-  decimal places. If the study were simply too small to detect *any* effect, it couldn't have
-  detected that one. Second, the null result is **consistent across six independent analyses** —
-  univariate, multivariate ML, time-stratified, paired, three alternative feature families, and
-  tissue normalisation. A power problem wouldn't produce that uniform convergence. Any undetected
-  radiomics effect would have to be very small."
+- Model answer: "Two things rule that out. First, the **positive control**: the *same statistical
+  analysis*, on the same patients with the same labels, recovered the published ARFI result at
+  p < 0.001 to three decimal places from the clinical measurements. If the analysis were simply too
+  weak to detect *any* effect in this cohort, it couldn't have detected that one. Second, the null
+  result is **consistent across six independent analyses** — univariate, multivariate ML,
+  time-stratified, paired, three alternative feature families, and tissue normalisation. A power
+  problem wouldn't produce that uniform convergence. Any undetected radiomics effect would have to be
+  very small."
 - If pushed: "A formal power analysis isn't meaningful for a multivariate radiomics pipeline where
   the true effect size is unknown — but the positive control is a stronger, empirical demonstration
-  that the method has enough power to find a real signal in this cohort."
+  that the statistical analysis has enough power to find a real signal in this cohort."
+
+**Q: Your positive control is on tabular clinical data — how does that validate your image-processing
+pipeline at all?** ⚠ *(the sharpest version of the question — likely from a computer-vision examiner)*
+- Model answer: "It's an important distinction, and I want to be precise. The clinical ARFI and
+  DCE-US values are measurements that never pass through my segmentation or PyRadiomics extraction —
+  they enter the *same downstream statistical analysis* as the radiomics features, from the same
+  patients with the same rejection labels. So the replication validates my **statistical analysis and
+  data handling**, and proves that analysis is powered to detect a real effect — it rules out 'the
+  statistics are broken or underpowered.' It does **not** validate the image-processing stage, and I
+  don't claim it does."
+- If pushed ("then how do you know your segmentation/extraction isn't the problem?"): "The image
+  pipeline is defended separately. Three *independent* feature descriptors — PyRadiomics, plus LBP,
+  Gabor, and Laws' texture energy — are all null; a single extraction bug wouldn't fool three
+  different methods. Extraction completed error-free on all studies with sensible, well-behaved
+  feature distributions and the expected within-class correlation structure, and I visually checked
+  the masks. The honest residual limitation is that all the texture methods share the *same
+  segmentation*, so there's no dedicated positive control for the segmentation stage itself — a
+  test–retest or a synthetic-phantom check would be the way to add one. But a segmentation subtle
+  enough to wipe out a real signal while leaving error-free, sensible features is unlikely, and it
+  would have to do so consistently across four descriptors."
 
 **Q: You have more features than samples — isn't that hopeless / overfitting?**
 - "That high-dimensional regime is exactly why I did *not* rely on raw multivariate fitting. I
@@ -256,16 +277,20 @@ if it arises; unlikely unless they run the code.)*
 
 ---
 
-## The five landmine questions — over-prepare these
+## The landmine questions — over-prepare these
 
-1. "Isn't it just underpowered?" → positive control + six-way convergence.
-2. "Your CV isn't nested / you tuned on all data." → disclosed; bias is upward; still null →
+1. "Isn't it just underpowered?" → positive control (same stats, clinical signal recovered) +
+   six-way convergence.
+2. "Does the positive control validate your *image* pipeline?" → No — it validates the statistical
+   analysis only; the imaging stage is defended by the 3 alternative descriptors + QC (residual: no
+   dedicated segmentation control — concede it).
+3. "Your CV isn't nested / you tuned on all data." → disclosed; bias is upward; still null →
    conservative.
-3. "Same patient in train and test?" → full set is exploratory/appendix; independent set is
+4. "Same patient in train and test?" → full set is exploratory/appendix; independent set is
    leakage-free primary.
-4. "Can you reproduce the extraction exactly?" → be honest about the 3 lost studies; not a result
+5. "Can you reproduce the extraction exactly?" → be honest about the 3 lost studies; not a result
    issue; conclusion unchanged.
-5. "Why no texture signal at all?" → the physics: macroscopic boundaries vs microscopic pathology.
+6. "Why no texture signal at all?" → the physics: macroscopic boundaries vs microscopic pathology.
 
 ---
 

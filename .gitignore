@@ -21,6 +21,9 @@ analysis/reports/
 *.zip
 *.ZIP
 
+# ignore Office lock files (created while a .pptx/.docx/.xlsx is open)
+~$*
+
 # ignore LaTeX build artifacts
 thesis/*.aux
 thesis/*.bbl

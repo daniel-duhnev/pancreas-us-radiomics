@@ -8,8 +8,9 @@ seconds, in 5 minutes, and in one sentence. If you can only prepare one thing, p
 ## The one-sentence version
 
 > "I tested whether automated texture analysis (radiomics) of ordinary grayscale ultrasound can
-> detect pancreas transplant rejection. It cannot — but I proved that finding is real, not a bug,
-> by showing the same pipeline *does* recover the known clinical-biomarker signal (ARFI/DCE-US)."
+> detect pancreas transplant rejection. It cannot — and that finding is real, not a broken or
+> underpowered analysis, because the *same statistical analysis*, run on the clinical ARFI/DCE-US
+> measurements from the same patients, cleanly recovers their known rejection signal."
 
 ## The 60-second pitch (memorise the beats, not the words)
 
@@ -27,9 +28,11 @@ seconds, in 5 minutes, and in one sentence. If you can only prepare one thing, p
 5. **What I found.** Nothing discriminates rejection. No feature survives multiple-testing
    correction; best classifier AUC is 0.636 with a confidence interval that includes chance (0.5).
    I confirmed this with alternative texture families and tissue normalisation — all null.
-6. **Why it's trustworthy (the punchline).** The *same* pipeline reproduced the published ARFI
-   result to three decimal places (ARFI p < 0.001 in the late period). So the pipeline works; the
-   texture signal genuinely isn't there in B-mode.
+6. **Why it's trustworthy (the punchline).** The *same statistical analysis*, applied to the
+   clinical ARFI/DCE-US measurements, reproduced the published result to three decimal places
+   (ARFI p < 0.001 in the late period). So the analysis is sound and powered — the texture signal
+   genuinely isn't there in B-mode. (Scope: this validates the stats/data handling, not the image
+   pipeline — that's defended separately; see M6.)
 7. **Takeaway.** Rejection changes tissue *stiffness* and *perfusion* — which ARFI and DCE-US
    measure directly — but not the acoustic-boundary *texture* that B-mode encodes. Future work:
    deep learning, multi-parametric models, larger multi-centre cohorts.
@@ -61,8 +64,10 @@ You *will* be asked some version of "isn't this just a failed experiment?" Your 
   are unlikely to work for pancreas rejection — so resources should go elsewhere (deep learning,
   multi-parametric). That is useful scientific information.
 - **It's a rigorously *established* negative, not an *inconclusive* one.** The positive control
-  proves the method could have detected a signal if one existed. Most "failed" projects can't
-  distinguish "no signal" from "broken pipeline." Yours can.
+  proves the *analysis* could have detected a signal if one existed (it detected the clinical one).
+  Most "failed" projects can't distinguish "no signal" from "broken/underpowered analysis." Yours
+  can — for the statistical stage. (The imaging stage is defended by the alternative feature
+  families and QC instead; see M6.)
 - **It has a mechanistic explanation** (see M5): B-mode texture encodes macroscopic acoustic
   boundaries; rejection is microscopic. The negative result is *predicted* by the physics, which
   makes it believable rather than mysterious.
